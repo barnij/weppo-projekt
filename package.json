@@ -1,0 +1,23 @@
+{
+  "name": "weppo-projekt",
+  "version": "1.0.0",
+  "description": "Projekt sklepu internetowego na przedmiot Wybrane Elementy Praktyki Projektowania Oprogramowania w roku akademickim 2020/21 na Uniwersytecie Wrocławskim. Grupa: Bartosz Jaśkiewicz, Andrzej Tkaczyk, Maksymilian Czudziak.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barnij/weppo-projekt.git"
+  },
+  "keywords": [
+    "weppo",
+    "projekt"
+  ],
+  "author": "Bartosz Jaśkiewicz, Andrzej Tkaczyk, Maksymilian Czudziak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/barnij/weppo-projekt/issues"
+  },
+  "homepage": "https://github.com/barnij/weppo-projekt#readme"
+}
