@@ -1,27 +1,29 @@
 
-ALTER TABLE ONLY user DROP CONSTRAINT IF EXISTS user_key;
-ALTER TABLE ONLY order DROP CONSTRAINT IF EXISTS order_key; 
-ALTER TABLE ONLY order_status DROP CONSTRAINT IF EXISTS order_status_key;
-ALTER TABLE ONLY sold_product DROP CONSTRAINT IF EXISTS sold_product_key;
-ALTER TABLE ONLY product DROP CONSTRAINT IF EXISTS product_key;
-ALTER TABLE ONLY size DROP CONSTRAINT IF EXISTS size_key;
-ALTER TABLE ONLY colour DROP CONSTRAINT IF EXISTS colour_key;
-ALTER TABLE ONLY category DROP CONSTRAINT IF EXISTS category_key;
-ALTER TABLE ONLY picture DROP CONSTRAINT IF EXISTS picture_key;
-ALTER TABLE ONLY order DROP CONSTRAINT IF EXISTS fk_order;
-ALTER TABLE ONLY sold_product DROP CONSTRAINT IF EXISTS fk_sold_product_order;
-ALTER TABLE ONLY sold_product DROP CONSTRAINT IF EXISTS fk_sold_product_prod;
-ALTER TABLE ONLY product DROP CONSTRAINT IF EXISTS fk_product_size;
-ALTER TABLE ONLY product DROP CONSTRAINT IF EXISTS fk_product_colour;
-ALTER TABLE ONLY product DROP CONSTRAINT IF EXISTS fk_product_category;
-ALTER TABLE ONLY picture DROP CONSTRAINT IF EXISTS fk_picture;
+ALTER TABLE purchase DROP CONSTRAINT IF EXISTS fk_purchase;
+ALTER TABLE sold_product DROP CONSTRAINT IF EXISTS fk_sold_product_purchase;
+ALTER TABLE sold_product DROP CONSTRAINT IF EXISTS fk_sold_product_prod;
+ALTER TABLE product DROP CONSTRAINT IF EXISTS fk_product_size;
+ALTER TABLE product DROP CONSTRAINT IF EXISTS fk_product_colour;
+ALTER TABLE product DROP CONSTRAINT IF EXISTS fk_product_category;
+ALTER TABLE picture DROP CONSTRAINT IF EXISTS fk_picture;
+ALTER TABLE account DROP CONSTRAINT IF EXISTS account_key;
+ALTER TABLE purchase DROP CONSTRAINT IF EXISTS purchase_key; 
+ALTER TABLE purchase_status DROP CONSTRAINT IF EXISTS purchase_status_key;
+ALTER TABLE sold_product DROP CONSTRAINT IF EXISTS sold_product_key;
+ALTER TABLE product DROP CONSTRAINT IF EXISTS product_key;
+ALTER TABLE size DROP CONSTRAINT IF EXISTS size_key;
+ALTER TABLE colour DROP CONSTRAINT IF EXISTS colour_key;
+ALTER TABLE category DROP CONSTRAINT IF EXISTS category_key;
+ALTER TABLE picture DROP CONSTRAINT IF EXISTS picture_key;
 
-DROP TABLE user;
-DROP TABLE order;
-DROP TABLE order_status;
+DROP TABLE account;
+DROP TABLE purchase;
+DROP TABLE purchase_status;
 DROP TABLE sold_product;
 DROP TABLE product;
 DROP TABLE size;
 DROP TABLE colour;
 DROP TABLE category;
 DROP TABLE picture;
+
+DROP DOMAIN alphanum;

@@ -12,28 +12,29 @@ SET default_with_oids = false;
 
 CREATE DOMAIN alphanum as varchar(30) check (value ~ '^[A-Z0-9]+$');
 
-CREATE TABLE user (
+CREATE TABLE account (
   id serial NOT NULL,
   username alphanum NOT NULL,
-  passwd text NOT NULL,
+  password text NOT NULL,
+  isadmin boolean NOT NULL,
   last_login timestamp
 );
 
-CREATE TABLE order (
+CREATE TABLE purchase (
   id serial NOT NULL,
   userid integer NOT NULL,
   status integer NOT NULL
 );
 
-CREATE TABLE order_status (
+CREATE TABLE purchase_status (
   id serial NOT NULL,
   description text 
 );
 
 CREATE TABLE sold_product (
-  order_id integer NOT NULL,
+  purchase_id integer NOT NULL,
   product_id integer NOT NULL,
-  amount integer NOT NULL,
+  amount integer NOT NULL
 );
 
 CREATE TABLE product (
@@ -69,50 +70,50 @@ CREATE TABLE picture (
   filepath text NOT NULL
 );
 
-ALTER TABLE ONLY user
-  ADD CONSTRAINT user_key PRIMARY KEY (id);
+ALTER TABLE account
+  ADD CONSTRAINT account_key PRIMARY KEY (id);
 
-ALTER TABLE ONLY order 
-  ADD CONSTRAINT order_key PRIMARY KEY (id);
+ALTER TABLE purchase 
+  ADD CONSTRAINT purchase_key PRIMARY KEY (id);
 
-ALTER TABLE ONLY order_status
-  ADD CONSTRAINT order_status_key PRIMARY KEY (id);
+ALTER TABLE purchase_status
+  ADD CONSTRAINT purchase_status_key PRIMARY KEY (id);
 
-ALTER TABLE ONLY sold_product
-  ADD CONSTRAINT sold_product_key PRIMARY KEY (order_id, product_id);
+ALTER TABLE sold_product
+  ADD CONSTRAINT sold_product_key PRIMARY KEY (purchase_id, product_id);
 
-ALTER TABLE ONLY product
+ALTER TABLE product
   ADD CONSTRAINT product_key PRIMARY KEY (id);
 
-ALTER TABLE ONLY size
+ALTER TABLE size
   ADD CONSTRAINT size_key PRIMARY KEY (id);
 
-ALTER TABLE ONLY colour
+ALTER TABLE colour
   ADD CONSTRAINT colour_key PRIMARY KEY (id);
 
-ALTER TABLE ONLY category
+ALTER TABLE category
   ADD CONSTRAINT category_key PRIMARY KEY (id);
 
-ALTER TABLE ONLY picture
+ALTER TABLE picture
   ADD CONSTRAINT picture_key PRIMARY KEY (id);
 
-ALTER TABLE ONLY order
-    ADD CONSTRAINT fk_order FOREIGN KEY (userid) REFERENCES user(id) DEFERRABLE;
+ALTER TABLE purchase
+    ADD CONSTRAINT fk_purchase FOREIGN KEY (userid) REFERENCES account(id) DEFERRABLE;
 
-ALTER TABLE ONLY sold_product
-    ADD CONSTRAINT fk_sold_product_order FOREIGN KEY (order_id) REFERENCES order(id) DEFERRABLE;
+ALTER TABLE sold_product
+    ADD CONSTRAINT fk_sold_product_purchase FOREIGN KEY (purchase_id) REFERENCES purchase(id);
 
-ALTER TABLE ONLY sold_product
-    ADD CONSTRAINT fk_sold_product_prod FOREIGN KEY (product_id) REFERENCES product(id) DEFERRABLE;
+ALTER TABLE sold_product
+    ADD CONSTRAINT fk_sold_product_prod FOREIGN KEY (product_id) REFERENCES product(id);
 
-ALTER TABLE ONLY product
-    ADD CONSTRAINT fk_product_size FOREIGN KEY (size) REFERENCES size(id) DEFERRABLE;
+ALTER TABLE product
+    ADD CONSTRAINT fk_product_size FOREIGN KEY (size) REFERENCES size(id);
 
-ALTER TABLE ONLY product
-    ADD CONSTRAINT fk_product_colour FOREIGN KEY (colour) REFERENCES colour(id) DEFERRABLE;
+ALTER TABLE product
+    ADD CONSTRAINT fk_product_colour FOREIGN KEY (colour) REFERENCES colour(id);
 
-ALTER TABLE ONLY product
-    ADD CONSTRAINT fk_product_category FOREIGN KEY (category) REFERENCES category(id) DEFERRABLE;
+ALTER TABLE product
+    ADD CONSTRAINT fk_product_category FOREIGN KEY (category) REFERENCES category(id);
 
-ALTER TABLE ONLY picture
-    ADD CONSTRAINT fk_picture FOREIGN KEY (product) REFERENCES product(id) DEFERRABLE;
+ALTER TABLE picture
+    ADD CONSTRAINT fk_picture FOREIGN KEY (product) REFERENCES product(id);
