@@ -1,5 +1,5 @@
-import express from 'express'
-import http from 'http'
+const express = require('express');
+const http = require('http');
 
 var app = express();
 app.set('view-engine', 'ejs');
