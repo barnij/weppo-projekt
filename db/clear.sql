@@ -16,14 +16,14 @@ ALTER TABLE colour DROP CONSTRAINT IF EXISTS colour_key;
 ALTER TABLE category DROP CONSTRAINT IF EXISTS category_key;
 ALTER TABLE picture DROP CONSTRAINT IF EXISTS picture_key;
 
-DROP TABLE account;
-DROP TABLE purchase;
-DROP TABLE purchase_status;
-DROP TABLE sold_product;
-DROP TABLE product;
-DROP TABLE size;
-DROP TABLE colour;
-DROP TABLE category;
-DROP TABLE picture;
+DROP TABLE IF EXISTS account;
+DROP TABLE IF EXISTS purchase;
+DROP TABLE IF EXISTS purchase_status;
+DROP TABLE IF EXISTS sold_product;
+DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS size;
+DROP TABLE IF EXISTS colour;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS picture;
 
-DROP DOMAIN alphanum;
+DROP DOMAIN IF EXISTS alphanum;
