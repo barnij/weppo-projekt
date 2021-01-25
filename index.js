@@ -8,7 +8,7 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
     res.render('index');
@@ -20,6 +20,10 @@ app.get('/category/:id(\\d+)', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('login');
+})
+
+app.get('/products', (req, res) => {
+    res.render('products');
 })
 
 app.post('/', (req, res) => {
