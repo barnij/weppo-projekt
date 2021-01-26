@@ -79,7 +79,7 @@ async function add_category(pool, description) {
   try {
     await pool.query(query, [description]);
     return true;
-  } catch (err) { 
+  } catch (err) {
     console.error('db add_category error');
     console.error(err);
   }
@@ -156,8 +156,8 @@ async function add_purchase_status(pool, description) {
   }
 }
 
-pool = connect();
-add_purchase_status(pool, 'test2').then(res => {disconnect(pool)});
+//pool = connect();
+//add_purchase_status(pool, 'test2').then(res => {disconnect(pool)});
 
 //TODO getters
 //TODO purchase management
