@@ -1,7 +1,6 @@
 const express = require('express');
 const http = require('http');
-var path = require('path')
-var __dirname = path.resolve()
+var path = require('path');
 
 var app = express();
 app.set('view engine', 'ejs');
@@ -66,7 +65,5 @@ app.get('/admin/orders', (req, res) => {
     res.render('admin-orders');
 })
 
-
-
-http.createServer(app).listen(8080);
+http.createServer(app).listen(process.env.PORT || 8080);
 console.log('Server started');
