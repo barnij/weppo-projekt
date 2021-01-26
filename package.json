@@ -2,9 +2,10 @@
   "name": "weppo-projekt",
   "version": "1.0.0",
   "description": "Projekt sklepu internetowego na przedmiot Wybrane Elementy Praktyki Projektowania Oprogramowania w roku akademickim 2020/21 na Uniwersytecie Wrocławskim. Grupa: Bartosz Jaśkiewicz, Andrzej Tkaczyk, Maksymilian Czudziak.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
