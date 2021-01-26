@@ -10,11 +10,9 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
-CREATE DOMAIN alphanum as varchar(30) check (value ~ '^[A-Z0-9]+$');
-
 CREATE TABLE account (
   id serial NOT NULL,
-  username alphanum NOT NULL,
+  username varchar(20) NOT NULL,
   password text NOT NULL,
   isadmin boolean NOT NULL,
   last_login timestamp
