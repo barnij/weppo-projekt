@@ -1,17 +1,6 @@
-const pg = require('pg');
+const {pool} = require('./config');
 
-function connect() {
-  let pool = new pg.Pool({
-    user: 'andrzej',
-    host: 'localhost',
-    database: 'weppo',
-    password: '123',
-    port: 5432,
-  });
-  return pool;
-}
-
-function disconnect(pool) {
+function disconnect() {
   pool.end();
 }
 
@@ -145,6 +134,7 @@ async function set_product_amount(pool, prodid, amount) {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 async function add_purchase_status(pool, description) {
   let query = `INSERT INTO purchase_status (description) VALUES ($1);`;
   try {
@@ -162,8 +152,7 @@ async function add_purchase_status(pool, description) {
 //TODO getters
 //TODO purchase management
 
-return {
-  connect,
+module.exports = {
   disconnect,
   get_user_id,
   login_user,
@@ -175,5 +164,4 @@ return {
   add_product,
   set_product_status,
   set_product_amount,
-
 }
