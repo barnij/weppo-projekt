@@ -79,7 +79,7 @@ async function add_category(pool, description) {
   try {
     await pool.query(query, [description]);
     return true;
-  } catch (err) { 
+  } catch (err) {
     console.error('db add_category error');
     console.error(err);
   }
