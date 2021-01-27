@@ -110,6 +110,17 @@ async function add_product(price, name, size, colour, amount, status, descriptio
   }
 }
 
+async function get_all_products(){
+  let query = 'SELECT * FROM product;'
+  try{
+    let res = await pool.query(query);
+    return res.rows;
+  } catch (err) {
+    console.error('db get_all_products error');
+    console.error(err);
+  }
+}
+
 async function set_product_status(prodid, status) {
   let query = `UPDATE product SET status = $1 WHERE id = $2;`;
   let args = [status, prodid];
@@ -164,4 +175,5 @@ module.exports = {
   add_product,
   set_product_status,
   set_product_amount,
+  get_all_products
 }
