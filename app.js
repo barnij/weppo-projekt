@@ -1,5 +1,6 @@
 const express = require('express');
 const http = require('http');
+const db_service = require('./db/db_services');
 var path = require('path');
 
 var app = express();
