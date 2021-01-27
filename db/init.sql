@@ -26,7 +26,7 @@ CREATE TABLE purchase (
 
 CREATE TABLE purchase_status (
   id serial NOT NULL,
-  description text 
+  description text
 );
 
 CREATE TABLE sold_product (
@@ -71,7 +71,7 @@ CREATE TABLE picture (
 ALTER TABLE account
   ADD CONSTRAINT account_key PRIMARY KEY (id);
 
-ALTER TABLE purchase 
+ALTER TABLE purchase
   ADD CONSTRAINT purchase_key PRIMARY KEY (id);
 
 ALTER TABLE purchase_status
