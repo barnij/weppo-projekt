@@ -1,26 +1,15 @@
-const pg = require('pg');
+const { pool } = require('./config');
 
-function connect() {
-  let pool = new pg.Pool({
-    user: 'andrzej',
-    host: 'localhost',
-    database: 'weppo',
-    password: '123',
-    port: 5432,
-  });
-  return pool;
-}
-
-function disconnect(pool) {
+function disconnect() {
   pool.end();
 }
 
-async function get_user_id(pool, username, password) {
+async function get_user_id(username, password) {
   let query = `SELECT id FROM account WHERE username = $1 AND password = $2;`;
   let args = [username, password];
   try {
     let res = await pool.query(query, args);
-    if(res.rows[0]){
+    if (res.rows[0]) {
       return res.rows[0].id;
     } else {
       return false;
@@ -31,9 +20,9 @@ async function get_user_id(pool, username, password) {
   }
 }
 
-async function login_user(pool, username, password) {
+async function login_user(username, password) {
   try {
-    let id = await get_user_id(pool, username, password);
+    let id = await get_user_id(username, password);
     let query = `UPDATE account SET last_login = NOW() WHERE id = $1;`;
     await pool.query(query, [id]);
     return id;
@@ -43,15 +32,15 @@ async function login_user(pool, username, password) {
   }
 }
 
-async function add_user(pool, username, password, isadmin) {
-  let query = `INSERT INTO account (username, password, isadmin, last_login)
-              VALUES ($1, $2, $3, NOW())
+async function add_user(username, password, isadmin) {
+  let query = `INSERT INTO account (id,username, password, isadmin, last_login)
+              VALUES (DEFAULT,$1, $2, $3, NOW())
               RETURNING id;`;
-  let query1 = `SELECT id FROM account WHERE username = $1 OR password = $2;`;
+  let query1 = `SELECT id FROM account WHERE username = $1;`;
   let args = [username, password, isadmin];
   try {
-    let check_existence = await pool.query(query1, [username, password]);
-    if (check_existence) {
+    let check_existence = await pool.query(query1, [username]);
+    if (check_existence.rowCount) {
       return false;
     }
     let res = await pool.query(query, args);
@@ -62,7 +51,7 @@ async function add_user(pool, username, password, isadmin) {
   }
 }
 
-async function set_admin(pool, userid, isadmin) {
+async function set_admin(userid, isadmin) {
   let query = `UPDATE account SET isadmin = $1 WHERE id = $2;`;
   let args = [isadmin, userid];
   try {
@@ -74,18 +63,18 @@ async function set_admin(pool, userid, isadmin) {
   }
 }
 
-async function add_category(pool, description) {
+async function add_category(description) {
   let query = `INSERT INTO category (description) VALUES ($1);`;
   try {
     await pool.query(query, [description]);
     return true;
-  } catch (err) { 
+  } catch (err) {
     console.error('db add_category error');
     console.error(err);
   }
 }
 
-async function add_size(pool, description) {
+async function add_size(description) {
   let query = `INSERT INTO size (description) VALUES ($1);`;
   try {
     await pool.query(query, [description]);
@@ -96,7 +85,7 @@ async function add_size(pool, description) {
   }
 }
 
-async function add_colour(pool, description) {
+async function add_colour(description) {
   let query = `INSERT INTO colour (description) VALUES ($1);`;
   try {
     await pool.query(query, [description]);
@@ -107,12 +96,12 @@ async function add_colour(pool, description) {
   }
 }
 
-async function add_product(pool, price, name, size, colour, amount, status, description, category) {
+async function add_product(price, name, size, colour, amount, status, description, category) {
   let query = `INSERT INTO product (price, name, size, colour, amount, status, description, category)
               VALUES ($1 ::numeric::money, $2, $3, $4, $5, $6, $7, $8)
               RETURNING id;`;
   let args = [price, name, size, colour, amount, status, description, category];
-  try{
+  try {
     let res = await pool.query(query, args);
     return res.rows[0].id;
   } catch (err) {
@@ -121,7 +110,8 @@ async function add_product(pool, price, name, size, colour, amount, status, desc
   }
 }
 
-async function set_product_status(pool, prodid, status) {
+
+async function set_product_status(prodid, status) {
   let query = `UPDATE product SET status = $1 WHERE id = $2;`;
   let args = [status, prodid];
   try {
@@ -133,7 +123,7 @@ async function set_product_status(pool, prodid, status) {
   }
 }
 
-async function set_product_amount(pool, prodid, amount) {
+async function set_product_amount(prodid, amount) {
   let query = `UPDATE product SET amount = $1 WHERE id = $2;`;
   let args = [amount, prodid];
   try {
@@ -145,7 +135,7 @@ async function set_product_amount(pool, prodid, amount) {
   }
 }
 
-async function add_purchase_status(pool, description) {
+async function add_purchase_status(description) {
   let query = `INSERT INTO purchase_status (description) VALUES ($1);`;
   try {
     await pool.query(query, [description]);
@@ -208,12 +198,11 @@ async function set_purchase_status(pool, purchaseid, status) {
 }
 
 async function get_category(pool, id) {
-  if(id) {
-    var query = `SELECT * FROM category WHERE id = $1;`;
-    var args = [id];
-  } else {
-    var query = `SELECT * FROM category;`;
-    var args = [];
+  var query = `SELECT * FROM category;`;
+  var args = [];
+  if (id) {
+    query = 'SELECT * FROM category WHERE id = $1;';
+    args = [id];
   }
   try {
     let res = await pool.query(query, args);
@@ -225,13 +214,14 @@ async function get_category(pool, id) {
 }
 
 async function get_colour(pool, id) {
-  if(id) {
-    var query = `SELECT * FROM colour WHERE id = $1;`;
-    var args = [id];
-  } else {
-    var query = `SELECT * FROM colour;`;
-    var args = [];
+  var query = `SELECT * FROM colour;`;
+  var args = [];
+
+  if (id) {
+    query = `SELECT * FROM colour WHERE id = $1;`;
+    args = [id];
   }
+
   try {
     let res = await pool.query(query, args);
     return res.rows;
@@ -242,13 +232,14 @@ async function get_colour(pool, id) {
 }
 
 async function get_picture(pool, prodid, id) {
-  if(id) {
-    var query = `SELECT * FROM picture WHERE id = $1;`;
-    var args = [id];
-  } else {
-    var query = `SELECT * FROM picture WHERE product = $1;`;
-    var args = [prodid];
+  var query = `SELECT * FROM picture WHERE product = $1;`;
+  var args = [prodid];
+
+  if (id) {
+    query = `SELECT * FROM picture WHERE id = $1;`;
+    args = [id];
   }
+
   try {
     let res = await pool.query(query, args);
     return res.rows;
@@ -259,16 +250,18 @@ async function get_picture(pool, prodid, id) {
 }
 
 async function get_purchase(pool, userid, id) {
-  if(id) {
-    var query = `SELECT * FROM purchase WHERE id = $1;`;
-    var args = [id];
+  var query = "";
+  var args = [];
+  if (id) {
+    query = `SELECT * FROM purchase WHERE id = $1;`;
+    args = [id];
   } else {
-    if(userid) {
-      var query = `SELECT * FROM purchase WHERE userid = $1;`;
-      var args = [userid];
+    if (userid) {
+      query = `SELECT * FROM purchase WHERE userid = $1;`;
+      args = [userid];
     } else {
-      var query = `SELECT * FROM purchase;`;
-      var args = [];
+      query = `SELECT * FROM purchase;`;
+      args = [];
     }
   }
   try {
@@ -281,13 +274,14 @@ async function get_purchase(pool, userid, id) {
 }
 
 async function get_purchase_status(pool, id) {
-  if(id) {
-    var query = `SELECT * FROM purchase_status WHERE id = $1;`;
-    var args = [id];
-  } else {
-    var query = `SELECT * FROM purchase_status;`;
-    var args = [];
+  var query = `SELECT * FROM purchase_status;`;
+  var args = [];
+
+  if (id) {
+    query = `SELECT * FROM purchase_status WHERE id = $1;`;
+    args = [id];
   }
+
   try {
     let res = await pool.query(query, args);
     return res.rows;
@@ -298,13 +292,14 @@ async function get_purchase_status(pool, id) {
 }
 
 async function get_size(pool, id) {
-  if(id) {
-    var query = `SELECT * FROM size WHERE id = $1;`;
-    var args = [id];
-  } else {
-    var query = `SELECT * FROM size;`;
-    var args = [];
+  var query = `SELECT * FROM size;`;
+  var args = [];
+
+  if (id) {
+    query = `SELECT * FROM size WHERE id = $1;`;
+    args = [id];
   }
+
   try {
     let res = await pool.query(query, args);
     return res.rows;
@@ -315,13 +310,14 @@ async function get_size(pool, id) {
 }
 
 async function get_sold_product(pool, purchaseid) {
-  if(purchaseid) {
-    var query = `SELECT * FROM sold_product WHERE purchase_id = $1;`;
-    var args = [purchaseid];
-  } else {
-    var query = `SELECT * FROM sold_product;`;
-    var args = [];
+  var query = `SELECT * FROM sold_product;`;
+  var args = [];
+
+  if (purchaseid) {
+    query = `SELECT * FROM sold_product WHERE purchase_id = $1;`;
+    args = [purchaseid];
   }
+
   try {
     let res = await pool.query(query, args);
     return res.rows;
@@ -332,13 +328,14 @@ async function get_sold_product(pool, purchaseid) {
 }
 
 async function get_product(pool, id) {
-  if(id) {
-    var query = `SELECT * FROM product WHERE id = $1;`;
-    var args = [id];
-  } else {
-    var query = `SELECT * FROM product;`;
-    var args = [];
+  var query = `SELECT * FROM product;`;
+  var args = [];
+
+  if (id) {
+    query = `SELECT * FROM product WHERE id = $1;`;
+    args = [id];
   }
+
   try {
     let res = await pool.query(query, args);
     return res.rows;
@@ -348,8 +345,7 @@ async function get_product(pool, id) {
   }
 }
 
-return {
-  connect,
+module.exports = {
   disconnect,
   get_user_id,
   login_user,

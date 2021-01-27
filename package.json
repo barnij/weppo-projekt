@@ -2,9 +2,10 @@
   "name": "weppo-projekt",
   "version": "1.0.0",
   "description": "Projekt sklepu internetowego na przedmiot Wybrane Elementy Praktyki Projektowania Oprogramowania w roku akademickim 2020/21 na Uniwersytecie Wrocławskim. Grupa: Bartosz Jaśkiewicz, Andrzej Tkaczyk, Maksymilian Czudziak.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r dotenv/config app.js"
   },
   "repository": {
     "type": "git",
@@ -21,11 +22,13 @@
   },
   "homepage": "https://github.com/barnij/weppo-projekt#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "http": "0.0.1-security",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "pg": "^8.5.1"
   },
   "devDependencies": {
     "eslint": "^7.17.0"
