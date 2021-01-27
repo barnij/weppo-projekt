@@ -4,7 +4,7 @@ function disconnect() {
   pool.end();
 }
 
-async function get_user_id(pool, username, password) {
+async function get_user_id(username, password) {
   let query = `SELECT id FROM account WHERE username = $1 AND password = $2;`;
   let args = [username, password];
   try {
@@ -20,9 +20,9 @@ async function get_user_id(pool, username, password) {
   }
 }
 
-async function login_user(pool, username, password) {
+async function login_user(username, password) {
   try {
-    let id = await get_user_id(pool, username, password);
+    let id = await get_user_id(username, password);
     let query = `UPDATE account SET last_login = NOW() WHERE id = $1;`;
     await pool.query(query, [id]);
     return id;
@@ -32,15 +32,15 @@ async function login_user(pool, username, password) {
   }
 }
 
-async function add_user(pool, username, password, isadmin) {
-  let query = `INSERT INTO account (username, password, isadmin, last_login)
-              VALUES ($1, $2, $3, NOW())
+async function add_user(username, password, isadmin) {
+  let query = `INSERT INTO account (id,username, password, isadmin, last_login)
+              VALUES (DEFAULT,$1, $2, $3, NOW())
               RETURNING id;`;
-  let query1 = `SELECT id FROM account WHERE username = $1 OR password = $2;`;
+  let query1 = `SELECT id FROM account WHERE username = $1;`;
   let args = [username, password, isadmin];
   try {
-    let check_existence = await pool.query(query1, [username, password]);
-    if (check_existence) {
+    let check_existence = await pool.query(query1, [username]);
+    if (check_existence.rowCount) {
       return false;
     }
     let res = await pool.query(query, args);
@@ -51,7 +51,7 @@ async function add_user(pool, username, password, isadmin) {
   }
 }
 
-async function set_admin(pool, userid, isadmin) {
+async function set_admin(userid, isadmin) {
   let query = `UPDATE account SET isadmin = $1 WHERE id = $2;`;
   let args = [isadmin, userid];
   try {
@@ -63,7 +63,7 @@ async function set_admin(pool, userid, isadmin) {
   }
 }
 
-async function add_category(pool, description) {
+async function add_category(description) {
   let query = `INSERT INTO category (description) VALUES ($1);`;
   try {
     await pool.query(query, [description]);
@@ -74,7 +74,7 @@ async function add_category(pool, description) {
   }
 }
 
-async function add_size(pool, description) {
+async function add_size(description) {
   let query = `INSERT INTO size (description) VALUES ($1);`;
   try {
     await pool.query(query, [description]);
@@ -85,7 +85,7 @@ async function add_size(pool, description) {
   }
 }
 
-async function add_colour(pool, description) {
+async function add_colour(description) {
   let query = `INSERT INTO colour (description) VALUES ($1);`;
   try {
     await pool.query(query, [description]);
@@ -96,7 +96,7 @@ async function add_colour(pool, description) {
   }
 }
 
-async function add_product(pool, price, name, size, colour, amount, status, description, category) {
+async function add_product(price, name, size, colour, amount, status, description, category) {
   let query = `INSERT INTO product (price, name, size, colour, amount, status, description, category)
               VALUES ($1 ::numeric::money, $2, $3, $4, $5, $6, $7, $8)
               RETURNING id;`;
@@ -110,7 +110,7 @@ async function add_product(pool, price, name, size, colour, amount, status, desc
   }
 }
 
-async function set_product_status(pool, prodid, status) {
+async function set_product_status(prodid, status) {
   let query = `UPDATE product SET status = $1 WHERE id = $2;`;
   let args = [status, prodid];
   try {
@@ -122,7 +122,7 @@ async function set_product_status(pool, prodid, status) {
   }
 }
 
-async function set_product_amount(pool, prodid, amount) {
+async function set_product_amount(prodid, amount) {
   let query = `UPDATE product SET amount = $1 WHERE id = $2;`;
   let args = [amount, prodid];
   try {
@@ -135,7 +135,7 @@ async function set_product_amount(pool, prodid, amount) {
 }
 
 // eslint-disable-next-line no-unused-vars
-async function add_purchase_status(pool, description) {
+async function add_purchase_status(description) {
   let query = `INSERT INTO purchase_status (description) VALUES ($1);`;
   try {
     await pool.query(query, [description]);
