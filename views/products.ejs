@@ -1,124 +1,69 @@
-<!DOCTYPE html>
-<html>
+<%- include('templates/head'); %>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Shopsio-index</title>
-    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/Team-Grid.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-</head>
+<%- include('templates/nav'); %>
 
-<body>
-    <nav class="navbar navbar-light navbar-expand-md fixed-top" style="background: #a1d0f7;">
-        <div class="container-fluid"><a class="navbar-brand" href="#">Shopsio</a><button data-toggle="collapse"
-                class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
-                    class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="nav navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="#">Kategoria 1</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Kategoria 2</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Kategoria 3</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span class="badge">NEW</span>
-                            Wszystkie produkty
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div style="padding-right: 5px;">
-                <button type="button" class="btn btn-primary">Koszyk</button>
-            </div>
-
-            <div class="btn-group" role="group">
-                <div class="btn-group">
-                    <button class="btn btn-primary" type="button">Zarejestruj</button>
-                    <button class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-                        aria-expanded="false" type="button">
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Zaloguj</a>
-                    </div>
+<div class="container" style="padding: 75px;">
+    <div class="row">
+        <div class="input-group md-form form-sm form-2 pl-0">
+            <input class="form-control my-0 py-1 blue-border" type="text" placeholder="Search" aria-label="Search">
+        </div>
+    </div>
+    <div class="row" style="padding: 100px 0px 0px 0px;">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="/assets/img/wine1.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
+                <div class="card-body">
+                    <h5 class="card-title">Item 1</h5>
+                    <p class="card-text">Item 1 description?</p>
+                    <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
                 </div>
             </div>
         </div>
-    </nav>
-
-    <div class="container" style="padding: 75px;">
-        <div class="row">
-            <div class="input-group md-form form-sm form-2 pl-0">
-                <input class="form-control my-0 py-1 blue-border" type="text" placeholder="Search" aria-label="Search">
-            </div>
-        </div>
-        <div class="row" style="padding: 100px 0px 0px 0px;">
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="/assets/img/wine1.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
-                    <div class="card-body">
-                        <h5 class="card-title">Item 1</h5>
-                        <p class="card-text">Item 1 description?</p>
-                        <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="assets/img/wine1.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
-                    <div class="card-body">
-                        <h5 class="card-title">Item 2</h5>
-                        <p class="card-text">Item 2 description?</p>
-                        <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="assets/img/wine2.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
-                    <div class="card-body">
-                        <h5 class="card-title">Item 3</h5>
-                        <p class="card-text">Item 3 description?</p>
-                        <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
-                    </div>
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="assets/img/wine1.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
+                <div class="card-body">
+                    <h5 class="card-title">Item 2</h5>
+                    <p class="card-text">Item 2 description?</p>
+                    <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
                 </div>
             </div>
         </div>
-        <div class="row" style="padding: 100px 0px 0px 0px;">
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="assets/img/wine3.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
-                    <div class="card-body">
-                        <h5 class="card-title">Item 1</h5>
-                        <p class="card-text">Item 1 description?</p>
-                        <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
-                    </div>
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="assets/img/wine2.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
+                <div class="card-body">
+                    <h5 class="card-title">Item 3</h5>
+                    <p class="card-text">Item 3 description?</p>
+                    <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="assets/img/wine4.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
-                    <div class="card-body">
-                        <h5 class="card-title">Item 2</h5>
-                        <p class="card-text">Item 2 description?</p>
-                        <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
             </div>
         </div>
     </div>
+    <div class="row" style="padding: 100px 0px 0px 0px;">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="assets/img/wine3.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
+                <div class="card-body">
+                    <h5 class="card-title">Item 1</h5>
+                    <p class="card-text">Item 1 description?</p>
+                    <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="assets/img/wine4.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
+                <div class="card-body">
+                    <h5 class="card-title">Item 2</h5>
+                    <p class="card-text">Item 2 description?</p>
+                    <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+</div>
 
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+<%- include('templates/end'); %>
