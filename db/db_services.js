@@ -146,7 +146,7 @@ async function add_purchase_status(description) {
   }
 }
 
-async function add_picture(pool, prodid, filepath) {
+async function add_picture(prodid, filepath) {
   let query = `INSERT INTO picture (product, filepath)
               VALUES ($1, $2);`;
   let args = [prodid, filepath];
@@ -159,7 +159,7 @@ async function add_picture(pool, prodid, filepath) {
   }
 }
 
-async function add_purchase(pool, userid, status) {
+async function add_purchase(userid, status) {
   let query = `INSERT INTO purchase (userid, status)
               VALUES ($1, $2);`;
   let args = [userid, status];
@@ -172,7 +172,7 @@ async function add_purchase(pool, userid, status) {
   }
 }
 
-async function add_sold_product(pool, purchaseid, prodid, amount) {
+async function add_sold_product(purchaseid, prodid, amount) {
   let query = `INSERT INTO sold_product (purchase_id, product_id, amount)
               VALUES ($1, $2, $3);`;
   let args = [purchaseid, prodid, amount];
@@ -185,7 +185,7 @@ async function add_sold_product(pool, purchaseid, prodid, amount) {
   }
 }
 
-async function set_purchase_status(pool, purchaseid, status) {
+async function set_purchase_status(purchaseid, status) {
   let query = `UPDATE purchase SET status = $1 WHERE id = $2;`;
   let args = [status, purchaseid];
   try {
@@ -197,7 +197,7 @@ async function set_purchase_status(pool, purchaseid, status) {
   }
 }
 
-async function get_category(pool, id) {
+async function get_category(id) {
   var query = `SELECT * FROM category;`;
   var args = [];
   if (id) {
@@ -213,7 +213,7 @@ async function get_category(pool, id) {
   }
 }
 
-async function get_colour(pool, id) {
+async function get_colour(id) {
   var query = `SELECT * FROM colour;`;
   var args = [];
 
@@ -231,7 +231,7 @@ async function get_colour(pool, id) {
   }
 }
 
-async function get_picture(pool, prodid, id) {
+async function get_picture(prodid, id) {
   var query = `SELECT * FROM picture WHERE product = $1;`;
   var args = [prodid];
 
@@ -249,7 +249,7 @@ async function get_picture(pool, prodid, id) {
   }
 }
 
-async function get_purchase(pool, userid, id) {
+async function get_purchase(userid, id) {
   var query = "";
   var args = [];
   if (id) {
@@ -273,7 +273,7 @@ async function get_purchase(pool, userid, id) {
   }
 }
 
-async function get_purchase_status(pool, id) {
+async function get_purchase_status(id) {
   var query = `SELECT * FROM purchase_status;`;
   var args = [];
 
@@ -291,7 +291,7 @@ async function get_purchase_status(pool, id) {
   }
 }
 
-async function get_size(pool, id) {
+async function get_size(id) {
   var query = `SELECT * FROM size;`;
   var args = [];
 
@@ -309,7 +309,7 @@ async function get_size(pool, id) {
   }
 }
 
-async function get_sold_product(pool, purchaseid) {
+async function get_sold_product(purchaseid) {
   var query = `SELECT * FROM sold_product;`;
   var args = [];
 
@@ -327,7 +327,7 @@ async function get_sold_product(pool, purchaseid) {
   }
 }
 
-async function get_product(pool, id) {
+async function get_product(id) {
   var query = `SELECT * FROM product;`;
   var args = [];
 
