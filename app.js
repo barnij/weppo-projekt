@@ -1,76 +1,80 @@
 const express = require('express');
-const Router = require('express-promise-router');
+const session = require('express-session');
+const ash = require('express-async-handler');
 const http = require('http');
 const db = require('./db/db_services');
 const path = require('path');
 
 const app = express();
-const router = Router();
-app.use(router);
+app.use(session({
+    secret: 'weppoweppo',
+    resave: true,
+    saveUninitialized: true
+}));
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.render('index');
 });
 
-router.get('/category/:id(\\d+)', (req, res) => {
+app.get('/category/:id(\\d+)', (req, res) => {
     res.render('category');
 });
 
-router.get('/login', (req, res) => {
+app.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.get('/listing', async (req, res) => {
+app.get('/listing', ash(async (req, res) => {
     const listing = await db.get_product();
     res.render('listing', { listing });
-});
+}));
 
-router.post('/', (req, res) => {
+app.post('/', (req, res) => {
     res.render('index');
 });
 
-router.get('/cart', (req, res) => {
+app.get('/cart', (req, res) => {
     res.render('cart');
 })
 
-router.get('/account', (req, res) => {
+app.get('/account', (req, res) => {
     res.render('account');
 });
 
-router.post('/account', (req, res) => {
+app.post('/account', (req, res) => {
     res.redirect('/account');
 });
 
-router.get('/checkout', (req, res) => {
+app.get('/checkout', (req, res) => {
     res.render('checkout');
 });
 
-router.post('/checkout', (req, res) => {
+app.post('/checkout', (req, res) => {
     res.render('buy-success');
 });
 
-router.get('/admin', (req, res) => {
+app.get('/admin', (req, res) => {
     res.render('admin');
 });
 
-router.get('/admin/products', (req, res) => {
+app.get('/admin/products', (req, res) => {
     res.render('admin-products');
 });
 
-router.get('/admin/products/:id(\\d+)', (req, res) => {
+app.get('/admin/products/:id(\\d+)', (req, res) => {
     res.render('admin-products');
 });
 
-router.get('/admin/users', (req, res) => {
+app.get('/admin/users', (req, res) => {
     res.render('admin-users');
 });
 
-router.get('/admin/orders', (req, res) => {
+app.get('/admin/orders', (req, res) => {
     res.render('admin-orders');
 });
 
