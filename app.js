@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const Router = require('express-promise-router');
 const http = require('http');
 const db = require('./db/db_services');
@@ -7,6 +8,11 @@ const path = require('path');
 const app = express();
 const router = Router();
 app.use(router);
+app.use(session({
+    secret: 'weppoweppo',
+    resave: true,
+    saveUninitialized: true
+}));
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
