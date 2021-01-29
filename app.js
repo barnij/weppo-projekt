@@ -27,7 +27,7 @@ app.get('/category/:id(\\d+)', (req, res) => {
 
 app.get('/login', ash( async (req, res) => {
     if(req.session.userid) {
-        res.render('index', {username: req.session.username});
+        res.redirect('/');
     } else {
         res.render('login');
     }
@@ -39,7 +39,7 @@ app.post('/login', ash( async (req, res) => {
     if(userid) {
         req.session.username = username;
         req.session.userid = userid;
-        res.render('index', { username: username });
+        res.redirect('/');
     } else {
         res.render('login');
     }
@@ -56,7 +56,7 @@ app.post('/', (req, res) => {
 
 app.get('/register', (req, res) => {
     if(req.session.userid) {
-        res.render('index', {username: req.session.username});
+        res.redirect('/');
     } else {
         res.render('register');
     }
@@ -69,11 +69,11 @@ app.post('/register', ash( async(req, res) => {
     if(password != confirm_password) {
         res.render('register');
     } else {
-        var succes = await db.add_user(username, password, false);
-        if(succes) {
-            req.session.userid = succes;
+        var success = await db.add_user(username, password, false);
+        if(success) {
+            req.session.userid = success;
             req.session.username = username;
-            res.render('index', {username: username});
+            res.redirect('/');
         } else {
             res.render('register');
         }
