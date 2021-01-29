@@ -45,6 +45,10 @@ app.post('/', (req, res) => {
     res.render('index');
 });
 
+app.get('/register', (req, res) => {
+    res.render('register');
+});
+
 app.get('/cart', (req, res) => {
     res.render('cart');
 })
