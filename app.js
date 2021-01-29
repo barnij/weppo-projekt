@@ -25,16 +25,25 @@ app.get('/category/:id(\\d+)', (req, res) => {
     res.render('category');
 });
 
-app.get('/login', (req, res) => {
+app.get('/login', ash( async (req, res) => {
     if(req.session.userid) {
-      res.render('/');
+      res.render('/', {username: req.session.username});
     } else {
-      res.render('login');
+      res.render('/login');
     }
-});
-app.post('/login', (req, res) => {
-    
-});
+}));
+app.post('/login', ash( async (req, res) => {
+    var username = req.body.username;
+    var password = req.body.password;
+    var userid = await db.login_user(username, password);
+    if(userid) {
+      req.session.username = username;
+      req.session.userid = userid;
+      res.render('/', { username: username });
+    } else {
+      res.render('/login');
+    }
+}));
 
 app.get('/listing', ash(async (req, res) => {
     const listing = await db.get_product();
