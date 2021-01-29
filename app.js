@@ -26,7 +26,14 @@ app.get('/category/:id(\\d+)', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.render('login');
+    if(req.session.userid) {
+      res.render('/');
+    } else {
+      res.render('login');
+    }
+});
+app.post('/login', (req, res) => {
+    
 });
 
 app.get('/listing', ash(async (req, res) => {
