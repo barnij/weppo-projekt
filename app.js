@@ -45,6 +45,10 @@ app.post('/login', ash( async (req, res) => {
     }
 }));
 
+app.get('/product', (req, res) => {
+    res.render('product');
+});
+
 app.get('/listing', ash(async (req, res) => {
     const listing = await db.get_product();
     res.render('listing', { listing });
