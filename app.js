@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', {username: req.session.username});
 });
 
 app.get('/category/:id(\\d+)', (req, res) => {
@@ -27,9 +27,9 @@ app.get('/category/:id(\\d+)', (req, res) => {
 
 app.get('/login', ash( async (req, res) => {
     if(req.session.userid) {
-      res.render('/', {username: req.session.username});
+        res.render('index', {username: req.session.username});
     } else {
-      res.render('/login');
+        res.render('login');
     }
 }));
 app.post('/login', ash( async (req, res) => {
@@ -37,11 +37,11 @@ app.post('/login', ash( async (req, res) => {
     var password = req.body.password;
     var userid = await db.login_user(username, password);
     if(userid) {
-      req.session.username = username;
-      req.session.userid = userid;
-      res.render('/', { username: username });
+        req.session.username = username;
+        req.session.userid = userid;
+        res.render('index', { username: username });
     } else {
-      res.render('/login');
+        res.render('login');
     }
 }));
 
@@ -51,12 +51,34 @@ app.get('/listing', ash(async (req, res) => {
 }));
 
 app.post('/', (req, res) => {
-    res.render('index');
+    res.render('index', {username: req.session.username});
 });
 
 app.get('/register', (req, res) => {
-    res.render('register');
+    if(req.session.userid) {
+        res.render('index', {username: req.session.username});
+    } else {
+        res.render('register');
+    }
 });
+
+app.post('/register', ash( async(req, res) => {
+    var username = req.body.reg_username;
+    var password = req.body.reg_password;
+    var confirm_password = req.body.reg_password_confirm;
+    if(password != confirm_password) {
+        res.render('register');
+    } else {
+        var succes = await db.add_user(username, password, false);
+        if(succes) {
+            req.session.userid = succes;
+            req.session.username = username;
+            res.render('index', {username: username});
+        } else {
+            res.render('register');
+        }
+    }
+}));
 
 app.get('/cart', (req, res) => {
     res.render('cart');

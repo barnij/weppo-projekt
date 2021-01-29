@@ -20,6 +20,22 @@ async function get_user_id(username, password) {
   }
 }
 
+async function get_user(id) {
+  var query = `SELECT * FROM account;`;
+  var args = [];
+  if (id) {
+    query = 'SELECT * FROM account WHERE id = $1;';
+    args = [id];
+  }
+  try {
+    let res = await pool.query(query, args);
+    return res.rows;
+  } catch (err) {
+    console.error('db get_user error');
+    console.error(err);
+  }
+}
+
 async function login_user(username, password) {
   try {
     let id = await get_user_id(username, password);
@@ -369,5 +385,6 @@ module.exports = {
   get_purchase_status,
   get_size,
   get_sold_product,
-  get_product
+  get_product,
+  get_user
 }
