@@ -18,16 +18,32 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', {username: req.session.username});
 });
 
 app.get('/category/:id(\\d+)', (req, res) => {
     res.render('category');
 });
 
-app.get('/login', (req, res) => {
-    res.render('login');
-});
+app.get('/login', ash( async (req, res) => {
+    if(req.session.userid) {
+        res.redirect('/');
+    } else {
+        res.render('login');
+    }
+}));
+app.post('/login', ash( async (req, res) => {
+    var username = req.body.username;
+    var password = req.body.password;
+    var userid = await db.login_user(username, password);
+    if(userid) {
+        req.session.username = username;
+        req.session.userid = userid;
+        res.redirect('/');
+    } else {
+        res.render('login');
+    }
+}));
 
 app.get('/listing', ash(async (req, res) => {
     const listing = await db.get_product();
@@ -35,12 +51,34 @@ app.get('/listing', ash(async (req, res) => {
 }));
 
 app.post('/', (req, res) => {
-    res.render('index');
+    res.render('index', {username: req.session.username});
 });
 
 app.get('/register', (req, res) => {
-    res.render('register');
+    if(req.session.userid) {
+        res.redirect('/');
+    } else {
+        res.render('register');
+    }
 });
+
+app.post('/register', ash( async(req, res) => {
+    var username = req.body.reg_username;
+    var password = req.body.reg_password;
+    var confirm_password = req.body.reg_password_confirm;
+    if(password != confirm_password) {
+        res.render('register');
+    } else {
+        var success = await db.add_user(username, password, false);
+        if(success) {
+            req.session.userid = success;
+            req.session.username = username;
+            res.redirect('/');
+        } else {
+            res.render('register');
+        }
+    }
+}));
 
 app.get('/cart', (req, res) => {
     res.render('cart');
