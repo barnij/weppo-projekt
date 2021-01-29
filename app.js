@@ -46,8 +46,8 @@ app.get('/register', (req, res) => {
     res.render('register');
 });
 
-app.get('/cart', (req, res) => {
-    res.render('cart');
+app.get('/basket', (req, res) => {
+    res.render('basket');
 })
 
 app.get('/account', (req, res) => {
