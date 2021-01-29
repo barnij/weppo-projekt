@@ -1,15 +1,10 @@
 <%- include('templates/head'); %>
-
     <%- include('templates/nav'); %>
 
-
-
-        <!-- REGISTRATION FORM -->
         <div class="text-center">
             <h1 class="logo">Rejestracja</h1>
-            <!-- Main Form -->
             <div class="login-form-1" style="display: flex; justify-content: center; align-items: center;">
-                <form id="register-form" class="text-left" action="" method="">
+                <form id="register-form" class="text-left" method="POST">
                     <div class="login-form-main-message"></div>
                     <div class="main-login-form">
                         <div class="login-group">
@@ -28,20 +23,15 @@
                                 <input type="password" class="form-control" id="reg_password_confirm"
                                     name="reg_password_confirm" placeholder="hasło">
                             </div>
-
                             <div class="form-group login-group-checkbox" style="margin: 10px;">
                                 <input type="checkbox" class="" id="reg_agree" name="reg_agree">
                                 <label for="reg_agree">Zgadzams się na <a href="#">zasady</a></label>
                             </div>
                         </div>
-                        <!-- <button type="submit" class="login-button"><i class="fa fa-chevron-right"></i></button> -->
                     </div>
-                    <button type="button" class="btn btn-primary">Zarejestruj</button>
+                    <button type="submit" class="btn btn-primary">Zarejestruj</button>
                 </form>
-
             </div>
-
-            <!-- end:Main Form -->
         </div>
 
         <%- include('templates/end'); %>
