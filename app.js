@@ -25,9 +25,9 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.get('/products', async (req, res) => {
-    const products = await db.get_product();
-    res.render('products',{products});
+router.get('/listing', async (req, res) => {
+    const listing = await db.get_product();
+    res.render('listing', { listing });
 });
 
 router.post('/', (req, res) => {
