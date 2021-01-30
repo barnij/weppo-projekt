@@ -11,46 +11,20 @@
                     </div>
                 </div>
                 <div class="d-flex flex-wrap justify-content-center">
+                    <% for(item of listing){ %>
                     <div class="card" style="width: 18rem; margin: 15px ;">
-                        <img src="/assets/img/wine1.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
+                        <a href="/product/<%= item.id %>">
+                            <img src="/assets/uploads/<%= item.id %>.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
+                        </a>
                         <div class="card-body">
-                            <h5 class="card-title">Item 1</h5>
-                            <p class="card-text">Item 1 description?</p>
-                            <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
+                            <a href="/product/<%= item.id %>">
+                                <h5 class="card-title"><%= item.name %> </h5>
+                            </a>
+                            <p class="card-text"><%= item.price %> </p>
+                            <a href="#" class="btn btn-primary">Add to basket</a>
                         </div>
                     </div>
-                    <div class="card" style="width: 18rem; margin: 15px ;">
-                        <img src="/assets/img/wine1.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
-                        <div class="card-body">
-                            <h5 class="card-title">Item 1</h5>
-                            <p class="card-text">Item 1 description?</p>
-                            <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
-                        </div>
-                    </div>
-                    <div class="card" style="width: 18rem; margin: 15px ;">
-                        <img src="/assets/img/wine1.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
-                        <div class="card-body">
-                            <h5 class="card-title">Item 1</h5>
-                            <p class="card-text">Item 1 description?</p>
-                            <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
-                        </div>
-                    </div>
-                    <div class="card" style="width: 18rem; margin: 15px ;">
-                        <img src="/assets/img/wine1.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
-                        <div class="card-body">
-                            <h5 class="card-title">Item 1</h5>
-                            <p class="card-text">Item 1 description?</p>
-                            <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
-                        </div>
-                    </div>
-                    <div class="card" style="width: 18rem; margin: 15px ;">
-                        <img src="/assets/img/wine1.jpg" class="card-img-top" alt="item_photo" style="height: 200px;">
-                        <div class="card-body">
-                            <h5 class="card-title">Item 1</h5>
-                            <p class="card-text">Item 1 description?</p>
-                            <a href="#" class="btn btn-primary stretched-link">Add to basket</a>
-                        </div>
-                    </div>
+                    <% } %>
                 </div>
             </div>
         </div>

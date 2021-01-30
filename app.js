@@ -17,13 +17,17 @@ app.set('views', './views');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-    res.render('index', {username: req.session.username});
-});
+app.get('/', ash(async(req, res) => {
+    const categories = await db.get_category();
+    res.render('index', {username: req.session.username, categories});
+}));
 
-app.get('/category/:id(\\d+)', (req, res) => {
-    res.render('category');
-});
+app.get('/category/:id(\\d+)', ash( async (req, res) => {
+    var id = req.params.id
+    const result = await db.get_product();
+    var listing = result.filter(pr => pr.category == id);
+    res.render('listing', {listing});
+}));
 
 app.get('/login', ash( async (req, res) => {
     if(req.session.userid) {
@@ -45,9 +49,11 @@ app.post('/login', ash( async (req, res) => {
     }
 }));
 
-app.get('/product', (req, res) => {
-    res.render('product');
-});
+app.get('/product/:id(\\d+)', ash(async (req, res) => {
+    var id = req.params.id;
+    const [product] = await db.get_full_product(id);
+    res.render('product',{product});
+}));
 
 app.get('/listing', ash(async (req, res) => {
     const listing = await db.get_product();
