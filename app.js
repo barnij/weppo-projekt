@@ -22,22 +22,22 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.get('/', ash(async(req, res) => {
+app.get('/', ash(async (req, res) => {
     res.render('index');
 }));
 
-app.get('/login', ash( async (req, res) => {
-    if(req.session.userid) {
+app.get('/login', ash(async (req, res) => {
+    if (req.session.userid) {
         res.redirect('/');
     } else {
         res.render('login');
     }
 }));
-app.post('/login', ash( async (req, res) => {
+app.post('/login', ash(async (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
     var userid = await db.login_user(username, password);
-    if(userid) {
+    if (userid) {
         req.session.username = username;
         req.session.userid = userid;
         req.session.logged = true;
@@ -50,7 +50,7 @@ app.post('/login', ash( async (req, res) => {
 app.get('/product/:id(\\d+)', ash(async (req, res) => {
     var id = req.params.id;
     const [product] = await db.get_full_product(id);
-    res.render('product',{product});
+    res.render('product', { product });
 }));
 
 app.get('/listing', ash(async (req, res) => {
@@ -58,7 +58,7 @@ app.get('/listing', ash(async (req, res) => {
     const result = await db.get_product();
     var listing = result;
     var active = null;
-    if(id){
+    if (id) {
         listing = listing.filter(pr => pr.category == id);
         active = id;
     }
@@ -67,26 +67,26 @@ app.get('/listing', ash(async (req, res) => {
 }));
 
 app.post('/', (req, res) => {
-    res.render('index', {username: req.session.username});
+    res.render('index', { username: req.session.username });
 });
 
 app.get('/register', (req, res) => {
-    if(req.session.userid) {
+    if (req.session.userid) {
         res.redirect('/');
     } else {
         res.render('register');
     }
 });
 
-app.post('/register', ash( async(req, res) => {
+app.post('/register', ash(async (req, res) => {
     var username = req.body.reg_username;
     var password = req.body.reg_password;
     var confirm_password = req.body.reg_password_confirm;
-    if(password != confirm_password) {
+    if (password != confirm_password) {
         res.render('register');
     } else {
         var success = await db.add_user(username, password, false);
-        if(success) {
+        if (success) {
             req.session.userid = success;
             req.session.username = username;
             res.redirect('/');
@@ -107,7 +107,10 @@ app.get('/logout', (req, res) => {
 
 app.get('/basket', (req, res) => {
     res.render('basket');
+})
 
+app.get('/admin', (req, res) => {
+    res.render('admin_panel');
 })
 
 app.get('/account', (req, res) => {
