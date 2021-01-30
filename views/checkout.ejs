@@ -34,19 +34,31 @@
                             </label>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 15%;">
+                    <!-- <div class="row" style="margin-top: 15%;">
                         <p class="h3" style="text-align: center;">Metoda płatności:</p>
+                    </div> -->
+                    <div class="row" style="margin-top: 15%;">
+                        <div class="col">
+                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                <option selected>wybierz opcję płatności</option>
+                                <option value="1">Karta płatnicza</option>
+                                <option value="2">Blik</option>
+                                <option value="3">Google Pay</option>
+                                <option value="4">Apple Pay</option>
+                            </select>
+                        </div>
                     </div>
+
                 </div>
                 <div class="col">
                     <form class="row g-3">
                         <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">imię</label>
-                            <input type="email" class="form-control" id="inputEmail4">
+                            <label for="inputName" class="form-label">imię</label>
+                            <input type="text" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label for="inputPassword4" class="form-label">nazwisko</label>
-                            <input type="password" class="form-control" id="inputPassword4">
+                            <label for="inputSurname" class="form-label">nazwisko</label>
+                            <input type="text" class="form-control">
                         </div>
                         <div class="col-12">
                             <label for="inputAddress" class="form-label">Ulica i numer</label>
@@ -69,6 +81,14 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+            <div class="row justify-content-end" style="margin: 50px 20px;">
+                <div class="col-auto">
+                    <h1 class="display-6">1290,18 zł</h1>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-success">Płacę</button>
                 </div>
             </div>
         </div>
