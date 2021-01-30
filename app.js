@@ -124,7 +124,6 @@ app.post('/api/add2basket', upload.single(), ash(async(req, res) => {
     } else {
       req.session.basket.push([req.body.prodid, 1]);
       let full_prod = await db.get_full_product(req.body.prodid);
-      //wyżej zwiększasz amount, ale nigdzie nie ustawiasz go na 1.
       req.session.basketinfo.push(full_prod);
     }
     res.json({success : "Updated Successfully", status : 200});
