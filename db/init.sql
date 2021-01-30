@@ -62,12 +62,6 @@ CREATE TABLE category (
   description text
 );
 
-CREATE TABLE picture (
-  id serial NOT NULL,
-  product integer NOT NULL,
-  filepath text NOT NULL
-);
-
 ALTER TABLE account
   ADD CONSTRAINT account_key PRIMARY KEY (id);
 
@@ -92,9 +86,6 @@ ALTER TABLE colour
 ALTER TABLE category
   ADD CONSTRAINT category_key PRIMARY KEY (id);
 
-ALTER TABLE picture
-  ADD CONSTRAINT picture_key PRIMARY KEY (id);
-
 ALTER TABLE purchase
     ADD CONSTRAINT fk_purchase FOREIGN KEY (userid) REFERENCES account(id) DEFERRABLE;
 
@@ -112,6 +103,3 @@ ALTER TABLE product
 
 ALTER TABLE product
     ADD CONSTRAINT fk_product_category FOREIGN KEY (category) REFERENCES category(id);
-
-ALTER TABLE picture
-    ADD CONSTRAINT fk_picture FOREIGN KEY (product) REFERENCES product(id);

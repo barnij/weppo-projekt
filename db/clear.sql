@@ -7,7 +7,7 @@ ALTER TABLE product DROP CONSTRAINT IF EXISTS fk_product_colour;
 ALTER TABLE product DROP CONSTRAINT IF EXISTS fk_product_category;
 ALTER TABLE picture DROP CONSTRAINT IF EXISTS fk_picture;
 ALTER TABLE account DROP CONSTRAINT IF EXISTS account_key;
-ALTER TABLE purchase DROP CONSTRAINT IF EXISTS purchase_key; 
+ALTER TABLE purchase DROP CONSTRAINT IF EXISTS purchase_key;
 ALTER TABLE purchase_status DROP CONSTRAINT IF EXISTS purchase_status_key;
 ALTER TABLE sold_product DROP CONSTRAINT IF EXISTS sold_product_key;
 ALTER TABLE product DROP CONSTRAINT IF EXISTS product_key;

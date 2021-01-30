@@ -11,13 +11,13 @@ INSERT INTO account (username, password, isadmin, last_login)
   VALUES ('user3', 'userpassword3', false, NOW());
 
 
-INSERT INTO category (description) 
+INSERT INTO category (description)
   VALUES ('category1');
 
-INSERT INTO category (description) 
+INSERT INTO category (description)
   VALUES ('category2');
 
-INSERT INTO category (description) 
+INSERT INTO category (description)
   VALUES ('category3');
 
 
@@ -31,13 +31,13 @@ INSERT INTO size (description)
  VALUES ('size3');
 
 
-INSERT INTO colour (description) 
+INSERT INTO colour (description)
   VALUES ('colour1');
 
-INSERT INTO colour (description) 
+INSERT INTO colour (description)
   VALUES ('colour2');
 
-INSERT INTO colour (description) 
+INSERT INTO colour (description)
   VALUES ('colour3');
 
 
@@ -51,24 +51,14 @@ INSERT INTO product (price, name, size, colour, amount, status, description, cat
   VALUES (20.49 ::numeric::money, 'product3', 3, 3, 70, true, 'this is very nice product3', 3);
 
 
-INSERT INTO purchase_status (description) 
+INSERT INTO purchase_status (description)
   VALUES ('purchase_status1');
 
-INSERT INTO purchase_status (description) 
+INSERT INTO purchase_status (description)
   VALUES ('purchase_status2');
 
-INSERT INTO purchase_status (description) 
+INSERT INTO purchase_status (description)
   VALUES ('purchase_status3');
-
-
-INSERT INTO picture (product, filepath)
-  VALUES (1, './public/assets/upload/prod1.jpg');
-
-INSERT INTO picture (product, filepath)
-  VALUES (2, './public/assets/upload/prod3.jpg');
-
-INSERT INTO picture (product, filepath)
-  VALUES (3, './public/assets/upload/prod3.jpg');
 
 
 INSERT INTO purchase (userid, status)
