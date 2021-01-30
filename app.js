@@ -108,6 +108,10 @@ app.get('/logout', (req, res) => {
 
 
 app.post('/api/add2basket', upload.single(), ash(async(req, res) => {
+    if(!req.session.basket) {
+        req.session.basket = [];
+        req.session.basketinfo = [];
+    }
     var inbasket = false;
     //jeśli nie ma czegoś takiego jak basket w sesji to tu się wywali server
     for(let i=0; i < req.session.basket.length; i++) {
@@ -127,11 +131,15 @@ app.post('/api/add2basket', upload.single(), ash(async(req, res) => {
 }));
 
 app.post('/api/remove', ash(async (req, res) => {
-  for(let i=0; i < req.session.basket.length; i++) {
-      if(req.session.basket[i][0] == req.body.prodid){
-          req.session.basket[i][1] = 0;
-      }
-  }
+    if(!req.session.basket) {
+        req.session.basket = [];
+        req.session.basketinfo = [];
+    }
+    for(let i=0; i < req.session.basket.length; i++) {
+        if(req.session.basket[i][0] == req.body.prodid){
+            req.session.basket[i][1] = 0;
+        }
+    }
 }));
 
 app.get('/basket', (req, res) => {
