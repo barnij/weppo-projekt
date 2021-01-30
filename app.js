@@ -26,18 +26,18 @@ app.get('/', ash(async(req, res) => {
     res.render('index');
 }));
 
-app.get('/login', ash( async (req, res) => {
-    if(req.session.userid) {
+app.get('/login', ash(async (req, res) => {
+    if (req.session.userid) {
         res.redirect('/');
     } else {
         res.render('login');
     }
 }));
-app.post('/login', ash( async (req, res) => {
+app.post('/login', ash(async (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
     var userid = await db.login_user(username, password);
-    if(userid) {
+    if (userid) {
         req.session.username = username;
         req.session.userid = userid;
         req.session.logged = true;
@@ -50,7 +50,7 @@ app.post('/login', ash( async (req, res) => {
 app.get('/product/:id(\\d+)', ash(async (req, res) => {
     var id = req.params.id;
     const [product] = await db.get_full_product(id);
-    res.render('product',{product});
+    res.render('product', { product });
 }));
 
 app.get('/listing', ash(async (req, res) => {
@@ -67,26 +67,26 @@ app.get('/listing', ash(async (req, res) => {
 }));
 
 app.post('/', (req, res) => {
-    res.render('index', {username: req.session.username});
+    res.render('index', { username: req.session.username });
 });
 
 app.get('/register', (req, res) => {
-    if(req.session.userid) {
+    if (req.session.userid) {
         res.redirect('/');
     } else {
         res.render('register');
     }
 });
 
-app.post('/register', ash( async(req, res) => {
+app.post('/register', ash(async (req, res) => {
     var username = req.body.reg_username;
     var password = req.body.reg_password;
     var confirm_password = req.body.reg_password_confirm;
-    if(password != confirm_password) {
+    if (password != confirm_password) {
         res.render('register');
     } else {
         var success = await db.add_user(username, password, false);
-        if(success) {
+        if (success) {
             req.session.userid = success;
             req.session.username = username;
             res.redirect('/');
@@ -124,6 +124,10 @@ app.get('/checkout', (req, res) => {
 
 app.post('/checkout', (req, res) => {
     res.render('buy-success');
+});
+
+app.get('/order', (req, res) => {
+    res.render('order_view');
 });
 
 app.get('/admin', (req, res) => {
