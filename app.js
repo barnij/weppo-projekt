@@ -22,7 +22,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.get('/', ash(async(req, res) => {
+app.get('/', ash(async (req, res) => {
     res.render('index');
 }));
 
@@ -58,7 +58,7 @@ app.get('/listing', ash(async (req, res) => {
     const result = await db.get_product();
     var listing = result;
     var active = null;
-    if(id){
+    if (id) {
         listing = listing.filter(pr => pr.category == id);
         active = id;
     }
@@ -107,7 +107,10 @@ app.get('/logout', (req, res) => {
 
 app.get('/basket', (req, res) => {
     res.render('basket');
+})
 
+app.get('/admin', (req, res) => {
+    res.render('admin_panel');
 })
 
 app.get('/account', (req, res) => {
