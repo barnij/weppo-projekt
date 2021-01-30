@@ -1,0 +1,75 @@
+<%- include('templates/head'); %>
+
+    <%- include('templates/nav'); %>
+
+        <div class="container" style="margin: 50px ;">
+            <div class="row" style="margin: 50px ;">
+                <h1 class="display-3" style="text-align: center;">Podsumowanie</h1>
+            </div>
+
+            <div class="row">
+                <div class="col" style="padding: 0px 50px ;">
+                    <div class="row">
+                        <p class="h3" style="text-align: center;">Dostawa:</p>
+                    </div>
+                    <div class="row">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Kurier - 14,99 zł
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+                                checked>
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Odbiór osobisty - 0 zł
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+                                checked>
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Poczta polska - 9,99 zł
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15%;">
+                        <p class="h3" style="text-align: center;">Metoda płatności:</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <form class="row g-3">
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">imię</label>
+                            <input type="email" class="form-control" id="inputEmail4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputPassword4" class="form-label">nazwisko</label>
+                            <input type="password" class="form-control" id="inputPassword4">
+                        </div>
+                        <div class="col-12">
+                            <label for="inputAddress" class="form-label">Ulica i numer</label>
+                            <input type="text" class="form-control" id="inputAddress">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputCity" class="form-label">Miejscowość</label>
+                            <input type="text" class="form-control" id="inputCity">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputZip" class="form-label">Kod pocztowy</label>
+                            <input type="text" class="form-control" id="inputZip">
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <label class="form-check-label" for="gridCheck">
+                                    Zgoda na zakup
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <%- include('templates/end'); %>
