@@ -21,10 +21,21 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(function (req, res, next) {
     res.locals.logged = req.session.logged;
+    if(!req.session.basket){
+        req.session.basket = [];
+        req.session.basketinfo = [];
+    }
     next();
 });
 
+app.get('/clearbasket', (req, res) => {
+    delete req.session.basket;
+    delete req.session.basketinfo;
+    res.redirect('/');
+});
+
 app.get('/', ash(async (req, res) => {
+    console.log(req.session);
     res.render('index');
 }));
 
@@ -108,32 +119,20 @@ app.get('/logout', (req, res) => {
 
 
 app.post('/api/add2basket', upload.single(), ash(async (req, res) => {
-    if (!req.session.basket) {
-        req.session.basket = [];
-        req.session.basketinfo = [];
-    }
-    var inbasket = req.session.basket.findIndex(obj => obj[0] == req.body.prodid);
-    // for(let i=0; i < req.session.basket.length; i++) {
-    //     if(req.session.basket[i][0] == req.body.prodid){
-    //         inbasket = i;
-    //         break;
-    //     }
-    // }
+    var id = Number(req.body.txtParam);
+    console.log(req.body);
+    var inbasket = req.session.basket.findIndex(obj => obj[0] == id);
     if (inbasket != -1) {
         req.session.basket[inbasket][1] += 1;
     } else {
-        req.session.basket.push([req.body.prodid, 1]);
-        let full_prod = await db.get_full_product(req.body.prodid);
+        req.session.basket.push([id, 1]);
+        let full_prod = await db.get_full_product(id);
         req.session.basketinfo.push(full_prod);
     }
     res.json({ success: "Updated Successfully", status: 200 });
 }));
 
 app.post('/api/remove', ash(async (req, res) => {
-    if (!req.session.basket) {
-        req.session.basket = [];
-        req.session.basketinfo = [];
-    }
     for (let i = 0; i < req.session.basket.length; i++) {
         if (req.session.basket[i][0] == req.body.prodid) {
             req.session.basket[i][1] = 0;

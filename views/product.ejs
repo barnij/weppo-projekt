@@ -1,58 +1,58 @@
 <%- include('templates/head'); %>
 
-    <%- include('templates/nav'); %>
+<%- include('templates/nav'); %>
 
-        <div class="container">
-            <div class="row">
-                <div class="col" style="margin: 20px 0 0 0;">
-                    <h1 class="display-1"><%= product.name %> </h1>
-                    <p class="lead">Cena: <%= product.price %></p>
-                    <dl class="row">
-                        <dt class="col-sm-3">Wielkość</dt>
-                        <dd class="col-sm-9"><%= product.size %> </dd>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="display-1"><%= product.name %> </h1>
+            <p class="lead">Cena: <%= product.price %></p>
+            <dl class="row">
+                <dt class="col-sm-3">Wielkość</dt>
+                <dd class="col-sm-9"><%= product.size %> </dd>
 
-                        <dt class="col-sm-3">Kolor</dt>
-                        <dd class="col-sm-9"><%= product.colour %> </dd>
+                <dt class="col-sm-3">Kolor</dt>
+                <dd class="col-sm-9"><%= product.colour %> </dd>
 
-                        <dt class="col-sm-3">Kategoria</dt>
-                        <dd class="col-sm-9"><%= product.category %> </dd>
+                <dt class="col-sm-3">Kategoria</dt>
+                <dd class="col-sm-9"><%= product.category %> </dd>
 
-                        <% if(product.amount > 0){ %>
-                        <dt class="col-sm-3">Liczba sztuk</dt>
-                        <dd class="col-sm-9"><%= product.amount %> </dd>
-                        <% } %>
+                <% if(product.amount > 0){ %>
+                <dt class="col-sm-3">Liczba sztuk</dt>
+                <dd class="col-sm-9"><%= product.amount %> </dd>
+                <% } %>
 
-                        <dt class="col-sm-3 text-truncate">Opis produktu</dt>
-                        <dd class="col-sm-9"><%= product.description %> </dd>
-                    </dl>
+                <dt class="col-sm-3 text-truncate">Opis produktu</dt>
+                <dd class="col-sm-9"><%= product.description %> </dd>
+            </dl>
 
-                    <div class="row mb-5">
-                        <div class="col">
-                        <% if(product.status){ %>
-                            <% if(product.amount> 0){ %>
-                                    <a id="add_to_basket" href="#" class="btn btn-primary">
-                                        Dodaj do koszyka
-                                    </a>
-                                <% }else{ %>
-                                    <a href="#" class="btn btn-secondary disabled">
-                                        Produkt chwilowo niedostępny
-                                    </a>
-                                <% } %>
-                            <% }else{ %>
-                                <a href="#" class="btn btn-danger disabled">
-                                    Produkt wycofany
-                                </a>
-                            <% } %>
-                        </div>
-                    </div>
-                </div>
+            <div class="row mb-5">
                 <div class="col">
-                    <div class="card">
-                        <img src="/assets/uploads/<%= product.id %>.jpg"
-                            class="img rounded" alt="no-product-image">
-                    </div>
+                <% if(product.status){ %>
+                    <% if(product.amount> 0){ %>
+                            <a id="add_to_basket" href="#" class="btn btn-primary">
+                                Dodaj do koszyka
+                            </a>
+                        <% }else{ %>
+                            <a href="#" class="btn btn-secondary disabled">
+                                Produkt chwilowo niedostępny
+                            </a>
+                        <% } %>
+                    <% }else{ %>
+                        <a href="#" class="btn btn-danger disabled">
+                            Produkt wycofany
+                        </a>
+                    <% } %>
                 </div>
             </div>
         </div>
+        <div class="col mt-5">
+            <div class="card" style="width: 300px; height: 300px;">
+                <img src="/assets/uploads/<%= product.id %>.jpg"
+                    class="img rounded" alt="no-product-image">
+            </div>
+        </div>
+    </div>
+</div>
 
-        <%- include('templates/end'); %>
+<%- include('templates/end'); %>

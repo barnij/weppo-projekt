@@ -49,7 +49,7 @@
                                 <p class="card-text">
                                     <%= item.price %>
                                 </p>
-                                <a href="#" class="btn btn-primary">Add to basket</a>
+                                <button type="button" name="<%= item.id %>" class="btn btn-primary basket-button">Add to basket</button>
                             </div>
                         </div>
                         <% } %>
@@ -58,5 +58,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('basket-button').forEach(elem => {
+        elem.addEventListener('click', event => {
+            var req = new XMLHttpRequest();
+            req.open('post', '/api/add2basket', true);
+            var form = new FormData();
+            form.append('txtParam', elem.getAttribute('name'));
+            req.send(form);
+        })
+    });
+</script>
+
 
 <%- include('templates/end'); %>
