@@ -60,7 +60,7 @@
 </div>
 
 <script>
-    document.querySelectorAll('basket-button').forEach(elem => {
+    document.querySelectorAll('.basket-button').forEach(elem => {
         elem.addEventListener('click', event => {
             var req = new XMLHttpRequest();
             req.open('post', '/api/add2basket', true);

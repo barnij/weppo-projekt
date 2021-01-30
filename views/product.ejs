@@ -30,18 +30,18 @@
                 <div class="col">
                 <% if(product.status){ %>
                     <% if(product.amount> 0){ %>
-                            <a id="add_to_basket" href="#" class="btn btn-primary">
+                            <button id="add_to_basket" name="<%= product.id %>" type="button" class="btn btn-primary">
                                 Dodaj do koszyka
-                            </a>
+                            </button>
                         <% }else{ %>
-                            <a href="#" class="btn btn-secondary disabled">
+                            <button type="button" class="btn btn-secondary disabled">
                                 Produkt chwilowo niedostępny
-                            </a>
+                            </button>
                         <% } %>
                     <% }else{ %>
-                        <a href="#" class="btn btn-danger disabled">
+                        <button type="button" class="btn btn-danger disabled">
                             Produkt wycofany
-                        </a>
+                        </button>
                     <% } %>
                 </div>
             </div>
@@ -54,5 +54,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    var btn = document.getElementById('add_to_basket');
+    if(btn){
+        btn.addEventListener('click', event => {
+            var req = new XMLHttpRequest();
+            req.open('post', '/api/add2basket', true);
+            var form = new FormData();
+            form.append('txtParam', btn.getAttribute('name'));
+            req.send(form);
+        });
+    }
+</script>
 
 <%- include('templates/end'); %>
