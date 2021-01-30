@@ -1,35 +1,35 @@
 <%- include('templates/head'); %>
-<%- include('templates/nav'); %>
+    <%- include('templates/nav'); %>
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Moje konto</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="display-3">Nazwa użytkownika</h1>
+                </div>
+            </div>
+
+            <div class=" row">
+                <div class="col-4">
+                    <h1 class="display-6">Zmiana hasła</h1>
+                    <form method="post">
+                        <div class="mt-2">
+                            <label for="old_pass" class="form-label">Aktualne hasło</label>
+                            <input type="password" name="old_pass" id="old_pass" class="form-control">
+                        </div>
+                        <div class="mt-2">
+                            <label for="new_pass" class="form-label">Nowe hasło</label>
+                            <input type="password" name="new_pass" id="new_pass" class="form-control">
+                        </div>
+                        <div class="mt-2">
+                            <label for="repeat_pass" class="form-label">Powtórz nowe hasło</label>
+                            <input type="password" name="repeat_pass" id="repeat_pass" class="form-control">
+                        </div>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-primary">Zapisz</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-4">
-            <h3>Zmiana hasła</h3>
-            <form method="post">
-                <div class="mt-2">
-                    <label for="old_pass" class="form-label">Aktualne hasło</label>
-                    <input type="password" name="old_pass" id="old_pass" class="form-control">
-                </div>
-                <div class="mt-2">
-                    <label for="new_pass" class="form-label">Nowe hasło</label>
-                    <input type="password" name="new_pass" id="new_pass" class="form-control">
-                </div>
-                <div class="mt-2">
-                    <label for="repeat_pass" class="form-label">Powtórz nowe hasło</label>
-                    <input type="password" name="repeat_pass" id="repeat_pass" class="form-control">
-                </div>
-                <div class="mt-2">
-                    <button type="submit" class="btn btn-primary">Zapisz</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<%- include('templates/end'); %>
+        <%- include('templates/end'); %>
