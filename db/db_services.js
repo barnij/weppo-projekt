@@ -361,6 +361,31 @@ async function get_product(id) {
   }
 }
 
+async function get_full_product(id){
+  var query = `SELECT p.id as id, price, name, ca.description as category,
+    c.description as colour, s.description as size, p.description as description,
+    amount, status
+    FROM product as p
+    JOIN colour as c ON p.colour = c.id
+    JOIN size as s ON p.size = s.id
+    JOIN category as ca ON p.category = ca.id`;
+  var args = [];
+  if(id){
+    query += ' WHERE p.id = $1';
+    args = [id];
+  }
+  query+=';';
+
+  try {
+    let res = await pool.query(query, args);
+    return res.rows;
+  } catch (err) {
+    console.error('db get_full_product error');
+    console.error(err);
+  }
+
+}
+
 module.exports = {
   disconnect,
   get_user_id,
@@ -386,5 +411,6 @@ module.exports = {
   get_size,
   get_sold_product,
   get_product,
-  get_user
+  get_user,
+  get_full_product
 }
