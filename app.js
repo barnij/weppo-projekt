@@ -26,13 +26,6 @@ app.get('/', ash(async(req, res) => {
     res.render('index');
 }));
 
-app.get('/category/:id(\\d+)', ash( async (req, res) => {
-    var id = req.params.id
-    const result = await db.get_product();
-    var listing = result.filter(pr => pr.category == id);
-    res.render('listing', {listing});
-}));
-
 app.get('/login', ash( async (req, res) => {
     if(req.session.userid) {
         res.redirect('/');
@@ -61,8 +54,16 @@ app.get('/product/:id(\\d+)', ash(async (req, res) => {
 }));
 
 app.get('/listing', ash(async (req, res) => {
-    const listing = await db.get_product();
-    res.render('listing', { listing });
+    var id = req.query.id
+    const result = await db.get_product();
+    var listing = result;
+    var active = null;
+    if(id){
+        listing = listing.filter(pr => pr.category == id);
+        active = id;
+    }
+    const categories = await db.get_category();
+    res.render('listing', { listing, categories, active });
 }));
 
 app.post('/', (req, res) => {
