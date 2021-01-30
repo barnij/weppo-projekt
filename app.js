@@ -117,6 +117,10 @@ app.get('/account', (req, res) => {
     res.render('account');
 });
 
+app.get('/users', (req, res) => {
+    res.render('users_list');
+});
+
 app.post('/account', (req, res) => {
     res.redirect('/account');
 });
