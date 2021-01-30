@@ -84,7 +84,7 @@ app.post('/register', ash( async(req, res) => {
     }
 }));
 
-app.get('/cart', (req, res) => {
+app.get('/basket', (req, res) => {
     res.render('basket');
 
 })
