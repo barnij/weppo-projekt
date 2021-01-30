@@ -17,9 +17,13 @@ app.set('views', './views');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
+app.use(function (req, res, next) {
+    res.locals.logged = req.session.logged;
+    next();
+});
+
 app.get('/', ash(async(req, res) => {
-    const categories = await db.get_category();
-    res.render('index', {username: req.session.username, categories});
+    res.render('index');
 }));
 
 app.get('/category/:id(\\d+)', ash( async (req, res) => {
@@ -43,6 +47,7 @@ app.post('/login', ash( async (req, res) => {
     if(userid) {
         req.session.username = username;
         req.session.userid = userid;
+        req.session.logged = true;
         res.redirect('/');
     } else {
         res.render('login');
@@ -89,6 +94,15 @@ app.post('/register', ash( async(req, res) => {
         }
     }
 }));
+
+
+app.get('/logout', (req, res) => {
+    delete req.session.logged;
+    delete req.session.userid;
+    delete req.session.username;
+    res.redirect('/');
+})
+
 
 app.get('/basket', (req, res) => {
     res.render('basket');
