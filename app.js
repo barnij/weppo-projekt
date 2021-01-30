@@ -4,8 +4,10 @@ const ash = require('express-async-handler');
 const http = require('http');
 const db = require('./db/db_services');
 const path = require('path');
+const multer = require('multer');
 
 const app = express();
+const upload = multer();
 app.use(session({
     secret: 'weppoweppo',
     resave: true,
@@ -105,12 +107,49 @@ app.get('/logout', (req, res) => {
 })
 
 
-app.get('/basket', (req, res) => {
-    res.render('basket');
-})
+app.post('/api/add2basket', upload.single(), ash(async (req, res) => {
+    if (!req.session.basket) {
+        req.session.basket = [];
+        req.session.basketinfo = [];
+    }
+    var inbasket = req.session.basket.findIndex(obj => obj[0] == req.body.prodid);
+    // for(let i=0; i < req.session.basket.length; i++) {
+    //     if(req.session.basket[i][0] == req.body.prodid){
+    //         inbasket = i;
+    //         break;
+    //     }
+    // }
+    if (inbasket != -1) {
+        req.session.basket[inbasket][1] += 1;
+    } else {
+        req.session.basket.push([req.body.prodid, 1]);
+        let full_prod = await db.get_full_product(req.body.prodid);
+        req.session.basketinfo.push(full_prod);
+    }
+    res.json({ success: "Updated Successfully", status: 200 });
+}));
 
-app.get('/admin', (req, res) => {
-    res.render('admin_panel');
+app.post('/api/remove', ash(async (req, res) => {
+    if (!req.session.basket) {
+        req.session.basket = [];
+        req.session.basketinfo = [];
+    }
+    for (let i = 0; i < req.session.basket.length; i++) {
+        if (req.session.basket[i][0] == req.body.prodid) {
+            req.session.basket[i][1] = 0;
+        }
+    }
+    res.json({ success: "Updated Successfully", status: 200 });
+}));
+
+app.get('/basket', (req, res) => {
+    let products_in_basket = [];
+    for (let i = 0; i < req.session.basket.length; i++) {
+        if (req.session.basket[i][1] > 0) {
+            products_in_basket.push([req.session.basketinfo[i], req.session.basket[1]]);
+        }
+    }
+    res.render('basket', { basket: products_in_basket });
 })
 
 app.get('/account', (req, res) => {
