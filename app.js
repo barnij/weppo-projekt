@@ -4,8 +4,10 @@ const ash = require('express-async-handler');
 const http = require('http');
 const db = require('./db/db_services');
 const path = require('path');
+const multer = require('multer');
 
 const app = express();
+const upload = multer();
 app.use(session({
     secret: 'weppoweppo',
     resave: true,
@@ -104,8 +106,10 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 })
 
-app.post('/api/add2basket', ash(async(req, res) => {
+
+app.post('/api/add2basket', upload.single(), ash(async(req, res) => {
     var inbasket = false;
+    //jeśli nie ma czegoś takiego jak basket w sesji to tu się wywali server
     for(let i=0; i < req.session.basket.length; i++) {
         if(req.session.basket[i][0] == req.body.prodid){
             inbasket = i;
@@ -117,6 +121,7 @@ app.post('/api/add2basket', ash(async(req, res) => {
     } else {
       req.session.basket.push([req.body.prodid, req.body.amount]);
       let full_prod = await db.get_full_product(req.body.prodid);
+      //wyżej zwiększasz amount, ale nigdzie nie ustawiasz go na 1.
       req.session.basketinfo.push(full_prod);
     }
 }));
