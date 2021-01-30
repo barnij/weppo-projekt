@@ -17,16 +17,13 @@ app.set('views', './views');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', ash(async(req, res) => {
-    const categories = await db.get_category();
-    res.render('index', {username: req.session.username, categories});
-}));
+app.use(function (req, res, next) {
+    res.locals.logged = req.session.logged;
+    next();
+});
 
-app.get('/category/:id(\\d+)', ash( async (req, res) => {
-    var id = req.params.id
-    const result = await db.get_product();
-    var listing = result.filter(pr => pr.category == id);
-    res.render('listing', {listing});
+app.get('/', ash(async(req, res) => {
+    res.render('index');
 }));
 
 app.get('/login', ash( async (req, res) => {
@@ -43,6 +40,7 @@ app.post('/login', ash( async (req, res) => {
     if(userid) {
         req.session.username = username;
         req.session.userid = userid;
+        req.session.logged = true;
         res.redirect('/');
     } else {
         res.render('login');
@@ -56,8 +54,16 @@ app.get('/product/:id(\\d+)', ash(async (req, res) => {
 }));
 
 app.get('/listing', ash(async (req, res) => {
-    const listing = await db.get_product();
-    res.render('listing', { listing });
+    var id = req.query.id
+    const result = await db.get_product();
+    var listing = result;
+    var active = null;
+    if(id){
+        listing = listing.filter(pr => pr.category == id);
+        active = id;
+    }
+    const categories = await db.get_category();
+    res.render('listing', { listing, categories, active });
 }));
 
 app.post('/', (req, res) => {
@@ -89,6 +95,15 @@ app.post('/register', ash( async(req, res) => {
         }
     }
 }));
+
+
+app.get('/logout', (req, res) => {
+    delete req.session.logged;
+    delete req.session.userid;
+    delete req.session.username;
+    res.redirect('/');
+})
+
 
 app.get('/basket', (req, res) => {
     res.render('basket');

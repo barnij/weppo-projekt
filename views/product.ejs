@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col" style="margin: 20px 0 0 0;">
                     <h1 class="display-1"><%= product.name %> </h1>
-                    <p class="lead">Nie ma czegoś takiego jak pełna nazwa produktu</p>
+                    <p class="lead">Cena: <%= product.price %></p>
                     <dl class="row">
                         <dt class="col-sm-3">Wielkość</dt>
                         <dd class="col-sm-9"><%= product.size %> </dd>
@@ -26,29 +26,30 @@
                         <dd class="col-sm-9"><%= product.description %> </dd>
                     </dl>
 
-                </div>
-                <div class="col">
-                    <div class="card" style=" min-height: 150px; margin: 100px ;"><img src="/assets/uploads/<%= product.id %>.jpg"
-                            class="img" alt="no-product-image"></div>
-                    <div class="d-flex justify-content-center">
-                        <h1 class="display-6">Cena: <%= product.price %> </h1>
-                    </div>
-                    <div class="d-flex justify-content-center">
+                    <div class="row mb-5">
+                        <div class="col">
                         <% if(product.status){ %>
-                            <% if(product.amount > 0){ %>
-                                <a id="add_to_basket" href="#" class="btn btn-primary">
-                                    Dodaj do koszyka
-                                </a>
+                            <% if(product.amount> 0){ %>
+                                    <a id="add_to_basket" href="#" class="btn btn-primary">
+                                        Dodaj do koszyka
+                                    </a>
+                                <% }else{ %>
+                                    <a href="#" class="btn btn-secondary disabled">
+                                        Produkt chwilowo niedostępny
+                                    </a>
+                                <% } %>
                             <% }else{ %>
-                                <a href="#" class="btn btn-secondary disabled">
-                                    Produkt chwilowo niedostępny
+                                <a href="#" class="btn btn-danger disabled">
+                                    Produkt wycofany
                                 </a>
                             <% } %>
-                        <% }else{ %>
-                        <a href="#" class="btn btn-danger disabled">
-                            Produkt wycofany
-                        </a>
-                        <% } %>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="/assets/uploads/<%= product.id %>.jpg"
+                            class="img rounded" alt="no-product-image">
                     </div>
                 </div>
             </div>
