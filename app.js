@@ -104,10 +104,39 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 })
 
+app.post('/api/add2basket', ash(async(req, res) => {
+    var inbasket = false;
+    for(let i=0; i < req.session.basket.length; i++) {
+        if(req.session.basket[i][0] == req.body.prodid){
+            inbasket = i;
+            break;
+        }
+    }
+    if(inbasket) {
+      req.session.basket[inbasket][1] += req.body.amount;
+    } else {
+      req.session.basket.push([req.body.prodid, req.body.amount]);
+      let full_prod = await db.get_full_product(req.body.prodid);
+      req.session.basketinfo.push(full_prod);
+    }
+}));
+
+app.post('/api/remove', ash(async (req, res) => {
+  for(let i=0; i < req.session.basket.length; i++) {
+      if(req.session.basket[i][0] == req.body.prodid){
+          req.session.basket[i][1] = 0;
+      }
+  }
+}));
 
 app.get('/basket', (req, res) => {
-    res.render('basket');
-
+    let products_in_basket = [];
+    for(let i = 0; i < req.session.basket.length; i++) {
+      if(req.session.basket[i][1] > 0) {
+        products_in_basket.push([req.session.basketinfo[i], req.session.basket[1]]);
+      }
+    }
+    res.render('basket', {basket: products_in_basket});
 })
 
 app.get('/account', (req, res) => {
