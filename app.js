@@ -112,20 +112,18 @@ app.post('/api/add2basket', upload.single(), ash(async(req, res) => {
         req.session.basket = [];
         req.session.basketinfo = [];
     }
-    var inbasket = false;
-    //jeśli nie ma czegoś takiego jak basket w sesji to tu się wywali server
-    for(let i=0; i < req.session.basket.length; i++) {
-        if(req.session.basket[i][0] == req.body.prodid){
-            inbasket = i;
-            break;
-        }
-    }
-    if(inbasket) {
+    var inbasket = req.session.basket.findIndex(obj => obj[0] == req.body.prodid);
+    // for(let i=0; i < req.session.basket.length; i++) {
+    //     if(req.session.basket[i][0] == req.body.prodid){
+    //         inbasket = i;
+    //         break;
+    //     }
+    // }
+    if(inbasket != -1) {
       req.session.basket[inbasket][1] += 1;
     } else {
       req.session.basket.push([req.body.prodid, 1]);
       let full_prod = await db.get_full_product(req.body.prodid);
-      //wyżej zwiększasz amount, ale nigdzie nie ustawiasz go na 1.
       req.session.basketinfo.push(full_prod);
     }
     res.json({success : "Updated Successfully", status : 200});
