@@ -17,9 +17,10 @@ app.set('views', './views');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-    res.render('index', {username: req.session.username});
-});
+app.get('/', ash(async(req, res) => {
+    const categories = await db.get_category();
+    res.render('index', {username: req.session.username, categories});
+}));
 
 app.get('/category/:id(\\d+)', ash( async (req, res) => {
     var id = req.params.id
