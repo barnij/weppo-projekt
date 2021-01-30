@@ -165,6 +165,10 @@ app.get('/users', (req, res) => {
     res.render('users_list');
 });
 
+app.get('/products2', (req, res) => {
+    res.render('products_list');
+});
+
 app.post('/account', (req, res) => {
     res.redirect('/account');
 });
