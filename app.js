@@ -100,13 +100,14 @@ app.post('/api/add2basket', upload.single(), ash(async(req, res) => {
         }
     }
     if(inbasket) {
-      req.session.basket[inbasket][1] += req.body.amount;
+      req.session.basket[inbasket][1] += 1;
     } else {
-      req.session.basket.push([req.body.prodid, req.body.amount]);
+      req.session.basket.push([req.body.prodid, 1]);
       let full_prod = await db.get_full_product(req.body.prodid);
       //wyżej zwiększasz amount, ale nigdzie nie ustawiasz go na 1.
       req.session.basketinfo.push(full_prod);
     }
+    res.json({success : "Updated Successfully", status : 200});
 }));
 
 app.post('/api/remove', ash(async (req, res) => {
@@ -119,6 +120,7 @@ app.post('/api/remove', ash(async (req, res) => {
             req.session.basket[i][1] = 0;
         }
     }
+    res.json({success : "Updated Successfully", status : 200});
 }));
 
 app.get('/basket', (req, res) => {
