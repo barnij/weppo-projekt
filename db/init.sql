@@ -37,7 +37,7 @@ CREATE TABLE sold_product (
 
 CREATE TABLE product (
   id serial NOT NULL,
-  price money NOT NULL,
+  price numeric NOT NULL,
   name text NOT NULL,
   size integer,
   colour integer,

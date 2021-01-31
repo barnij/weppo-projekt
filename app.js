@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(function (req, res, next) {
     res.locals.logged = req.session.logged;
-    if(!req.session.basket){
+    if (!req.session.basket) {
         req.session.basket = {};
         req.session.basketinfo = {};
         req.session.basketlength = 0;
@@ -69,6 +69,7 @@ app.get('/product/:id(\\d+)', ash(async (req, res) => {
 }));
 
 app.get('/listing', ash(async (req, res) => {
+    var search = req.query.search;
     var id = req.query.id
     const result = await db.get_product();
     var listing = result;
@@ -77,8 +78,11 @@ app.get('/listing', ash(async (req, res) => {
         listing = listing.filter(pr => pr.category == id);
         active = id;
     }
+    if(search){
+        listing = listing.filter(pr => pr.name.toLowerCase().includes(search.toLowerCase()));
+    }
     const categories = await db.get_category();
-    res.render('listing', { listing, categories, active });
+    res.render('listing', { listing, categories, active, search });
 }));
 
 app.post('/', (req, res) => {
@@ -126,19 +130,19 @@ app.post('/api/add2basket', upload.single(), ash(async (req, res) => {
     if (req.session.basket[id]) {
         req.session.basket[id].amount += 1;
     } else {
-        req.session.basket[id] = {amount:1};
+        req.session.basket[id] = { amount: 1 };
         let full_prod = await db.get_full_product(id);
         req.session.basketinfo[id] = full_prod[0];
     }
-    res.json({ success: "Updated Successfully", status: 200 });
+    res.json({ success: "Updated Successfully", status: 200, productName: req.session.basketinfo[id].name });
 }));
 
 app.get('/api/remove/:id(\\d+)', (req, res) => {
     var id = parseInt(req.params.id);
-    if (req.session.basket && req.session.basket[id]){
+    if (req.session.basket && req.session.basket[id]) {
         req.session.basketlength -= 1;
         req.session.basket[id].amount -= 1;
-        if (req.session.basket[id].amount < 1){
+        if (req.session.basket[id].amount < 1) {
             delete req.session.basket[id];
             delete req.session.basketinfo[id];
         }
@@ -151,11 +155,11 @@ app.get('/basket', (req, res) => {
     let bi = req.session.basketinfo;
     let b = req.session.basket;
     Object.keys(bi).map((key) => {
-        products_in_basket.push({item: bi[key], amount: b[key].amount});
+        products_in_basket.push({ item: bi[key], amount: b[key].amount });
     })
     console.log(products_in_basket);
     res.render('basket', { basket: products_in_basket });
-})
+});
 
 app.get('/account', (req, res) => {
     if (req.session.userid) {
@@ -195,11 +199,15 @@ app.get('/order', (req, res) => {
 });
 
 app.get('/admin', (req, res) => {
-    res.render('admin');
+    res.render('admin_panel');
 });
 
 app.get('/admin/products', (req, res) => {
     res.render('admin-products');
+});
+
+app.get('/admin/product', (req, res) => {
+    res.render('admin-product');
 });
 
 app.get('/admin/products/:id(\\d+)', (req, res) => {
@@ -210,8 +218,16 @@ app.get('/admin/users', (req, res) => {
     res.render('admin-users');
 });
 
+app.get('/admin/user', (req, res) => {
+    res.render('admin_user');
+});
+
 app.get('/admin/orders', (req, res) => {
     res.render('admin-orders');
+});
+
+app.get('/admin/order', (req, res) => {
+    res.render('admin_order_view');
 });
 
 http.createServer(app).listen(process.env.PORT || 8080);
