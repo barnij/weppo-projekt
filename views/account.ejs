@@ -4,7 +4,7 @@
         <div class="container">
           <div class="row">
             <div class="col" id="alert">
-              <% if(locals.pass_change) { %>
+              <% if(pass_change) { %>
                 <% if(locals.pass_change == 2) {%>
                   <div class="alert alert-success alert-dismissible fade show" role="alert">
                     Zmieniono hasło
@@ -16,7 +16,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
                 <% } %>
-                <% delete locals.pass_change %>
               <% } %>
             </div>
           </div>
@@ -29,7 +28,7 @@
             <div class="row">
                 <div class="col-4">
                     <h1 class="display-6">Zmiana hasła</h1>
-                    <form method="post">
+                    <form action="/account/changepassword" method="post">
                         <div class="mt-2">
                             <label for="old_pass" class="form-label">Aktualne hasło</label>
                             <input type="password" name="old_pass" id="old_pass" class="form-control">
@@ -44,9 +43,7 @@
                         </div>
                         <div class="mt-2">
                             <!-- <button id='submit' type="submit" class="btn btn-primary">Zapisz</button> -->
-                            <form action="/account/changepassword" method="POST">
-                              <button type="submit" class="btn btn-primary">Zmień hasło</button>
-                            </form>
+                            <button type="submit" class="btn btn-primary">Zmień hasło</button>
                         </div>
                     </form>
                 </div>
