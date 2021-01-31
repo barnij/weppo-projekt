@@ -25,7 +25,7 @@ function auth_user(req, res, next) {
         next();
     }else{
         req.session.customAlert = { type: 'danger', message: 'By przejść do żądanej strony, musisz się zalogować' };
-        res.redirect('/login');
+        res.redirect('/login?redirect='+req.url);
     }
 }
 
@@ -86,7 +86,11 @@ app.post('/login', ash(async (req, res) => {
         req.session.userid = userid;
         req.session.logged = true;
         req.session.successLogin = true;
-        res.redirect('/');
+        var redirect = '/';
+        if(req.query.redirect){
+            redirect = req.query.redirect;
+        }
+        res.redirect(redirect);
     } else {
         res.render('login', { alert: { type: 'warning', message: 'Nieprawidłowy login lub hasło' } });
     }
