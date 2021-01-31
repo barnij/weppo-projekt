@@ -277,6 +277,24 @@ async function get_picture(prodid, id) {
   }
 }
 
+async function get_described_purchase(userid) {
+  var query = `SELECT purchase.id, purchase_status.description as status, tmp1.price as sum 
+  FROM purchase JOIN purchase_status ON purchase.status = purchase_status.id 
+  JOIN (SELECT sold_product.purchase_id, sum(sold_product.amount * product.price) as price 
+  FROM sold_product JOIN product ON sold_product.product_id = product.id 
+  GROUP BY sold_product.purchase_id) as tmp1 ON purchase.id = tmp1.purchase_id 
+  WHERE purchase.userid = $1
+  ORDER BY purchase.id ASC;`
+  var args = [userid];
+  try {
+    let res = await pool.query(query, args);
+    return res.rows;
+  } catch (err) {
+    console.error('db get_described_purchase error');
+    console.error(err)
+  }
+}
+
 async function get_purchase(userid, id) {
   var query = "";
   var args = [];
@@ -425,5 +443,6 @@ module.exports = {
   get_product,
   get_user,
   get_full_product,
-  set_user_password
+  set_user_password,
+  get_described_purchase
 }
