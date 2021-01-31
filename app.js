@@ -19,6 +19,16 @@ app.set('views', './views');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
+
+function auth_user(req, res, next) {
+    if(req.session.logged){
+        next();
+    }else{
+        req.session.customAlert = { type: 'danger', message: 'By przejść do żądanej strony, musisz się zalogować' };
+        res.redirect('/login?redirect='+req.url);
+    }
+}
+
 app.use(function (req, res, next) {
     res.locals.logged = req.session.logged;
     if (!req.session.basket) {
@@ -27,6 +37,23 @@ app.use(function (req, res, next) {
         req.session.basketlength = 0;
     }
     res.locals.basketlength = req.session.basketlength;
+
+    if (req.session.successLogin){
+        res.locals.alert = { type: 'success', message: 'Zalogowano pomyślnie' };
+        delete req.session.successLogin;
+    }
+    if (req.session.successRegister) {
+        res.locals.alert = { type: 'success', message: 'Zarejestrowano pomyślnie' };
+        delete req.session.successRegister;
+    }
+    if (req.session.logout) {
+        res.locals.alert = { type: 'success', message: 'Wylogowano pomyślnie' };
+        delete req.session.logout;
+    }
+    if (req.session.customAlert) {
+        res.locals.alert = req.session.customAlert;
+        delete req.session.customAlert;
+    }
     next();
 });
 
@@ -58,9 +85,14 @@ app.post('/login', ash(async (req, res) => {
         req.session.username = username;
         req.session.userid = userid;
         req.session.logged = true;
-        res.redirect('/');
+        req.session.successLogin = true;
+        var redirect = '/';
+        if(req.query.redirect){
+            redirect = req.query.redirect;
+        }
+        res.redirect(redirect);
     } else {
-        res.render('login');
+        res.render('login', { alert: { type: 'warning', message: 'Nieprawidłowy login lub hasło' } });
     }
 }));
 
@@ -104,13 +136,14 @@ app.post('/register', ash(async (req, res) => {
     var password = req.body.reg_password;
     var confirm_password = req.body.reg_password_confirm;
     if (password != confirm_password) {
-        res.render('register');
+        res.render('register', { alert: { type: 'warning', message: 'Hasła się nie zgadzają' } });
     } else {
         var success = await db.add_user(username, password, false);
         if (success) {
             req.session.userid = success;
             req.session.username = username;
             req.session.logged = true;
+            req.session.successRegister = true;
             res.redirect('/');
         } else {
             res.render('register');
@@ -123,6 +156,7 @@ app.get('/logout', (req, res) => {
     delete req.session.logged;
     delete req.session.userid;
     delete req.session.username;
+    req.session.logout = true;
     res.redirect('/');
 })
 
@@ -164,35 +198,27 @@ app.get('/basket', (req, res) => {
     res.render('basket', { basket: products_in_basket });
 });
 
-app.get('/account', ash(async (req, res) => {
-    let pass_change = req.session.pass_change;
-    delete req.session.pass_change;
-    let orders_list = await db.get_described_purchase(req.session.userid);
-    if (req.session.userid) {
-        res.render('account', {username: req.session.username, pass_change: pass_change, orders_list: orders_list});
-    } else {
-        res.redirect('/');
+
+app.get('/account', auth_user, ash( async (req, res) => {
+    var alert = false;
+    if(req.session.pass_change){
+        alert = { type: 'warning', message: 'Wpisano niepoprawne dane' };
+        if (req.session.pass_change == 2) {
+            alert = { type: 'success', message: 'Zmieniono hasło' };
+        }
+        delete req.session.pass_change;
     }
-}));
-
-app.post('/account', ash(async (req, res) => {
-    let pass_change = req.session.pass_change;
-    delete req.session.pass_change;
     let orders_list = await db.get_described_purchase(req.session.userid);
-    if (req.session.userid) {
-        res.render('account', {username: req.session.username, pass_change: pass_change, orders_list: orders_list});
-    } else {
-        res.redirect('/');
-  }
+    res.render('account', {username: req.session.username, alert, orders_list: orders_list});
 }));
 
-app.post('/account/changepassword', ash(async(req, res) => {
+app.post('/account/changepassword', auth_user, ash(async(req, res) => {
     var old_pass = req.body.old_pass;
     var new_pass = req.body.new_pass;
     var repeat_pass = req.body.repeat_pass;
     var userid = await db.get_user_id(req.session.username, old_pass);
-    var success = 1
-    if(userid == req.session.userid && new_pass == repeat_pass) {
+    var success = 1;
+    if(new_pass == repeat_pass) {
         success = await db.set_user_password(userid, new_pass);
     }
     req.session.pass_change = success;
@@ -203,7 +229,7 @@ app.get('/checkout', (req, res) => {
     res.render('checkout');
 });
 
-app.post('/checkout', (req, res) => {
+app.post('/checkout', auth_user, (req, res) => {
     res.render('buy-success');
 });
 
