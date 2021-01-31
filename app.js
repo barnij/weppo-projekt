@@ -69,6 +69,7 @@ app.get('/product/:id(\\d+)', ash(async (req, res) => {
 }));
 
 app.get('/listing', ash(async (req, res) => {
+    var search = req.query.search;
     var id = req.query.id
     const result = await db.get_product();
     var listing = result;
@@ -77,8 +78,11 @@ app.get('/listing', ash(async (req, res) => {
         listing = listing.filter(pr => pr.category == id);
         active = id;
     }
+    if(search){
+        listing = listing.filter(pr => pr.name.toLowerCase().includes(search.toLowerCase()));
+    }
     const categories = await db.get_category();
-    res.render('listing', { listing, categories, active });
+    res.render('listing', { listing, categories, active, search });
 }));
 
 app.post('/', (req, res) => {
@@ -130,7 +134,7 @@ app.post('/api/add2basket', upload.single(), ash(async (req, res) => {
         let full_prod = await db.get_full_product(id);
         req.session.basketinfo[id] = full_prod[0];
     }
-    res.json({ success: "Updated Successfully", status: 200 });
+    res.json({ success: "Updated Successfully", status: 200, productName: req.session.basketinfo[id].name });
 }));
 
 app.get('/api/remove/:id(\\d+)', (req, res) => {
@@ -155,7 +159,7 @@ app.get('/basket', (req, res) => {
     })
     console.log(products_in_basket);
     res.render('basket', { basket: products_in_basket });
-})
+});
 
 app.get('/account', (req, res) => {
     res.render('account');
