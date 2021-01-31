@@ -172,15 +172,16 @@ app.get('/account', ash(async (req, res) => {
     }
 }));
 
-app.post('/account', (req, res) => {
+app.post('/account', ash(async (req, res) => {
     let pass_change = req.session.pass_change;
     delete req.session.pass_change;
+    let orders_list = await db.get_described_purchase(req.session.userid);
     if (req.session.userid) {
-        res.render('account', {username: req.session.username, pass_change: pass_change});
+        res.render('account', {username: req.session.username, pass_change: pass_change, orders_list: orders_list});
     } else {
         res.redirect('/');
-    }
-});
+  }
+}));
 
 app.post('/account/changepassword', ash(async(req, res) => {
     var old_pass = req.body.old_pass;
