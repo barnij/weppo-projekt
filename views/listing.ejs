@@ -39,6 +39,9 @@
             <div class="col">
                 <h3>Produkty</h3>
                 <div class="d-flex flex-wrap justify-content-center">
+                    <% if(listing.length == 0){ %>
+                    <p>Brak produktów o żądanych parametrach.</p>
+                    <% } %>
                     <% for(item of listing){ %>
                         <div class="card" style="width: 18rem; margin: 15px ;">
                             <a href="/product/<%= item.id %>">
