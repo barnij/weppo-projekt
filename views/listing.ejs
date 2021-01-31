@@ -69,6 +69,7 @@
     document.querySelectorAll('.basket-button').forEach(elem => {
         elem.addEventListener('click', event => {
             var alert = document.getElementById('alert');
+            var counter = document.getElementById('nav-basket');
             var req = new XMLHttpRequest();
             req.open('post', '/api/add2basket', true);
             req.onreadystatechange = function () {
@@ -78,6 +79,7 @@
                         Dodano do koszyka
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>`;
+                    counter.innerHTML = parseInt(counter.innerHTML) + 1;
                 }
             }
             var form = new FormData();
