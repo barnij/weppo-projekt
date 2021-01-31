@@ -199,7 +199,7 @@ app.get('/basket', (req, res) => {
 });
 
 
-app.post('/account', auth_user, (req, res) => {
+app.get('/account', auth_user, ash( async (req, res) => {
     var alert = false;
     if(req.session.pass_change){
         alert = { type: 'warning', message: 'Wpisano niepoprawne dane' };
@@ -209,11 +209,7 @@ app.post('/account', auth_user, (req, res) => {
         delete req.session.pass_change;
     }
     let orders_list = await db.get_described_purchase(req.session.userid);
-    if (req.session.userid) {
-        res.render('account', {username: req.session.username, pass_change: pass_change, orders_list: orders_list});
-    } else {
-        res.redirect('/');
-    }
+    res.render('account', {username: req.session.username, alert, orders_list: orders_list});
 }));
 
 app.post('/account/changepassword', auth_user, ash(async(req, res) => {
