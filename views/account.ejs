@@ -2,26 +2,10 @@
     <%- include('templates/nav'); %>
 
         <div class="container">
-          <div class="row">
-            <div class="col" id="alert">
-              <% if(pass_change) { %>
-                <% if(locals.pass_change == 2) {%>
-                  <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Zmieniono hasło
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                <% } else { %>
-                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    Wpisano niepoprawne dane
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                <% } %>
-              <% } %>
-            </div>
-          </div>
             <div class="row">
                 <div class="col">
-                    <h1 class="display-3"><%= username %></h1>
+                    <h1 class="display-3">Moje konto</h1>
+                    <p class="display-6">Użytkownik: <%= username %></p>
                 </div>
             </div>
 
