@@ -134,7 +134,7 @@ app.post('/api/add2basket', upload.single(), ash(async (req, res) => {
         let full_prod = await db.get_full_product(id);
         req.session.basketinfo[id] = full_prod[0];
     }
-    res.json({ success: "Updated Successfully", status: 200 });
+    res.json({ success: "Updated Successfully", status: 200, productName: req.session.basketinfo[id].name });
 }));
 
 app.get('/api/remove/:id(\\d+)', (req, res) => {
