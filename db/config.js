@@ -15,7 +15,7 @@ const connectionObject = {
 const pool = new pg.Pool(
     isProduction ? {
         connectionString: process.env.DATABASE_URL,
-        ssl: isProduction
+        ssl: { rejectUnauthorized: false }
     } : connectionObject
 )
 
