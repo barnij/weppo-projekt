@@ -36,18 +36,20 @@ app.get('/clearbasket', (req, res) => {
     res.redirect('/');
 });
 
-app.get('/', ash(async (req, res) => {
+app.get('/', async (req, res) => {
+    //debug:
     console.log(req.session);
     res.render('index');
-}));
+});
 
-app.get('/login', ash(async (req, res) => {
-    if (req.session.userid) {
+app.get('/login', (req, res) => {
+    if (req.session.logged) {
         res.redirect('/');
     } else {
         res.render('login');
     }
-}));
+});
+
 app.post('/login', ash(async (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
@@ -90,7 +92,7 @@ app.post('/', (req, res) => {
 });
 
 app.get('/register', (req, res) => {
-    if (req.session.userid) {
+    if (req.session.logged) {
         res.redirect('/');
     } else {
         res.render('register');
@@ -108,6 +110,7 @@ app.post('/register', ash(async (req, res) => {
         if (success) {
             req.session.userid = success;
             req.session.username = username;
+            req.session.logged = true;
             res.redirect('/');
         } else {
             res.render('register');
