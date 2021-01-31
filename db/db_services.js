@@ -20,6 +20,18 @@ async function get_user_id(username, password) {
   }
 }
 
+async function set_user_password(userid, password) {
+  let query = 'UPDATE account SET password = $1 WHERE id = $2;';
+  let args = [password, userid];
+  try {
+    await pool.query(query, args);
+    return 2;
+  } catch (err) {
+    console.error('db set_user_password error');
+    console.error(err);
+  }
+}
+
 async function get_user(id) {
   var query = `SELECT * FROM account;`;
   var args = [];
@@ -412,5 +424,6 @@ module.exports = {
   get_sold_product,
   get_product,
   get_user,
-  get_full_product
+  get_full_product,
+  set_user_password
 }
