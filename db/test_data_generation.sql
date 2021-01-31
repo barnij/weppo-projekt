@@ -42,13 +42,13 @@ INSERT INTO colour (description)
 
 
 INSERT INTO product (price, name, size, colour, amount, status, description, category)
-  VALUES (10.99 ::numeric::money, 'product1', 1, 1, 30, true, 'this is very nice product1', 1);
+  VALUES (10.99, 'product1', 1, 1, 30, true, 'this is very nice product1', 1);
 
 INSERT INTO product (price, name, size, colour, amount, status, description, category)
-  VALUES (15.99 ::numeric::money, 'product2', 2, 2, 50, true, 'this is very nice product2', 2);
+  VALUES (15.99, 'product2', 2, 2, 50, true, 'this is very nice product2', 2);
 
 INSERT INTO product (price, name, size, colour, amount, status, description, category)
-  VALUES (20.49 ::numeric::money, 'product3', 3, 3, 70, true, 'this is very nice product3', 3);
+  VALUES (20.49, 'product3', 3, 3, 70, true, 'this is very nice product3', 3);
 
 
 INSERT INTO purchase_status (description)
