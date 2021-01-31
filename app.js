@@ -185,6 +185,10 @@ app.get('/admin/products', (req, res) => {
     res.render('admin-products');
 });
 
+app.get('/admin/product', (req, res) => {
+    res.render('admin-product');
+});
+
 app.get('/admin/products/:id(\\d+)', (req, res) => {
     res.render('admin-products');
 });

@@ -1,0 +1,102 @@
+<%- include('templates/head'); %>
+
+    <%- include('templates/nav'); %>
+
+        <div class="container">
+            <div class="row">
+                <h1 class="display-2">Nazwa przedmiotu</h1>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <form method="POST" style="margin: 0 40% 0 0 ;"></form>
+                    <div class="row">
+                        <div class="col">
+                            <p class="lead">Cena:</p>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="number" placeholder="12,50 zł" step="0.5"
+                                aria-label="default input example">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="lead">Kategoria:</p>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" aria-label="Zmiana statusu">
+                                <option value="1">kategoria_1</option>
+                                <option value="2" selected>kategoria_2</option>
+                                <option value="2">kategoria_3</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="lead">Kolor:</p>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" aria-label="Zmiana statusu">
+                                <option value="1">kolor_1</option>
+                                <option value="2">kolor_2</option>
+                                <option value="2" selected>kolor_3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="lead">Liczba sztuk:</p>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="number" placeholder="30"
+                                aria-label="default input example">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="lead">Status:</p>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" aria-label="Zmiana statusu">
+                                <option value="1">Dostępny</option>
+                                <option value="2">Niedostępny</option>
+                                <option value="2" selected>Wycofany</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="lead">Opis:</p>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <textarea class="form-control" id="exampleFormControlTextarea1"
+                                    rows="3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="lead">Zdjecie produktu:</p>
+
+                            <img src="assets/img/wine4.jpg" class="figure-img img-fluid rounded-circle"
+                                style="height: 150px; width: 150px;" alt="wine pic not found">
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="file" id="formFile">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 20px">Zapisz</button>
+                    </form>
+                </div>
+
+                <div class="col">
+                    <p class="h6 text-end">
+                        <a role="button" tabindex="0" style=" color: #dc3545;">Usuń przedmiot</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <%- include('templates/end'); %>
