@@ -178,7 +178,7 @@ app.get('/order', (req, res) => {
 });
 
 app.get('/admin', (req, res) => {
-    res.render('admin');
+    res.render('admin_panel');
 });
 
 app.get('/admin/products', (req, res) => {
@@ -195,6 +195,10 @@ app.get('/admin/users', (req, res) => {
 
 app.get('/admin/orders', (req, res) => {
     res.render('admin-orders');
+});
+
+app.get('/admin/order', (req, res) => {
+    res.render('admin_order_view');
 });
 
 http.createServer(app).listen(process.env.PORT || 8080);
