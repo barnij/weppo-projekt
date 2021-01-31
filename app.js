@@ -198,11 +198,6 @@ app.get('/basket', (req, res) => {
     res.render('basket', { basket: products_in_basket });
 });
 
-app.get('/account', auth_user, (req, res) => {
-    let pass_change = req.session.pass_change;
-    delete req.session.pass_change;
-    res.render('account', {username: req.session.username, pass_change: pass_change});
-});
 
 app.post('/account', auth_user, (req, res) => {
     var alert = false;
@@ -213,13 +208,13 @@ app.post('/account', auth_user, (req, res) => {
         }
         delete req.session.pass_change;
     }
-
+    let orders_list = await db.get_described_purchase(req.session.userid);
     if (req.session.userid) {
-        res.render('account', {username: req.session.username, alert});
+        res.render('account', {username: req.session.username, pass_change: pass_change, orders_list: orders_list});
     } else {
         res.redirect('/');
     }
-});
+}));
 
 app.post('/account/changepassword', auth_user, ash(async(req, res) => {
     var old_pass = req.body.old_pass;
