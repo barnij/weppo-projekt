@@ -1,35 +1,38 @@
-<nav class="navbar navbar-light navbar-expand-lg" style="background: #a1d0f7;">
+<nav class="navbar navbar-expand-lg navbar-light mb-3" style="background-color: #e3f2fd;">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Shopsio</a>
-        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="navbar-toggler-icon"></span> </button>
-        <div class="collapse navbar-collapse" id="navcol-1">
-            <ul class="nav navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="#">Kategoria 1</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Kategoria 2</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Kategoria 3</a></li>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/listing">
-                        <span class="badge">NEW</span>
-                        Wszystkie produkty
-                    </a>
+                    <a class="nav-link" href="/listing">Zobacz nasze produkty</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/basket">Koszyk</a>
                 </li>
             </ul>
-        </div>
-        <div style="padding-right: 5px;">
-            <button type="button" class="btn btn-primary">Koszyk</button>
-        </div>
-        <div class="btn-group" role="group">
-            <div class="btn-group">
-                <button class="btn btn-primary" type="button">Zarejestruj</button>
-                <button class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-                    aria-expanded="false" type="button">
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Zaloguj</a>
-                </div>
-            </div>
+            <ul class="navbar-nav navbar-right">
+                <% if(locals.logged){ %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/account">Moje konto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Wyloguj</a>
+                </li>
+                <% }else{ %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Zaloguj</a>
+                </li>
+                <li>
+                    <div class="btn-nav">
+                        <a class="btn btn-secondary btn-small navbar-btn" href="/register">Zarejestruj!</a>
+                    </div>
+                </li>
+                <% } %>
+            </ul>
         </div>
     </div>
 </nav>

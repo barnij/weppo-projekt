@@ -105,3 +105,6 @@ dist
 
 # VSCode config file
 .vscode/*
+
+# Finder config file
+.DS_Store

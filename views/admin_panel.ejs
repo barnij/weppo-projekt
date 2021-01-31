@@ -1,0 +1,92 @@
+<%- include('templates/head'); %>
+    <%- include('templates/nav'); %>
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="display-3">Nazwa administratora</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h1 class="display-6">Zmiana hasła</h1>
+                    <form method="POST">
+                        <div class="mt-2">
+                            <label for="old_pass" class="form-label">Aktualne hasło</label>
+                            <input type="password" name="old_pass" id="old_pass" class="form-control">
+                        </div>
+                        <div class="mt-2">
+                            <label for="new_pass" class="form-label">Nowe hasło</label>
+                            <input type="password" name="new_pass" id="new_pass" class="form-control">
+                        </div>
+                        <div class="mt-2">
+                            <label for="repeat_pass" class="form-label">Powtórz nowe hasło</label>
+                            <input type="password" name="repeat_pass" id="repeat_pass" class="form-control">
+                        </div>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-primary">Zapisz</button>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="col">
+                </div>
+                <div class="col-sm-4">
+                    <span role="button" tabindex="0">
+                        <h1 class="display-6">Użytkownicy</h1>
+                    </span>
+                    <span role="button" tabindex="0">
+                        <h1 class="display-6">Produkty</h1>
+                    </span>
+                    <span role="button" tabindex="0">
+                        <h1 class="display-6">Zamówienia</h1>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div style="margin-top: 5%;">
+                        <p class="lead">
+                            Kategorie produktów:
+                        </p>
+                    </div>
+
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <dt class="col-sm-3">kategoria_1</dt>
+                                <dd class="col-sm-9"><span role="button" tabindex="0">usuń</span></dd>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="row">
+                                <dt class="col-sm-3">kategoria_2</dt>
+                                <dd class="col-sm-9"><span role="button" tabindex="0">usuń</span></dd>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <dt class="col-sm-3">kategoria_3</dt>
+                                <dd class="col-sm-9"><span role="button" tabindex="0">usuń</span></dd>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col"></div>
+                <div class="col">
+                    <p class="lead">
+                        Dodaj nową kategorię:
+                    </p>
+                    <form method="POST">
+                        <input class="form-control" type="text" placeholder="Nazwa nowej kategorii"
+                            aria-label="default input example">
+                        <button type="submit" class="btn btn-secondary" style="margin-top: 5%;">Dodaj</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <%- include('templates/end'); %>
