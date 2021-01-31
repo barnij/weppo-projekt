@@ -1,0 +1,34 @@
+<%- include('templates/head'); %>
+
+    <%- include('templates/nav'); %>
+
+        <div class="container">
+            <div class="row">
+                <h1 class="display-2">Nazwa produktu</h1>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="lead">
+                        Ostatnie logowanie: <strong>11.11.2011r.</strong>
+                    </p>
+                    <p class="lead" style="margin: 5% 0px;">Status:
+                        <strong>
+                            Użytkownik
+                        </strong>
+                    </p>
+                    <form method="POST" style="margin: 0 40% 0 0 ;">
+                        <select class="form-select" aria-label="Zmiana statusu">
+                            <option selected>Wybierz nowy status</option>
+                            <option value="1">Użytkownik</option>
+                            <option value="2">Administrator</option>
+                        </select>
+                        <button type="submit" class="btn btn-secondary" style="margin-top: 5%;">Ustaw</button>
+                    </form>
+                </div>
+
+
+                <div class="col">
+
+                </div>
+
+                <%- include('templates/end'); %>
