@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(function (req, res, next) {
     res.locals.logged = req.session.logged;
-    if(!req.session.basket){
+    if (!req.session.basket) {
         req.session.basket = [];
         req.session.basketinfo = [];
     }
@@ -185,6 +185,10 @@ app.get('/admin/products/:id(\\d+)', (req, res) => {
 
 app.get('/admin/users', (req, res) => {
     res.render('admin-users');
+});
+
+app.get('/admin/user', (req, res) => {
+    res.render('admin_user');
 });
 
 app.get('/admin/orders', (req, res) => {
