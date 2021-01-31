@@ -22,9 +22,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(function (req, res, next) {
     res.locals.logged = req.session.logged;
     if(!req.session.basket){
-        req.session.basket = [];
-        req.session.basketinfo = [];
+        req.session.basket = {};
+        req.session.basketinfo = {};
+        req.session.basketlength = 0;
     }
+    res.locals.basketlength = req.session.basketlength;
     next();
 });
 
@@ -120,34 +122,38 @@ app.get('/logout', (req, res) => {
 
 app.post('/api/add2basket', upload.single(), ash(async (req, res) => {
     var id = Number(req.body.txtParam);
-    console.log(req.body);
-    var inbasket = req.session.basket.findIndex(obj => obj[0] == id);
-    if (inbasket != -1) {
-        req.session.basket[inbasket][1] += 1;
+    req.session.basketlength += 1;
+    if (req.session.basket[id]) {
+        req.session.basket[id].amount += 1;
     } else {
-        req.session.basket.push([id, 1]);
+        req.session.basket[id] = {amount:1};
         let full_prod = await db.get_full_product(id);
-        req.session.basketinfo.push(full_prod);
+        req.session.basketinfo[id] = full_prod[0];
     }
     res.json({ success: "Updated Successfully", status: 200 });
 }));
 
-app.post('/api/remove', ash(async (req, res) => {
-    for (let i = 0; i < req.session.basket.length; i++) {
-        if (req.session.basket[i][0] == req.body.prodid) {
-            req.session.basket[i][1] = 0;
+app.get('/api/remove/:id(\\d+)', (req, res) => {
+    var id = parseInt(req.params.id);
+    if (req.session.basket && req.session.basket[id]){
+        req.session.basketlength -= 1;
+        req.session.basket[id].amount -= 1;
+        if (req.session.basket[id].amount < 1){
+            delete req.session.basket[id];
+            delete req.session.basketinfo[id];
         }
     }
-    res.json({ success: "Updated Successfully", status: 200 });
-}));
+    res.redirect('/basket');
+});
 
 app.get('/basket', (req, res) => {
     let products_in_basket = [];
-    for (let i = 0; i < req.session.basket.length; i++) {
-        if (req.session.basket[i][1] > 0) {
-            products_in_basket.push([req.session.basketinfo[i], req.session.basket[1]]);
-        }
-    }
+    let bi = req.session.basketinfo;
+    let b = req.session.basket;
+    Object.keys(bi).map((key) => {
+        products_in_basket.push({item: bi[key], amount: b[key].amount});
+    })
+    console.log(products_in_basket);
     res.render('basket', { basket: products_in_basket });
 })
 
