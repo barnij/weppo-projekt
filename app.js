@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(function (req, res, next) {
     res.locals.logged = req.session.logged;
-    if(!req.session.basket){
+    if (!req.session.basket) {
         req.session.basket = {};
         req.session.basketinfo = {};
         req.session.basketlength = 0;
@@ -126,7 +126,7 @@ app.post('/api/add2basket', upload.single(), ash(async (req, res) => {
     if (req.session.basket[id]) {
         req.session.basket[id].amount += 1;
     } else {
-        req.session.basket[id] = {amount:1};
+        req.session.basket[id] = { amount: 1 };
         let full_prod = await db.get_full_product(id);
         req.session.basketinfo[id] = full_prod[0];
     }
@@ -135,10 +135,10 @@ app.post('/api/add2basket', upload.single(), ash(async (req, res) => {
 
 app.get('/api/remove/:id(\\d+)', (req, res) => {
     var id = parseInt(req.params.id);
-    if (req.session.basket && req.session.basket[id]){
+    if (req.session.basket && req.session.basket[id]) {
         req.session.basketlength -= 1;
         req.session.basket[id].amount -= 1;
-        if (req.session.basket[id].amount < 1){
+        if (req.session.basket[id].amount < 1) {
             delete req.session.basket[id];
             delete req.session.basketinfo[id];
         }
@@ -151,7 +151,7 @@ app.get('/basket', (req, res) => {
     let bi = req.session.basketinfo;
     let b = req.session.basket;
     Object.keys(bi).map((key) => {
-        products_in_basket.push({item: bi[key], amount: b[key].amount});
+        products_in_basket.push({ item: bi[key], amount: b[key].amount });
     })
     console.log(products_in_basket);
     res.render('basket', { basket: products_in_basket });
