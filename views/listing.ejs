@@ -6,6 +6,11 @@
 
 <div class="container">
         <div class="row">
+            <div class="col" id="alert">
+
+            </div>
+        </div>
+        <div class="row">
             <div class="col">
                 <h3>Kategorie</h3>
                 <div class="d-flex flex-wrap justify-content-left">
@@ -59,17 +64,27 @@
     </div>
 </div>
 
+
 <script>
     document.querySelectorAll('.basket-button').forEach(elem => {
         elem.addEventListener('click', event => {
+            var alert = document.getElementById('alert');
             var req = new XMLHttpRequest();
             req.open('post', '/api/add2basket', true);
+            req.onreadystatechange = function () {
+                if (req.readyState == XMLHttpRequest.DONE) {
+                    alert.innerHTML =
+                    `<div class="alert alert-success alert-dismissible fade show" role="alert">
+                        Dodano do koszyka
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`;
+                }
+            }
             var form = new FormData();
             form.append('txtParam', elem.getAttribute('name'));
             req.send(form);
         })
     });
 </script>
-
 
 <%- include('templates/end'); %>
