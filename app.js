@@ -158,12 +158,29 @@ app.get('/basket', (req, res) => {
 })
 
 app.get('/account', (req, res) => {
-    res.render('account');
+    if (req.session.userid) {
+        res.render('account', {username: req.session.username});
+    } else {
+        res.redirect('/');
+    }
 });
 
 app.post('/account', (req, res) => {
-    res.redirect('/account');
+    res.render('account', {username: req.session.username});
 });
+
+app.post('/account/changepassword', ash(async(req, res) => {
+    var old_pass = req.body.old_pass;
+    var new_pass = req.body.new_pass;
+    var repeat_pass = req.body.repeat_pass;
+    var userid = await db.get_user_id(req.session.username, old_pass);
+    var success = 1
+    if(userid == req.session.userid && new_pass == repeat_pass) {
+        success = await db.set_user_password(userid, new_pass);
+    }
+    res.locals.pass_change = success;
+    res.redirect('/account');
+}));
 
 app.get('/checkout', (req, res) => {
     res.render('checkout');

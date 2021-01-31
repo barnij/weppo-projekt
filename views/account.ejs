@@ -2,9 +2,27 @@
     <%- include('templates/nav'); %>
 
         <div class="container">
+          <div class="row">
+            <div class="col" id="alert">
+              <% if(locals.pass_change) { %>
+                <% if(locals.pass_change == 2) {%>
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Zmieniono hasło
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                <% } else { %>
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Wpisano niepoprawne dane
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                <% } %>
+                <% delete locals.pass_change %>
+              <% } %>
+            </div>
+          </div>
             <div class="row">
                 <div class="col">
-                    <h1 class="display-3">Nazwa użytkownika</h1>
+                    <h1 class="display-3"><%= username %></h1>
                 </div>
             </div>
 
@@ -25,7 +43,10 @@
                             <input type="password" name="repeat_pass" id="repeat_pass" class="form-control">
                         </div>
                         <div class="mt-2">
-                            <button type="submit" class="btn btn-primary">Zapisz</button>
+                            <!-- <button id='submit' type="submit" class="btn btn-primary">Zapisz</button> -->
+                            <form action="/account/changepassword" method="POST">
+                              <button type="submit" class="btn btn-primary">Zmień hasło</button>
+                            </form>
                         </div>
                     </form>
                 </div>
@@ -212,6 +233,39 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                  </div>
 
-                <%- include('templates/end'); %>
+                  <script>
+                    var btn = document.getElementById('submit');
+                    if(btn){
+                        btn.addEventListener('click', event => {
+                            var alert = document.getElementById('alert');
+                            var req = new XMLHttpRequest();
+                            console.log('submit przyciśnięty');
+                            req.open('post', '/account', true);
+                            if(pass_change){
+                                req.onreadystatechange = function () {
+                                    if (req.readyState == XMLHttpRequest.DONE) {
+                                        alert.innerHTML =
+                                            `<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            Zmieniono hasło
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                          </div>`;
+                                    }
+                                }
+                            } else {
+                                  req.onreadystatechange = function () {
+                                     if (req.readyState == XMLHttpRequest.DONE) {
+                                        alert.innerHTML =
+                                            `<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            Wpisano niepoprawne dane
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                          </div>`;
+                                      }
+                                  }
+                            }
+                        });
+                    }
+                </script>
+
+<%- include('templates/end'); %>
