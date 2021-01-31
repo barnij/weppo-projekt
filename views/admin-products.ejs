@@ -3,8 +3,18 @@
     <%- include('templates/nav'); %>
 
         <div class="container">
-            <div class="row">
-                <h1 class="display-2" style="text-align: center;">Wszystkie przedmioty</h1>
+            <div class="row align-items-center">
+                <div class="col">
+                    <h1 class="display-2">Wszystkie przedmioty</h1>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-success">Dodaj przedmiot</button>
+                </div>
+                <!-- <div class="row justify-content-end" style="margin: 50px 20px;">
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-success">Dodaj przedmiot</button>
+                    </div>
+                </div> -->
             </div>
 
             <div class="list-group" style="margin: 1em 5em">
@@ -150,11 +160,7 @@
                     </div>
                 </div>
 
-                <div class="row justify-content-end" style="margin: 50px 20px;">
-                    <div class="col-auto">
-                        <button type="button" class="btn btn-success">Dodaj przedmiot</button>
-                    </div>
-                </div>
+
             </div>
         </div>
         <%- include('templates/end'); %>
