@@ -193,6 +193,10 @@ app.get('/admin/users', (req, res) => {
     res.render('admin-users');
 });
 
+app.get('/admin/user', (req, res) => {
+    res.render('admin_user');
+});
+
 app.get('/admin/orders', (req, res) => {
     res.render('admin-orders');
 });
