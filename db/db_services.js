@@ -1,16 +1,28 @@
 const { pool } = require('./config');
+var bcrypt = require('bcrypt');
+
+async function encrypt(text) {
+  var rounds = 12;
+  var hash = await bcrypt.hash(text, rounds);
+  return hash;
+}
 
 function disconnect() {
   pool.end();
 }
 
 async function get_user_id(username, password) {
-  let query = `SELECT id FROM account WHERE username = $1 AND password = $2;`;
-  let args = [username, password];
+  let query = `SELECT id, password FROM account WHERE username = $1;`;
+  let args = [username];
   try {
     let res = await pool.query(query, args);
     if (res.rows[0]) {
-      return res.rows[0].id;
+      let r = await bcrypt.compare(password, res.rows[0].password);
+      if(r) {
+        return res.rows[0].id;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
@@ -21,6 +33,7 @@ async function get_user_id(username, password) {
 }
 
 async function set_user_password(userid, password) {
+  password = await encrypt(password);
   let query = 'UPDATE account SET password = $1 WHERE id = $2;';
   let args = [password, userid];
   try {
@@ -51,8 +64,10 @@ async function get_user(id) {
 async function login_user(username, password) {
   try {
     let id = await get_user_id(username, password);
-    let query = `UPDATE account SET last_login = NOW() WHERE id = $1;`;
-    await pool.query(query, [id]);
+    if(id) {
+      let query = `UPDATE account SET last_login = NOW() WHERE id = $1;`;
+      await pool.query(query, [id]);
+    }
     return id;
   } catch (err) {
     console.error('db login_user error');
@@ -61,6 +76,7 @@ async function login_user(username, password) {
 }
 
 async function add_user(username, password, isadmin) {
+  password = await encrypt(password);
   let query = `INSERT INTO account (id,username, password, isadmin, last_login)
               VALUES (DEFAULT,$1, $2, $3, NOW())
               RETURNING id;`;
