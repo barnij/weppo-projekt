@@ -1,9 +1,10 @@
 const db = require('./db_services');
 (async function () {
+  await db.add_user('anonymous', 'anonymouspassword', false);
   await db.add_user('admin1', 'adminpassword1', true);
-  await db.add_user('user1', 'userpassword1', true);
-  await db.add_user('user2', 'userpassword2', true);
-  await db.add_user('user3', 'userpassword3', true);
+  await db.add_user('user1', 'userpassword1', false);
+  await db.add_user('user2', 'userpassword2', false);
+  await db.add_user('user3', 'userpassword3', false);
 
   await db.add_category('kategoria 1');
   await db.add_category('kategoria 2');
@@ -26,7 +27,7 @@ const db = require('./db_services');
   await db.add_purchase_status('status zamówienia 3');
 
   await db.add_purchase(1, 1);
-  await db.add_purchase(1, 2);
+  await db.add_purchase(3, 2);
   await db.add_purchase(2, 3);
 
   await db.add_sold_product(1, 1, 2);

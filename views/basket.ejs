@@ -13,7 +13,7 @@
 
                 <% for (product of basket){ %>
                     <% var price = product.item.price; %>
-                    <% suma += price * product.amount; %>
+                    <% sum += price * product.amount; %>
                     <div class="list-group-item list-group-item-action flex-column align-items-start">
                         <div class="row">
                             <div class="col-6" style="width: auto;">
@@ -50,7 +50,9 @@
                     <h1 class="display-6"><%= Math.round(sum*100) / 100 %> zł</h1>
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-success">Do płatności</button>
+                  <form action="/checkout" method="POST">
+                    <button type="submit" class="btn btn-success">Do płatności</button>
+                  </form>
                 </div>
             </div>
             <% }else{ %>
