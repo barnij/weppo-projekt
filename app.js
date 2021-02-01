@@ -67,6 +67,8 @@ app.get('/account', auth.user, ash(account.get));
 
 app.post('/account/changepassword', auth.user, ash(account.changePassword));
 
+app.get('/order/:id(\\d+)', auth.user, ash(account.order));
+
 app.get('/checkout', auth.user, (req, res) => {
     res.render('checkout');
 });
@@ -74,8 +76,6 @@ app.get('/checkout', auth.user, (req, res) => {
 app.post('/checkout', auth.user, (req, res) => {
     res.render('buy-success');
 });
-
-app.get('/order/:id(\\d+)', auth.user, ash(account.order));
 
 app.get('/admin', (req, res) => {
     res.render('admin_panel');
