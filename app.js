@@ -56,11 +56,14 @@ app.get('/api/remove/:id(\\d+)', basket.remove);
 
 app.get('/clearbasket', basket.clear);
 
+app.post('/checkout', ash(basket.checkout_get));
+
+app.post('/checkout/finalize', ash(basket.checkout_post))
+
 //products
 app.get('/product/:id(\\d+)', ash(product.get));
 
 app.get('/listing', ash(product.list));
-
 
 //account
 app.get('/account', auth.user, ash(account.get));
@@ -69,14 +72,7 @@ app.post('/account/changepassword', auth.user, ash(account.changePassword));
 
 app.get('/order/:id(\\d+)', auth.user, ash(account.order));
 
-app.get('/checkout', auth.user, (req, res) => {
-    res.render('checkout');
-});
-
-app.post('/checkout', auth.user, (req, res) => {
-    res.render('buy-success');
-});
-
+//admin TODO
 app.get('/admin', (req, res) => {
     res.render('admin_panel');
 });

@@ -205,11 +205,12 @@ async function add_picture(prodid, filepath) {
 
 async function add_purchase(userid, status) {
   let query = `INSERT INTO purchase (userid, status)
-              VALUES ($1, $2);`;
+              VALUES ($1, $2)
+              RETURNING id;`;
   let args = [userid, status];
   try {
-    await pool.query(query, args);
-    return true;
+    let res = await pool.query(query, args);
+    return res.rows[0].id;
   } catch (err) {
     console.error('db add_purchase error');
     console.error(err);
