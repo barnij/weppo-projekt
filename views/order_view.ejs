@@ -4,59 +4,65 @@
 
         <div class="container">
             <div class="row">
-                <h1 class="display-2" style="text-align: center;">Zamówienie #2137</h1>
+                <h1 class="display-2" style="text-align: center;">Zamówienie #<%= id %>
+                </h1>
             </div>
 
 
             <div class="list-group" style="margin: 1em 5em">
-                <div class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="row">
-                        <div class="col-6" style="width: auto;">
-                            <img src="assets/img/wine4.jpg" class="figure-img img-fluid rounded-circle"
-                                style="height: 100px; width: 100px;" alt="wine pic not found">
-                        </div>
-                        <div class="col">
-                            <div class="d-flex w-100 justify-content-between">
-                                <a role="button" tabindex="0">
-                                    <h5 class="mb-1">Nazwa przedmiotu</h5>
-                                </a>
-
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">mały</dd>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">zielony</dd>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">kategoria_1</dd>
-                                <div class="col">
-                                    <p class="text-end">Cena: 90,08 zł</p>
+                <% var sum=0 %>
+                    <% for(product of product_list) { %>
+                        <% sum +=product.amount * product.price %>
+                            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <a role="button" href="/product/<%= product.product_id %>" tabindex="0">
+                                                <h5 class="mb-1">
+                                                    <%= product.name %>
+                                                </h5>
+                                            </a>
+                                        </div>
+                                        <div class="row">
+                                            <dd class="col-sm-9">
+                                                <%= product.size %>
+                                            </dd>
+                                        </div>
+                                        <div class="row">
+                                            <dd class="col-sm-9">
+                                                <%= product.colour %>
+                                            </dd>
+                                            <div class="col">
+                                                <p class="text-end">Ilość: <%= product.amount %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <dd class="col-sm-9">
+                                                <%= product.category %>
+                                            </dd>
+                                            <div class="col">
+                                                <p class="text-end">Cena: <%= product.price %> zł</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                            <% } %>
 
+                                <div class="row justify-content-end" style="margin: 50px 20px;">
+                                    <div class="col-auto">
+                                        <div class="alert alert-dark" role="alert">
+                                            <%= status %>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <h1 class="display-6">
+                                            <%= Math.round(sum*100) / 100 %> zł
+                                        </h1>
+                                    </div>
 
-                <div class="row justify-content-end" style="margin: 50px 20px;">
-
-                    <div class="col-auto">
-                        <div class="alert alert-success" role="alert">
-                            Zakończone
-                        </div>
-                        <!-- <div class="alert alert-warning" role="alert">
-                            Opłacone
-                        </div>
-                        <div class="alert alert-primary" role="alert">
-                            Otwarte
-                        </div> -->
-                    </div>
-                    <div class="col-auto">
-                        <h1 class="display-6">1290,18 zł</h1>
-                    </div>
-
-                </div>
+                                </div>
             </div>
 
             <%- include('templates/end'); %>
