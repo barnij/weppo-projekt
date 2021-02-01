@@ -55,16 +55,10 @@
                                         <div class="alert alert-dark" role="alert">
                                             <%= status %>
                                         </div>
-                                        <!-- <div class="alert alert-warning" role="alert">
-                            Opłacone
-                        </div>
-                        <div class="alert alert-primary" role="alert">
-                            Otwarte
-                        </div> -->
                                     </div>
                                     <div class="col-auto">
                                         <h1 class="display-6">
-                                            <%= sum %> zł
+                                            <%= Math.round(sum*100) / 100 %> zł
                                         </h1>
                                     </div>
 

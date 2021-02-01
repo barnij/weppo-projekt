@@ -34,7 +34,6 @@ async function order(req, res) {
     if(purchase && userid == purchase.userid) {
         var status = await db.get_purchase_status(purchase.status);
         var prods = await db.get_full_sold_product(id);
-        console.log(prods);
         res.render('order_view', {id: id, status: status[0].description, product_list: prods})
     } else {
         res.redirect('/');

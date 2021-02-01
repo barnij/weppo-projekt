@@ -7,7 +7,7 @@
                 <h1 class="display-1" style="text-align: center;">Koszyk</h1>
             </div>
 
-            <% var suma = 0; %>
+            <% var sum = 0; %>
 
             <div class="list-group" style="margin: 1em 5em">
 
@@ -47,7 +47,7 @@
             <% if(locals.basket && basket.length > 0){ %>
             <div class="row justify-content-end" style="margin: 50px 20px;">
                 <div class="col-auto">
-                    <h1 class="display-6"><%= suma %> zł</h1>
+                    <h1 class="display-6"><%= Math.round(sum*100) / 100 %> zł</h1>
                 </div>
                 <div class="col-auto">
                     <button type="button" class="btn btn-success">Do płatności</button>
