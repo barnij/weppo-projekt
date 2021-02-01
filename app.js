@@ -75,9 +75,7 @@ app.post('/checkout', auth.user, (req, res) => {
     res.render('buy-success');
 });
 
-app.get('/order', (req, res) => {
-    res.render('order_view');
-});
+app.get('/order/:id(\\d+)', auth.user, ash(account.order));
 
 app.get('/admin', (req, res) => {
     res.render('admin_panel');

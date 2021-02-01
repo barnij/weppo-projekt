@@ -26,7 +26,23 @@ async function changePassword(req, res) {
     res.redirect('/account');
 }
 
+async function order(req, res) {
+    var id = req.params.id;
+    var userid = req.session.userid;
+    var purchase = await db.get_purchase(userid, id);
+    purchase = purchase[0];
+    if(purchase && userid == purchase.userid) {
+        var status = await db.get_purchase_status(purchase.status);
+        var prods = await db.get_full_sold_product(id);
+        console.log(prods);
+        res.render('order_view', {id: id, status: status, product_list: prods})
+    } else {
+        res.redirect('/');
+    }
+}
+
 module.exports = {
     get,
-    changePassword
+    changePassword,
+    order
 }

@@ -22,9 +22,9 @@
                             </div>
                             <div class="col">
                                 <div class="d-flex w-100 justify-content-between">
-                                    <span role="button" tabindex="0">
+                                    <a role="button" href="/product/<%= product.item.id %>" tabindex="0">
                                         <h5 class="mb-1"><%= product.item.name %> (<%= product.amount %>)</h5>
-                                    </span>
+                                    </a>
                                     <small><a role="button" href="/api/remove/<%= product.item.id %>" tabindex="0">Usuń</a></small>
                                 </div>
                                 <div class="row">
