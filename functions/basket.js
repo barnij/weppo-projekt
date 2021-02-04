@@ -44,9 +44,37 @@ function clear(req, res) {
     res.redirect('/');
 }
 
+async function checkout_get(req, res) {
+    let sum = 0;
+    let bi = req.session.basketinfo;
+    let b = req.session.basket;
+    Object.keys(bi).map((key) => {
+        sum += bi[key].price * b[key].amount; 
+    })
+    sum = Math.round(sum*100) / 100;
+    res.render('checkout', {sum: sum});
+}
+
+async function checkout_post(req, res) {
+    if(req.session.logged) {
+      var userid = req.session.userid;
+    } else {
+      userid = 1;
+    }
+    let id = await db.add_purchase(userid, 1);
+    let bi = req.session.basketinfo;
+    let b = req.session.basket;
+    Object.keys(bi).map(async (key) => {
+        await db.add_sold_product(id, bi[key].id,  b[key].amount);
+    })
+    clear(req, res);
+}
+
 module.exports = {
     get,
     add,
     remove,
-    clear
+    clear,
+    checkout_get,
+    checkout_post
 }

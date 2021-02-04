@@ -205,11 +205,12 @@ async function add_picture(prodid, filepath) {
 
 async function add_purchase(userid, status) {
   let query = `INSERT INTO purchase (userid, status)
-              VALUES ($1, $2);`;
+              VALUES ($1, $2)
+              RETURNING id;`;
   let args = [userid, status];
   try {
-    await pool.query(query, args);
-    return true;
+    let res = await pool.query(query, args);
+    return res.rows[0].id;
   } catch (err) {
     console.error('db add_purchase error');
     console.error(err);
@@ -432,6 +433,28 @@ async function get_full_product(id){
 
 }
 
+async function get_full_sold_product(purchaseid) {
+  var query = `SELECT purchase.id as id, product.id as product_id, product.price as price, product.name as name, sold_product.amount as amount, size.description as size, colour.description as colour, category.description as category 
+  FROM purchase JOIN sold_product ON purchase.id = sold_product.purchase_id
+  JOIN product ON product.id = sold_product.product_id
+  JOIN size ON product.size = size.id
+  JOIN colour ON product.colour = colour.id
+  JOIN category ON product.category = category.id`;
+  var args = [];
+  if(purchaseid) {
+    query += ' WHERE purchase.id = $1';
+    args = [purchaseid];
+  }
+  query += ';';
+  try {
+    let res = await pool.query(query, args);
+    return res.rows;
+  } catch (err) {
+    console.error('db get_full_sold_product error');
+    console.error(err);
+  }
+}
+
 module.exports = {
   disconnect,
   get_user_id,
@@ -460,5 +483,6 @@ module.exports = {
   get_user,
   get_full_product,
   set_user_password,
-  get_described_purchase
+  get_described_purchase,
+  get_full_sold_product
 }

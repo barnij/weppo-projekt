@@ -52,7 +52,7 @@
 
                 </div>
                 <div class="col">
-                    <form class="row g-3" method="POST">
+                    <form action="/checkout/finalize" class="row g-3" method="POST">
                         <div class="col-md-6">
                             <label for="inputName" class="form-label">imię</label>
                             <input type="text" class="form-control">
@@ -83,7 +83,7 @@
                         </div>
                         <div class="row justify-content-end" style="margin: 50px 20px;">
                             <div class="col-auto">
-                                <h1 class="display-6">1290,18 zł</h1>
+                                <h1 class="display-6"> <%= sum %> zł</h1>
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-success">Płacę</button>
