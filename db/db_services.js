@@ -46,10 +46,10 @@ async function set_user_password(userid, password) {
 }
 
 async function get_user(id) {
-  var query = `SELECT * FROM account;`;
+  var query = `SELECT id, username, isadmin, to_char(last_login, 'DD Mon YYYY') as last_login FROM account;`;
   var args = [];
   if (id) {
-    query = 'SELECT * FROM account WHERE id = $1;';
+    query = `SELECT id, username, isadmin, to_char(last_login, 'DD Mon YYYY') as last_login FROM account WHERE id = $1;`;
     args = [id];
   }
   try {
@@ -294,15 +294,34 @@ async function get_picture(prodid, id) {
   }
 }
 
-async function get_described_purchase(userid) {
-  var query = `SELECT purchase.id, purchase_status.description as status, tmp1.price as sum 
-  FROM purchase JOIN purchase_status ON purchase.status = purchase_status.id 
-  JOIN (SELECT sold_product.purchase_id, sum(sold_product.amount * product.price) as price 
-  FROM sold_product JOIN product ON sold_product.product_id = product.id 
-  GROUP BY sold_product.purchase_id) as tmp1 ON purchase.id = tmp1.purchase_id 
-  WHERE purchase.userid = $1
-  ORDER BY purchase.id ASC;`
-  var args = [userid];
+async function get_described_purchase(userid, id) {
+  var query = `SELECT purchase.userid as userid, purchase.id, purchase_status.description as status, tmp1.price as sum 
+              FROM purchase JOIN purchase_status ON purchase.status = purchase_status.id 
+              JOIN (SELECT sold_product.purchase_id, sum(sold_product.amount * product.price) as price 
+              FROM sold_product JOIN product ON sold_product.product_id = product.id 
+              GROUP BY sold_product.purchase_id) as tmp1 ON purchase.id = tmp1.purchase_id 
+              ORDER BY purchase.id ASC;`;
+  var args = [];
+  if(userid) {
+    query = `SELECT purchase.userid as userid, purchase.id, purchase_status.description as status, tmp1.price as sum 
+            FROM purchase JOIN purchase_status ON purchase.status = purchase_status.id 
+            JOIN (SELECT sold_product.purchase_id, sum(sold_product.amount * product.price) as price 
+            FROM sold_product JOIN product ON sold_product.product_id = product.id 
+            GROUP BY sold_product.purchase_id) as tmp1 ON purchase.id = tmp1.purchase_id 
+            WHERE purchase.userid = $1
+            ORDER BY purchase.id ASC;`;
+    args = [userid];
+  }
+  if(id) {
+    query = `SELECT purchase.userid as userid, purchase.id, purchase_status.description as status, tmp1.price as sum 
+            FROM purchase JOIN purchase_status ON purchase.status = purchase_status.id 
+            JOIN (SELECT sold_product.purchase_id, sum(sold_product.amount * product.price) as price 
+            FROM sold_product JOIN product ON sold_product.product_id = product.id 
+            GROUP BY sold_product.purchase_id) as tmp1 ON purchase.id = tmp1.purchase_id 
+            WHERE purchase.id = $1
+            ORDER BY purchase.id ASC;`;
+    args = [id];
+  }
   try {
     let res = await pool.query(query, args);
     return res.rows;

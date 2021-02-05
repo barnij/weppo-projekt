@@ -57,7 +57,21 @@
                                 <p class="card-text">
                                     <%= item.price %>
                                 </p>
-                                <button type="button" name="<%= item.id %>" class="btn btn-primary basket-button">Add to basket</button>
+                                <% if(item.status){ %>
+                                  <% if(item.amount> 0){ %>
+                                          <button id="add_to_basket" name="<%= item.id %>" type="button" class="btn btn-primary">
+                                              Dodaj do koszyka
+                                          </button>
+                                      <% }else{ %>
+                                          <button type="button" class="btn btn-secondary disabled">
+                                              Produkt chwilowo niedostępny
+                                          </button>
+                                      <% } %>
+                                  <% }else{ %>
+                                      <button type="button" class="btn btn-danger disabled">
+                                          Produkt wycofany
+                                      </button>
+                                  <% } %>
                             </div>
                         </div>
                         <% } %>

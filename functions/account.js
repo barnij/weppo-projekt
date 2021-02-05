@@ -31,11 +31,12 @@ async function order(req, res) {
     var userid = req.session.userid;
     var purchase = await db.get_purchase(userid, id);
     purchase = purchase[0];
-    if(purchase && userid == purchase.userid) {
+    if(purchase && (userid == purchase.userid || req.session.isadmin)) {
         var status = await db.get_purchase_status(purchase.status);
         var prods = await db.get_full_sold_product(id);
         res.render('order_view', {id: id, status: status[0].description, product_list: prods})
     } else {
+        req.session.customAlert = { type: 'danger', message: 'Nie masz uprawnień by wyświetlić tę stronę' };
         res.redirect('/');
     }
 }

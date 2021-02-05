@@ -12,10 +12,13 @@ async function postLogin(req, res) {
     var username = req.body.username;
     var password = req.body.password;
     var userid = await db.login_user(username, password);
+    var user = await db.get_user(userid);
+    user = user[0];
     if (userid) {
         req.session.username = username;
         req.session.userid = userid;
         req.session.logged = true;
+        req.session.isadmin = user.isadmin;
         req.session.successLogin = true;
         var redirect = '/';
         if (req.query.redirect) {
@@ -59,6 +62,7 @@ function logout(req, res) {
     delete req.session.logged;
     delete req.session.userid;
     delete req.session.username;
+    delete req.session.isadmin;
     req.session.logout = true;
     res.redirect('/');
 }

@@ -16,21 +16,26 @@
             </ul>
             <ul class="navbar-nav navbar-right">
                 <% if(locals.logged){ %>
-                <li class="nav-item">
-                    <a class="nav-link" href="/account">Moje konto</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Wyloguj</a>
-                </li>
+                    <% if(locals.isadmin) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin">Panel administratora</a>
+                        </li>     
+                    <% } %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account">Moje konto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Wyloguj</a>
+                    </li>
                 <% }else{ %>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Zaloguj</a>
-                </li>
-                <li>
-                    <div class="btn-nav">
-                        <a class="btn btn-secondary btn-small navbar-btn" href="/register">Zarejestruj!</a>
-                    </div>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Zaloguj</a>
+                    </li>
+                    <li>
+                        <div class="btn-nav">
+                            <a class="btn btn-secondary btn-small navbar-btn" href="/register">Zarejestruj!</a>
+                        </div>
+                    </li>
                 <% } %>
             </ul>
         </div>
