@@ -18,147 +18,40 @@
             </div>
 
             <div class="list-group" style="margin: 1em 5em">
+              <% for(product of products) { %>
                 <div class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="row">
-                        <div class="col-6" style="width: auto;">
-                            <img src="assets/img/wine3.jpg" class="figure-img img-fluid rounded-circle"
-                                style="height: 100px; width: 100px;" alt="wine pic not found">
-                        </div>
                         <div class="col">
                             <div class="d-flex w-100 justify-content-between">
-                                <a role="button" tabindex="0">
-                                    <h5 class="mb-1">Nazwa przedmiotu</h5>
+                                <a href="/product/<%= product.id %>" role="button" tabindex="0">
+                                    <h5 class="mb-1"><%= product.name %></h5>
                                 </a>
-                                <small><a role="button" tabindex="0" style="color: #dc3545;">Usuń</a></small>
+                                <small><a href="/admin/changeStatus/<%= product.id %>" role="button" tabindex="0" style="color: #dc3545;">Zmień status</a></small>
                             </div>
                             <div class="row">
-                                <dd class="col-sm-9">mały</dd>
+                                <dd class="col-sm-9"><%= product.size %></dd>
                             </div>
                             <div class="row">
-                                <dd class="col-sm-9">zielony</dd>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">kategoria_1</dd>
+                                <dd class="col-sm-9"><%= product.colour %></dd>
                                 <div class="col">
-                                    <p class="text-end">Cena: 15,08 zł</p>
+                                  <% if(product.status) { %>
+                                    <p class="text-end">Status: Dostępny</p>
+                                  <% } else { %>
+                                    <p class="text-end">Status: Niedostępny</p>
+                                  <% } %>
+                              </div>
+                            </div>
+                            <div class="row">
+                                <dd class="col-sm-9"><%= product.category %></dd>
+                                <div class="col">
+                                    <p class="text-end">Cena: <%= product.price %> zł</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="row">
-                        <div class="col-6" style="width: auto;">
-                            <img src="assets/img/wine3.jpg" class="figure-img img-fluid rounded-circle"
-                                style="height: 100px; width: 100px;" alt="wine pic not found">
-                        </div>
-                        <div class="col">
-                            <div class="d-flex w-100 justify-content-between">
-                                <a role="button" tabindex="0">
-                                    <h5 class="mb-1">Nazwa przedmiotu</h5>
-                                </a>
-                                <small><a role="button" tabindex="0" style="color: #dc3545;">Usuń</a></small>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">mały</dd>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">zielony</dd>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">kategoria_1</dd>
-                                <div class="col">
-                                    <p class="text-end">Cena: 15,08 zł</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="row">
-                        <div class="col-6" style="width: auto;">
-                            <img src="assets/img/wine3.jpg" class="figure-img img-fluid rounded-circle"
-                                style="height: 100px; width: 100px;" alt="wine pic not found">
-                        </div>
-                        <div class="col">
-                            <div class="d-flex w-100 justify-content-between">
-                                <a role="button" tabindex="0">
-                                    <h5 class="mb-1">Nazwa przedmiotu</h5>
-                                </a>
-                                <small><a role="button" tabindex="0" style="color: #dc3545;">Usuń</a></small>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">mały</dd>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">zielony</dd>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">kategoria_1</dd>
-                                <div class="col">
-                                    <p class="text-end">Cena: 15,08 zł</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="row">
-                        <div class="col-6" style="width: auto;">
-                            <img src="assets/img/wine3.jpg" class="figure-img img-fluid rounded-circle"
-                                style="height: 100px; width: 100px;" alt="wine pic not found">
-                        </div>
-                        <div class="col">
-                            <div class="d-flex w-100 justify-content-between">
-                                <a role="button" tabindex="0">
-                                    <h5 class="mb-1">Nazwa przedmiotu</h5>
-                                </a>
-                                <small><a role="button" tabindex="0" style="color: #dc3545;">Usuń</a></small>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">mały</dd>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">zielony</dd>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">kategoria_1</dd>
-                                <div class="col">
-                                    <p class="text-end">Cena: 15,08 zł</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="row">
-                        <div class="col-6" style="width: auto;">
-                            <img src="assets/img/wine3.jpg" class="figure-img img-fluid rounded-circle"
-                                style="height: 100px; width: 100px;" alt="wine pic not found">
-                        </div>
-                        <div class="col">
-                            <div class="d-flex w-100 justify-content-between">
-                                <a role="button" tabindex="0">
-                                    <h5 class="mb-1">Nazwa przedmiotu</h5>
-                                </a>
-                                <small><a role="button" tabindex="0" style="color: #dc3545;">Usuń</a></small>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">mały</dd>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">zielony</dd>
-                            </div>
-                            <div class="row">
-                                <dd class="col-sm-9">kategoria_1</dd>
-                                <div class="col">
-                                    <p class="text-end">Cena: 15,08 zł</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <% } %>
+                
 
 
             </div>

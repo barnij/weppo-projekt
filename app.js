@@ -11,6 +11,7 @@ const auth = require('./functions/auth');
 const user = require('./functions/user');
 const product = require('./functions/product');
 const account = require('./functions/account');
+const admin = require('./functions/admin');
 
 
 const app = express();
@@ -73,37 +74,31 @@ app.post('/account/changepassword', auth.user, ash(account.changePassword));
 app.get('/order/:id(\\d+)', auth.user, ash(account.order));
 
 //admin TODO
-app.get('/admin', (req, res) => {
-    res.render('admin_panel');
-});
+app.get('/admin', auth.admin, ash(admin.get));
 
-app.get('/admin/products', (req, res) => {
-    res.render('admin-products');
-});
+app.post('/admin/addCategory', auth.admin, ash(admin.add_category));
 
-app.get('/admin/product', (req, res) => {
-    res.render('admin-product');
-});
+app.post('/admin/addSize', auth.admin, ash(admin.add_size));
 
-app.get('/admin/products/:id(\\d+)', (req, res) => {
-    res.render('admin-products');
-});
+app.post('/admin/addColour', auth.admin, ash(admin.add_colour));
 
-app.get('/admin/users', (req, res) => {
-    res.render('admin-users');
-});
+app.get('/admin/users', auth.admin, ash(admin.get_users));
 
-app.get('/admin/user', (req, res) => {
-    res.render('admin_user');
-});
+app.get('/admin/products', auth.admin, ash(admin.get_products));
 
-app.get('/admin/orders', (req, res) => {
-    res.render('admin-orders');
-});
+app.get('/admin/changeStatus/:id(\\d+)', auth.admin, ash(admin.change_status));
 
-app.get('/admin/order', (req, res) => {
-    res.render('admin_order_view');
-});
+app.get('/admin/orders', auth.admin, ash(admin.get_orders));
+
+app.get('/admin/user/:id(\\d+)', auth.admin, ash(admin.get_user));
+
+app.post('/admin/changeUserStatus/:id(\\d+)', auth.admin, ash(admin.change_user_status));
+
+app.get('/admin/order/:id(\\d+)', auth.admin, ash(admin.get_order));
+
+app.post('/admin/changeOrderStatus/:id(\\d+)', auth.admin, ash(admin.change_order_status));
+
+app.get('/admin/product/:id(\\d+)', auth.admin, ash(admin.get_product));
 
 http.createServer(app).listen(process.env.PORT || 8080);
 console.log('Server started');

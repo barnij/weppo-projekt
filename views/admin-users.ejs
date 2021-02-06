@@ -6,50 +6,16 @@
             <div class="row">
                 <h1 class="display-2" style="text-align: center;">Użytkownicy</h1>
             </div>
-
+            <% for(user of users) { %>
             <div class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
-                    <span role="button" tabindex="0">
-                        <h5 class="mb-1">Nazwa_użytkownika</h5>
-                    </span>
-                    <small><a role="button" tabindex="0" style="color: #dc3545;">Usuń</a></small>
+                    <a href="/admin/user/<%= user.id %>" role="button" tabindex="0">
+                        <h5 class="mb-1"><%= user.username %></h5>
+                    </a>
+                    <!-- <small><a role="button" tabindex="0" style="color: #dc3545;">Usuń</a></small> -->
                 </div>
             </div>
-
-            <div class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <span role="button" tabindex="0">
-                        <h5 class="mb-1">Nazwa_użytkownika</h5>
-                    </span>
-                    <small><a role="button" tabindex="0" style="color: #dc3545;">Usuń</a></small>
-                </div>
-            </div>
-            <div class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <span role="button" tabindex="0">
-                        <h5 class="mb-1">Nazwa_użytkownika</h5>
-                    </span>
-                    <small><a role="button" tabindex="0" style="color: #dc3545;">Usuń</a></small>
-                </div>
-            </div>
-
-            <div class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <span role="button" tabindex="0">
-                        <h5 class="mb-1">Nazwa_użytkownika</h5>
-                    </span>
-                    <small><a role="button" tabindex="0" style="color: #dc3545;">Usuń</a></small>
-                </div>
-            </div>
-            <div class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <span role="button" tabindex="0">
-                        <h5 class="mb-1">Nazwa_użytkownika</h5>
-                    </span>
-                    <small><a role="button" tabindex="0" style="color: #dc3545;">Usuń</a></small>
-                </div>
-            </div>
-
+            <% } %>
         </div>
 
         <%- include('templates/end'); %>
