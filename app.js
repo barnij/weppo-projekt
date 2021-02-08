@@ -73,7 +73,7 @@ app.post('/account/changepassword', auth.user, ash(account.changePassword));
 
 app.get('/order/:id(\\d+)', auth.user, ash(account.order));
 
-//admin TODO
+//admin
 app.get('/admin', auth.admin, ash(admin.get));
 
 app.post('/admin/addCategory', auth.admin, ash(admin.add_category));
