@@ -56,6 +56,10 @@ async function checkout_get(req, res) {
 }
 
 async function checkout_post(req, res) {
+    console.log(req.body);
+    if(req.body.payment_method == 0) {
+      req.session.customAlert = { type: 'danger', message: 'Wybierz formę płatności' };
+    }
     if(req.session.logged) {
       var userid = req.session.userid;
     } else {

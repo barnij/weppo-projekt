@@ -10,76 +10,48 @@
             <div class="row">
                 <div class="col" style="padding: 0px 50px ;">
                     <div class="row">
-                        <p class="h3" style="text-align: center;">Dostawa:</p>
+                        <p class="h3" style="text-align: left;">Dostawa:</p>
                     </div>
                     <div class="row">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                id="flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                Kurier - 14,99 zł
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                id="flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                Odbiór osobisty - 0 zł
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                id="flexRadioDefault3">
-                            <label class="form-check-label" for="flexRadioDefault3">
-                                Poczta polska - 9,99 zł
-                            </label>
-                        </div>
+                        <h5 style="text-align: left;"> Kurier - 0 zł </h1>
                     </div>
                     <!-- <div class="row" style="margin-top: 15%;">
                         <p class="h3" style="text-align: center;">Metoda płatności:</p>
                     </div> -->
                     <div class="row" style="margin-top: 15%;">
-                        <div class="col">
-                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                <option selected>wybierz opcję płatności</option>
-                                <option value="1">Karta płatnicza</option>
-                                <option value="2">Blik</option>
-                                <option value="3">Google Pay</option>
-                                <option value="4">Apple Pay</option>
-                            </select>
-                        </div>
+                      <div class="col">
+                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="payment_method">
+                          <option value=0 selected>wybierz opcję płatności</option>
+                          <option value=1>Karta płatnicza</option>
+                          <option value=2>Blik</option>
+                          <option value=3>Google Pay</option>
+                          <option value=4>Apple Pay</option>
+                        </select>
+                      </div>
                     </div>
-
-                </div>
-                <div class="col">
+                    
+                  </div>
+                  <div class="col">
                     <form action="/checkout/finalize" class="row g-3" method="POST">
                         <div class="col-md-6">
                             <label for="inputName" class="form-label">imię</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="first_name">
                         </div>
                         <div class="col-md-6">
                             <label for="inputSurname" class="form-label">nazwisko</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="last_name">
                         </div>
                         <div class="col-12">
                             <label for="inputAddress" class="form-label">Ulica i numer</label>
-                            <input type="text" class="form-control" id="inputAddress">
+                            <input type="text" class="form-control" id="inputAddress" name="address">
                         </div>
                         <div class="col-md-6">
                             <label for="inputCity" class="form-label">Miejscowość</label>
-                            <input type="text" class="form-control" id="inputCity">
+                            <input type="text" class="form-control" id="inputCity" name="city">
                         </div>
                         <div class="col-md-6">
                             <label for="inputZip" class="form-label">Kod pocztowy</label>
-                            <input type="text" class="form-control" id="inputZip">
-                        </div>
-                        <div class="col-12">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="gridCheck">
-                                <label class="form-check-label" for="gridCheck">
-                                    Zgoda na zakup
-                                </label>
-                            </div>
+                            <input type="text" class="form-control" id="inputZip" name="city_code">
                         </div>
                         <div class="row justify-content-end" style="margin: 50px 20px;">
                             <div class="col-auto">
