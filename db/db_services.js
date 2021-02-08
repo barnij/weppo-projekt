@@ -155,9 +155,9 @@ async function add_product(price, name, size, colour, amount, status, descriptio
 }
 
 // eslint-disable-next-line no-unused-vars
-async function edit_product(price, name, size, colour, amount, status, description, category, prodid) {
-  let query = `UPDATE product SET price = $1, name = $2, size = $3, colour = $4, amount = $5,
-              status = $6, description = $7, category = $8 WHERE id = $9;`;
+async function edit_product(price, name, size, colour, status, description, category, prodid) {
+  let query = `UPDATE product SET price = $1, name = $2, size = $3, colour = $4, amount = 1,
+              status = $5, description = $6, category = $7 WHERE id = $8;`;
   let args = [...arguments];
   try {
     await pool.query(query, args);

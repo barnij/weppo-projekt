@@ -13,17 +13,8 @@ const product = require('./functions/product');
 const account = require('./functions/account');
 const admin = require('./functions/admin');
 
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './public/uploads/')
-    },
-    filename: function (req, file, cb) {
-        cb(null, req.body.prodid + '.jpg')
-    }
-});
-
 const app = express();
-const upload = multer({storage});
+const upload = multer({ dest: './public/uploads/'});
 app.use(session({
     secret: 'weppoweppo',
     resave: true,
@@ -106,9 +97,9 @@ app.post('/admin/changeOrderStatus/:id(\\d+)', auth.admin, ash(admin.change_orde
 
 app.get('/admin/product/:id(\\d+)', auth.admin, ash(admin.get_product));
 
-app.get('/admin/addProduct', auth.admin, ash(admin.get_product));
+app.get('/admin/addProduct', auth.admin, ash(admin.add_product_page));
 
-app.get('/admin/addProduct', auth.admin, ash(admin.get_product));
+app.post('/admin/addProduct', auth.admin, upload.single('new_pic'), ash(admin.add_product));
 
 app.post('/admin/product/:id(\\d+)', auth.admin, upload.single('new_pic'), ash(admin.edit_product));
 

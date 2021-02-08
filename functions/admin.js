@@ -1,3 +1,4 @@
+const fs = require('fs').promises;
 const db = require('../db/db_services');
 
 async function get(req, res) {
@@ -128,12 +129,18 @@ async function edit_product(req, res) {
     let size = req.body.new_size;
     let category = req.body.new_category;
     let colour = req.body.new_colour;
-    let amount = req.body.new_amount;
     let status = req.body.new_status;
     let desc = req.body.new_description;
-    const success = await db.edit_product(price, name, size, colour, amount, status, desc, category, prodid);
+    let pic = req.file.filename;
+
+    const success = await db.edit_product(price, name, size, colour, status, desc, category, prodid);
     if(success){
-        req.session.customAlert = { type: 'success', message: 'Pomyślnie edytowano produkt' };
+        try {
+            await fs.rename(`./public/uploads/${pic}`, `./public/uploads/${prodid}.jpg`);
+            req.session.customAlert = { type: 'success', message: 'Pomyślnie edytowano produkt' };
+        } catch (err){
+            req.session.customAlert = { type: 'warning', message: 'Edytowano, ale nastąpił błąd w dodaniu zdjęcia' };
+        }
     }else{
         req.session.customAlert = { type: 'danger', message: 'Błąd podczas edytowania produktu' };
     }
@@ -141,6 +148,37 @@ async function edit_product(req, res) {
     res.redirect(req.url);
 }
 
+async function add_product_page(req, res) {
+    let categories = await db.get_category();
+    let colours = await db.get_colour();
+    let sizes = await db.get_size();
+    res.render('admin-add-product',{categories, colours, sizes});
+}
+
+async function add_product(req, res) {
+    let name = req.body.new_name;
+    let price = req.body.new_price;
+    let size = req.body.new_size;
+    let category = req.body.new_category;
+    let colour = req.body.new_colour;
+    let status = req.body.new_status;
+    let desc = req.body.new_description;
+    let pic = req.file.filename;
+
+    const id = await db.add_product(price, name, size, colour, 1, status, desc, category)
+    if (id) {
+        try{
+            await fs.rename(`./public/uploads/${pic}`, `./public/uploads/${id}.jpg`);
+            req.session.customAlert = { type: 'success', message: 'Pomyślnie dodano produkt' };
+        }catch(err){
+            req.session.customAlert = { type: 'warning', message: 'Dodano produkt, ale nastąpił błąd w dodaniu zdjęcia' };
+        }
+        res.redirect(`/admin/product/${id}`);
+    } else {
+        req.session.customAlert = { type: 'danger', message: 'Błąd podczas dodawania produktu' };
+        res.redirect('/admin/addProduct');
+    }
+}
 
 
 module.exports = {
@@ -157,5 +195,7 @@ module.exports = {
     get_order,
     change_order_status,
     get_product,
-    edit_product
+    edit_product,
+    add_product_page,
+    add_product
 }

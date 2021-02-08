@@ -38,15 +38,9 @@
                             <div class="col">
                                 <select class="form-select" aria-label="Zmiana kategorii" name="new_category">
                                     <% for(let category of categories){ %>
-                                        <% if(category.id == product.category_id){ %>
-                                            <option value="<%= category.id %>" selected>
-                                                <%= category.description %>
-                                            </option>
-                                        <% }else{ %>
-                                            <option value="<%= category.id %>">
-                                                <%= category.description %>
-                                            </option>
-                                        <% } %>
+                                        <option value="<%= category.id %>">
+                                            <%= category.description %>
+                                        </option>
                                     <% } %>
                                 </select>
                             </div>
@@ -59,15 +53,9 @@
                             <div class="col">
                                 <select class="form-select" aria-label="Zmiana koloru" name="new_colour">
                                     <% for(let colour of colours){ %>
-                                        <% if(colour.id==product.colour_id){ %>
-                                            <option value="<%= colour.id %>" selected>
-                                                <%= colour.description %>
-                                            </option>
-                                        <% }else{ %>
-                                            <option value="<%= colour.id %>">
-                                                <%= colour.description %>
-                                            </option>
-                                        <% } %>
+                                        <option value="<%= colour.id %>">
+                                            <%= colour.description %>
+                                        </option>
                                     <% } %>
                                 </select>
                             </div>
@@ -80,27 +68,11 @@
                             <div class="col">
                                 <select class="form-select" aria-label="Zmiana wielkości" name="new_size">
                                     <% for(let size of sizes){ %>
-                                        <% if(size.id==product.size_id){ %>
-                                            <option value="<%= size.id %>" selected>
-                                                <%= size.description %>
-                                            </option>
-                                        <% }else{ %>
-                                            <option value="<%= size.id %>">
-                                                <%= size.description %>
-                                            </option>
-                                        <% } %>
+                                        <option value="<%= size.id %>">
+                                            <%= size.description %>
+                                        </option>
                                     <% } %>
                                 </select>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-4">
-                                <p class="lead">Liczba sztuk:</p>
-                            </div>
-                            <div class="col">
-                                <input class="form-control" type="number" value="<%= product.amount %>"
-                                    aria-label="default input example" name="new_amount">
                             </div>
                         </div>
 
@@ -110,13 +82,8 @@
                             </div>
                             <div class="col">
                                 <select class="form-select" aria-label="Zmiana statusu" name="new_status">
-                                    <% if(product.status){ %>
-                                        <option value="true" selected>Dostępny</option>
-                                        <option value="false">Niedostępny</option>
-                                    <% }else{ %>
-                                        <option value="true">Dostępny</option>
-                                        <option value="false" selected>Niedostępny</option>
-                                    <% } %>
+                                    <option value="true">Dostępny</option>
+                                    <option value="false" selected>Niedostępny</option>
                                 </select>
                             </div>
                         </div>
@@ -127,7 +94,7 @@
                             <div class="col">
                                 <div class="mb-3">
                                     <textarea class="form-control" id="exampleFormControlTextarea1"
-                                    rows="3" name="new_description"><%= product.description %></textarea>
+                                    rows="3" name="new_description"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -145,17 +112,6 @@
                 </div>
 
                 <div class="col">
-                    <div class="row">
-                        <p class="h6 text-end">
-                            <a role="button" tabindex="0" style=" color: #dc3545;">Usuń przedmiot</a>
-                        </p>
-                    </div>
-                    <div class="row text-end mt-3">
-                        <div class="col">
-                            <p class="lead">Aktualne zdjęcie produktu:</p>
-                            <img src="/uploads/<%= product.id %>.jpg" class="figure-img img-fluid" alt="wine pic not found">
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
