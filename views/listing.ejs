@@ -45,7 +45,7 @@
                     <% for(item of listing){ %>
                         <div class="card" style="width: 18rem; margin: 15px ;">
                             <a href="/product/<%= item.id %>">
-                                <img src="/assets/uploads/<%= item.id %>.jpg" class="card-img-top" alt="item_photo"
+                                <img src="/uploads/<%= item.id %>.jpg" class="card-img-top" alt="item_photo"
                                     style="height: 200px;">
                             </a>
                             <div class="card-body">
@@ -55,7 +55,7 @@
                                     </h5>
                                 </a>
                                 <p class="card-text">
-                                    <%= item.price %>
+                                    <%= item.price %> zł
                                 </p>
                                 <% if(item.status){ %>
                                   <% if(item.amount> 0){ %>

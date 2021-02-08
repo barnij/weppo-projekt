@@ -4,19 +4,18 @@
 
         <div class="container">
             <div class="row mb-3">
-                <h1 class="display-2">Edytuj produkt</h1>
+                <h1 class="display-2">Dodaj produkt</h1>
             </div>
             <div class="row">
                 <div class="col-8">
                     <form method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="prodid" value="<%= product.id %>">
                         <div class="row">
                             <div class="col-4">
                                 <p class="lead">Nazwa:</p>
                             </div>
                             <div class="col">
                                 <div class="input-group">
-                                    <input class="form-control" name="new_name" type="text" value="<%= product.name %>"
+                                    <input class="form-control" name="new_name" type="text"
                                         aria-label="default input example" required>
                                 </div>
                             </div>
@@ -27,7 +26,7 @@
                             </div>
                             <div class="col">
                                 <div class="input-group">
-                                    <input class="form-control" name="new_price" type="number" value="<%= product.price %>" aria-label="default input example" required>
+                                    <input class="form-control" name="new_price" type="number" aria-label="default input example" required>
                                     <span class="input-group-text">zł</span>
                                 </div>
                             </div>
@@ -37,7 +36,7 @@
                                 <p class="lead">Kategoria:</p>
                             </div>
                             <div class="col">
-                                <select class="form-select" aria-label="Zmiana kategorii" name="new_category" required>
+                                <select class="form-select" aria-label="Zmiana kategorii" name="new_category">
                                     <% for(let category of categories){ %>
                                         <% if(category.id == product.category_id){ %>
                                             <option value="<%= category.id %>" selected>
@@ -58,7 +57,7 @@
                                 <p class="lead">Kolor:</p>
                             </div>
                             <div class="col">
-                                <select class="form-select" aria-label="Zmiana koloru" name="new_colour" required>
+                                <select class="form-select" aria-label="Zmiana koloru" name="new_colour">
                                     <% for(let colour of colours){ %>
                                         <% if(colour.id==product.colour_id){ %>
                                             <option value="<%= colour.id %>" selected>
@@ -79,7 +78,7 @@
                                 <p class="lead">Wielkość:</p>
                             </div>
                             <div class="col">
-                                <select class="form-select" aria-label="Zmiana wielkości" name="new_size" required>
+                                <select class="form-select" aria-label="Zmiana wielkości" name="new_size">
                                     <% for(let size of sizes){ %>
                                         <% if(size.id==product.size_id){ %>
                                             <option value="<%= size.id %>" selected>
@@ -101,7 +100,7 @@
                             </div>
                             <div class="col">
                                 <input class="form-control" type="number" value="<%= product.amount %>"
-                                    aria-label="default input example" name="new_amount" required>
+                                    aria-label="default input example" name="new_amount">
                             </div>
                         </div>
 
@@ -110,7 +109,7 @@
                                 <p class="lead">Status:</p>
                             </div>
                             <div class="col">
-                                <select class="form-select" aria-label="Zmiana statusu" name="new_status" required>
+                                <select class="form-select" aria-label="Zmiana statusu" name="new_status">
                                     <% if(product.status){ %>
                                         <option value="true" selected>Dostępny</option>
                                         <option value="false">Niedostępny</option>
@@ -138,7 +137,7 @@
                                 <p class="lead">Zdjecie produktu:</p>
                             </div>
                             <div class="col">
-                                <input class="form-control" type="file" id="formFile" name="new_pic" required>
+                                <input class="form-control" type="file" id="formFile" name="new_pic">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary" style="margin-top: 20px">Zapisz</button>

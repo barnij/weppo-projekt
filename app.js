@@ -13,9 +13,17 @@ const product = require('./functions/product');
 const account = require('./functions/account');
 const admin = require('./functions/admin');
 
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, req.body.prodid + '.jpg')
+    }
+});
 
 const app = express();
-const upload = multer();
+const upload = multer({storage});
 app.use(session({
     secret: 'weppoweppo',
     resave: true,
@@ -31,8 +39,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(checksession);
 
 app.get('/', (req, res) => {
-    //debug:
-    console.log(req.session);
     res.render('index');
 });
 
@@ -99,6 +105,22 @@ app.get('/admin/order/:id(\\d+)', auth.admin, ash(admin.get_order));
 app.post('/admin/changeOrderStatus/:id(\\d+)', auth.admin, ash(admin.change_order_status));
 
 app.get('/admin/product/:id(\\d+)', auth.admin, ash(admin.get_product));
+
+app.get('/admin/addProduct', auth.admin, ash(admin.get_product));
+
+app.get('/admin/addProduct', auth.admin, ash(admin.get_product));
+
+app.post('/admin/product/:id(\\d+)', auth.admin, upload.single('new_pic'), ash(admin.edit_product));
+
+// 404
+app.get('/404', (req, res) => {
+    res.status(404).render('404');
+});
+
+app.get('*', (req, res) => {
+    res.redirect('/404');
+});
+
 
 http.createServer(app).listen(process.env.PORT || 8080);
 console.log('Server started');

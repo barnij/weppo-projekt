@@ -114,9 +114,34 @@ async function change_order_status(req, res) {
 }
 
 async function get_product(req, res) {
-    let prod = await db.get_full_product(req.params.id);
-    res.render('product', {product: prod});
+    let [product] = await db.get_full_product(req.params.id);
+    let categories = await db.get_category();
+    let colours = await db.get_colour();
+    let sizes = await db.get_size();
+    res.render('admin-product', {product, categories, colours, sizes});
 }
+
+async function edit_product(req, res) {
+    let prodid = req.params.id;
+    let name = req.body.new_name;
+    let price = req.body.new_price;
+    let size = req.body.new_size;
+    let category = req.body.new_category;
+    let colour = req.body.new_colour;
+    let amount = req.body.new_amount;
+    let status = req.body.new_status;
+    let desc = req.body.new_description;
+    const success = await db.edit_product(price, name, size, colour, amount, status, desc, category, prodid);
+    if(success){
+        req.session.customAlert = { type: 'success', message: 'Pomyślnie edytowano produkt' };
+    }else{
+        req.session.customAlert = { type: 'danger', message: 'Błąd podczas edytowania produktu' };
+    }
+
+    res.redirect(req.url);
+}
+
+
 
 module.exports = {
     get,
@@ -131,5 +156,6 @@ module.exports = {
     change_user_status,
     get_order,
     change_order_status,
-    get_product
+    get_product,
+    edit_product
 }
