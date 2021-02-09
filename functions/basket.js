@@ -7,7 +7,6 @@ function get(req, res) {
     Object.keys(bi).map((key) => {
         products_in_basket.push({ item: bi[key], amount: b[key].amount });
     })
-    console.log(products_in_basket);
     res.render('basket', { basket: products_in_basket });
 }
 
@@ -52,7 +51,7 @@ async function checkout_get(req, res) {
       let bi = req.session.basketinfo;
       let b = req.session.basket;
       Object.keys(bi).map((key) => {
-        sum += bi[key].price * b[key].amount; 
+        sum += bi[key].price * b[key].amount;
       })
       sum = Math.round(sum*100) / 100;
       res.render('checkout', {sum: sum});

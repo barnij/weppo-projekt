@@ -74,7 +74,6 @@
                         btn.addEventListener('click', event => {
                             var alert = document.getElementById('alert');
                             var req = new XMLHttpRequest();
-                            console.log('submit przyciśnięty');
                             req.open('post', '/account', true);
                             if(pass_change){
                                 req.onreadystatechange = function () {
