@@ -36,7 +36,7 @@
                                 <p class="lead">Kategoria:</p>
                             </div>
                             <div class="col">
-                                <select class="form-select" aria-label="Zmiana kategorii" name="new_category">
+                                <select class="form-select" aria-label="Zmiana kategorii" name="new_category" required>
                                     <% for(let category of categories){ %>
                                         <option value="<%= category.id %>">
                                             <%= category.description %>
@@ -51,7 +51,7 @@
                                 <p class="lead">Kolor:</p>
                             </div>
                             <div class="col">
-                                <select class="form-select" aria-label="Zmiana koloru" name="new_colour">
+                                <select class="form-select" aria-label="Zmiana koloru" name="new_colour" required>
                                     <% for(let colour of colours){ %>
                                         <option value="<%= colour.id %>">
                                             <%= colour.description %>
@@ -66,7 +66,7 @@
                                 <p class="lead">Wielkość:</p>
                             </div>
                             <div class="col">
-                                <select class="form-select" aria-label="Zmiana wielkości" name="new_size">
+                                <select class="form-select" aria-label="Zmiana wielkości" name="new_size" required>
                                     <% for(let size of sizes){ %>
                                         <option value="<%= size.id %>">
                                             <%= size.description %>
@@ -81,7 +81,7 @@
                                 <p class="lead">Status:</p>
                             </div>
                             <div class="col">
-                                <select class="form-select" aria-label="Zmiana statusu" name="new_status">
+                                <select class="form-select" aria-label="Zmiana statusu" name="new_status" required>
                                     <option value="true">Dostępny</option>
                                     <option value="false" selected>Niedostępny</option>
                                 </select>
@@ -101,10 +101,10 @@
 
                         <div class="row">
                             <div class="col-4">
-                                <p class="lead">Zdjecie produktu:</p>
+                                <p class="lead">Zdjęcie produktu:</p>
                             </div>
                             <div class="col">
-                                <input class="form-control" type="file" id="formFile" name="new_pic">
+                                <input class="form-control" type="file" id="formFile" name="new_pic" required>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary" style="margin-top: 20px">Zapisz</button>
