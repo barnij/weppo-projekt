@@ -22,11 +22,6 @@
                 <dt class="col-sm-3">Kategoria</dt>
                 <dd class="col-sm-9"><%= product.category %> </dd>
 
-                <% if(product.amount > 0){ %>
-                <dt class="col-sm-3">Liczba sztuk</dt>
-                <dd class="col-sm-9"><%= product.amount %> </dd>
-                <% } %>
-
                 <dt class="col-sm-3 text-truncate">Opis produktu</dt>
                 <dd class="col-sm-9"><%= product.description %> </dd>
             </dl>
@@ -34,15 +29,9 @@
             <div class="row mb-5">
                 <div class="col">
                 <% if(product.status){ %>
-                    <% if(product.amount> 0){ %>
                             <button id="add_to_basket" name="<%= product.id %>" type="button" class="btn btn-primary">
                                 Dodaj do koszyka
                             </button>
-                        <% }else{ %>
-                            <button type="button" class="btn btn-secondary disabled">
-                                Produkt chwilowo niedostępny
-                            </button>
-                        <% } %>
                     <% }else{ %>
                         <button type="button" class="btn btn-danger disabled">
                             Produkt wycofany
@@ -53,7 +42,7 @@
         </div>
         <div class="col mt-5">
             <div class="card" style="width: 300px; height: 300px;">
-                <img src="/assets/uploads/<%= product.id %>.jpg"
+                <img src="/uploads/<%= product.id %>.jpg"
                     class="img rounded" alt="no-product-image">
             </div>
         </div>

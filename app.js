@@ -11,10 +11,10 @@ const auth = require('./functions/auth');
 const user = require('./functions/user');
 const product = require('./functions/product');
 const account = require('./functions/account');
-
+const admin = require('./functions/admin');
 
 const app = express();
-const upload = multer();
+const upload = multer({ dest: './public/uploads/'});
 app.use(session({
     secret: 'weppoweppo',
     resave: true,
@@ -30,8 +30,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(checksession);
 
 app.get('/', (req, res) => {
-    //debug:
-    console.log(req.session);
     res.render('index');
 });
 
@@ -56,9 +54,9 @@ app.get('/api/remove/:id(\\d+)', basket.remove);
 
 app.get('/clearbasket', basket.clear);
 
-app.post('/checkout', ash(basket.checkout_get));
+app.get('/checkout', ash(basket.checkout_get));
 
-app.post('/checkout/finalize', ash(basket.checkout_post))
+app.post('/checkout/finalize', ash(basket.checkout_post));
 
 //products
 app.get('/product/:id(\\d+)', ash(product.get));
@@ -72,38 +70,48 @@ app.post('/account/changepassword', auth.user, ash(account.changePassword));
 
 app.get('/order/:id(\\d+)', auth.user, ash(account.order));
 
-//admin TODO
-app.get('/admin', (req, res) => {
-    res.render('admin_panel');
+//admin
+app.get('/admin', auth.admin, ash(admin.get));
+
+app.post('/admin/addCategory', auth.admin, ash(admin.add_category));
+
+app.post('/admin/addSize', auth.admin, ash(admin.add_size));
+
+app.post('/admin/addColour', auth.admin, ash(admin.add_colour));
+
+app.get('/admin/users', auth.admin, ash(admin.get_users));
+
+app.get('/admin/products', auth.admin, ash(admin.get_products));
+
+app.get('/admin/changeStatus/:id(\\d+)', auth.admin, ash(admin.change_status));
+
+app.get('/admin/orders', auth.admin, ash(admin.get_orders));
+
+app.get('/admin/user/:id(\\d+)', auth.admin, ash(admin.get_user));
+
+app.post('/admin/changeUserStatus/:id(\\d+)', auth.admin, ash(admin.change_user_status));
+
+app.get('/admin/order/:id(\\d+)', auth.admin, ash(admin.get_order));
+
+app.post('/admin/changeOrderStatus/:id(\\d+)', auth.admin, ash(admin.change_order_status));
+
+app.get('/admin/product/:id(\\d+)', auth.admin, ash(admin.get_product));
+
+app.get('/admin/addProduct', auth.admin, ash(admin.add_product_page));
+
+app.post('/admin/addProduct', auth.admin, upload.single('new_pic'), ash(admin.add_product));
+
+app.post('/admin/product/:id(\\d+)', auth.admin, upload.single('new_pic'), ash(admin.edit_product));
+
+// 404
+app.get('/404', (req, res) => {
+    res.status(404).render('404');
 });
 
-app.get('/admin/products', (req, res) => {
-    res.render('admin-products');
+app.get('*', (req, res) => {
+    res.redirect('/404');
 });
 
-app.get('/admin/product', (req, res) => {
-    res.render('admin-product');
-});
-
-app.get('/admin/products/:id(\\d+)', (req, res) => {
-    res.render('admin-products');
-});
-
-app.get('/admin/users', (req, res) => {
-    res.render('admin-users');
-});
-
-app.get('/admin/user', (req, res) => {
-    res.render('admin_user');
-});
-
-app.get('/admin/orders', (req, res) => {
-    res.render('admin-orders');
-});
-
-app.get('/admin/order', (req, res) => {
-    res.render('admin_order_view');
-});
 
 http.createServer(app).listen(process.env.PORT || 8080);
 console.log('Server started');

@@ -17,7 +17,7 @@
                     <div class="list-group-item list-group-item-action flex-column align-items-start">
                         <div class="row">
                             <div class="col-6" style="width: auto;">
-                                <img src="/assets/uploads/<%= product.item.id %>.jpg" class="figure-img img-fluid rounded-circle"
+                                <img src="/uploads/<%= product.item.id %>.jpg" class="figure-img img-fluid rounded-circle"
                                     style="height: 100px; width: 100px;" alt="wine pic not found">
                             </div>
                             <div class="col">
@@ -50,7 +50,7 @@
                     <h1 class="display-6"><%= Math.round(sum*100) / 100 %> zł</h1>
                 </div>
                 <div class="col-auto">
-                  <form action="/checkout" method="POST">
+                  <form action="/checkout" method="GET">
                     <button type="submit" class="btn btn-success">Do płatności</button>
                   </form>
                 </div>
