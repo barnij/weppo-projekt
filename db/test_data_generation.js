@@ -21,6 +21,8 @@ const db = require('./db_services');
   await db.add_product(10.99, 'produkt 1', 1, 1, 30, true, 'To jest niezwykły produkt 1', 1);
   await db.add_product(15.99, 'produkt 2', 2, 2, 50, true, 'To jest niezwykły produkt 2', 2);
   await db.add_product(20.99, 'produkt 3', 3, 3, 70, true, 'To jest niezwykły produkt 3', 3);
+  await db.add_product(15.99, 'produkt 4', 2, 3, 30, true, 'To jest niezwykły produkt 2', 2);
+  await db.add_product(20.99, 'produkt 5', 3, 1, 20, true, 'To jest niezwykły produkt 3', 3);
 
   await db.add_purchase_status('status zamówienia 1');
   await db.add_purchase_status('status zamówienia 2');
