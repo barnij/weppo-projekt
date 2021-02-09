@@ -154,6 +154,20 @@ async function add_product(price, name, size, colour, amount, status, descriptio
   }
 }
 
+// eslint-disable-next-line no-unused-vars
+async function edit_product(price, name, size, colour, status, description, category, prodid) {
+  let query = `UPDATE product SET price = $1, name = $2, size = $3, colour = $4, amount = 1,
+              status = $5, description = $6, category = $7 WHERE id = $8;`;
+  let args = [...arguments];
+  try {
+    await pool.query(query, args);
+    return true;
+  } catch (err) {
+    console.error('db edit_product error');
+    console.error(err);
+  }
+}
+
 
 async function set_product_status(prodid, status) {
   let query = `UPDATE product SET status = $1 WHERE id = $2;`;
@@ -295,29 +309,29 @@ async function get_picture(prodid, id) {
 }
 
 async function get_described_purchase(userid, id) {
-  var query = `SELECT purchase.userid as userid, purchase.id, purchase_status.description as status, tmp1.price as sum 
-              FROM purchase JOIN purchase_status ON purchase.status = purchase_status.id 
-              JOIN (SELECT sold_product.purchase_id, sum(sold_product.amount * product.price) as price 
-              FROM sold_product JOIN product ON sold_product.product_id = product.id 
-              GROUP BY sold_product.purchase_id) as tmp1 ON purchase.id = tmp1.purchase_id 
+  var query = `SELECT purchase.userid as userid, purchase.id, purchase_status.description as status, tmp1.price as sum
+              FROM purchase JOIN purchase_status ON purchase.status = purchase_status.id
+              JOIN (SELECT sold_product.purchase_id, sum(sold_product.amount * product.price) as price
+              FROM sold_product JOIN product ON sold_product.product_id = product.id
+              GROUP BY sold_product.purchase_id) as tmp1 ON purchase.id = tmp1.purchase_id
               ORDER BY purchase.id ASC;`;
   var args = [];
   if(userid) {
-    query = `SELECT purchase.userid as userid, purchase.id, purchase_status.description as status, tmp1.price as sum 
-            FROM purchase JOIN purchase_status ON purchase.status = purchase_status.id 
-            JOIN (SELECT sold_product.purchase_id, sum(sold_product.amount * product.price) as price 
-            FROM sold_product JOIN product ON sold_product.product_id = product.id 
-            GROUP BY sold_product.purchase_id) as tmp1 ON purchase.id = tmp1.purchase_id 
+    query = `SELECT purchase.userid as userid, purchase.id, purchase_status.description as status, tmp1.price as sum
+            FROM purchase JOIN purchase_status ON purchase.status = purchase_status.id
+            JOIN (SELECT sold_product.purchase_id, sum(sold_product.amount * product.price) as price
+            FROM sold_product JOIN product ON sold_product.product_id = product.id
+            GROUP BY sold_product.purchase_id) as tmp1 ON purchase.id = tmp1.purchase_id
             WHERE purchase.userid = $1
             ORDER BY purchase.id ASC;`;
     args = [userid];
   }
   if(id) {
-    query = `SELECT purchase.userid as userid, purchase.id, purchase_status.description as status, tmp1.price as sum 
-            FROM purchase JOIN purchase_status ON purchase.status = purchase_status.id 
-            JOIN (SELECT sold_product.purchase_id, sum(sold_product.amount * product.price) as price 
-            FROM sold_product JOIN product ON sold_product.product_id = product.id 
-            GROUP BY sold_product.purchase_id) as tmp1 ON purchase.id = tmp1.purchase_id 
+    query = `SELECT purchase.userid as userid, purchase.id, purchase_status.description as status, tmp1.price as sum
+            FROM purchase JOIN purchase_status ON purchase.status = purchase_status.id
+            JOIN (SELECT sold_product.purchase_id, sum(sold_product.amount * product.price) as price
+            FROM sold_product JOIN product ON sold_product.product_id = product.id
+            GROUP BY sold_product.purchase_id) as tmp1 ON purchase.id = tmp1.purchase_id
             WHERE purchase.id = $1
             ORDER BY purchase.id ASC;`;
     args = [id];
@@ -430,7 +444,7 @@ async function get_product(id) {
 async function get_full_product(id){
   var query = `SELECT p.id as id, price, name, ca.description as category,
     c.description as colour, s.description as size, p.description as description,
-    amount, status
+    amount, status, c.id as colour_id, ca.id as category_id, s.id as size_id
     FROM product as p
     JOIN colour as c ON p.colour = c.id
     JOIN size as s ON p.size = s.id
@@ -453,7 +467,7 @@ async function get_full_product(id){
 }
 
 async function get_full_sold_product(purchaseid) {
-  var query = `SELECT purchase.id as id, product.id as product_id, product.price as price, product.name as name, sold_product.amount as amount, size.description as size, colour.description as colour, category.description as category 
+  var query = `SELECT purchase.id as id, product.id as product_id, product.price as price, product.name as name, sold_product.amount as amount, size.description as size, colour.description as colour, category.description as category
   FROM purchase JOIN sold_product ON purchase.id = sold_product.purchase_id
   JOIN product ON product.id = sold_product.product_id
   JOIN size ON product.size = size.id
@@ -503,5 +517,6 @@ module.exports = {
   get_full_product,
   set_user_password,
   get_described_purchase,
-  get_full_sold_product
+  get_full_sold_product,
+  edit_product
 }
