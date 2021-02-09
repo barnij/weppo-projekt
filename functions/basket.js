@@ -76,7 +76,7 @@ async function checkout_post(req, res) {
           await db.add_sold_product(id, bi[key].id,  b[key].amount);
       })
       // Do something with shipping information
-      req.session.customAlert = { type: 'success', message: 'Dziękujemy za zakupy' };
+      req.session.customAlert = { type: 'success', message: 'Dziękujemy za zakupy!' };
       clear(req, res);
     }
 }
