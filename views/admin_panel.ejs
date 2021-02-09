@@ -33,84 +33,47 @@
                             Kategorie produktów:
                         </p>
                     </div>
-
                     <ul>
                         <% for(category of categories) { %>
                             <li>
                                 <div class="row">
-                                    <div class="col">
-                                        <dt class="col-sm-3">
-                                            <%= category.description %>
-                                        </dt>
-                                    </div>
+                                    <dt class="col">
+                                        <%= category.description %>
+                                    </dt>
                                 </div>
                             </li>
                             <% } %>
                     </ul>
-                </div>
-                <div class="col"></div>
-                <div class="col">
-                    <p class="lead">
-                        Dodaj nową kategorię:
-                    </p>
-                    <form action="/admin/addCategory" method="POST">
-                        <input class="form-control" type="text" name="new_category" placeholder="Nazwa nowej kategorii"
-                            aria-label="default input example">
-                        <button type="submit" class="btn btn-secondary" style="margin-top: 5%;">Dodaj</button>
-                    </form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
+
                     <div style="margin-top: 5%;">
                         <p class="lead">
                             Rozmiary produktów:
                         </p>
                     </div>
-
                     <ul>
                         <% for(size of sizes) { %>
                             <li>
                                 <div class="row">
-                                    <div class="col">
-                                        <dt class="col-sm-3">
-                                            <%= size.description %>
-                                        </dt>
-                                    </div>
+                                    <dt class="col">
+                                        <%= size.description %>
+                                    </dt>
                                 </div>
                             </li>
                             <% } %>
                     </ul>
-                </div>
-                <div class="col"></div>
-                <div class="col">
-                    <p class="lead">
-                        Dodaj nowy rozmiar:
-                    </p>
-                    <form action="/admin/addSize" method="POST">
-                        <input class="form-control" type="text" name="new_size" placeholder="Nazwa nowej kategorii"
-                            aria-label="default input example">
-                        <button type="submit" class="btn btn-secondary" style="margin-top: 5%;">Dodaj</button>
-                    </form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
+
                     <div style="margin-top: 5%;">
                         <p class="lead">
                             Kolory produktów:
                         </p>
                     </div>
-
                     <ul>
                         <% for(colour of colours) { %>
                             <li>
                                 <div class="row">
-                                    <div class="col">
-                                        <dt class="col-sm-3">
-                                            <%= colour.description %>
-                                        </dt>
-                                    </div>
+                                    <dt class="col">
+                                        <%= colour.description %>
+                                    </dt>
                                 </div>
                             </li>
                             <% } %>
@@ -118,14 +81,36 @@
                 </div>
                 <div class="col"></div>
                 <div class="col">
-                    <p class="lead">
-                        Dodaj nowy kolor:
-                    </p>
-                    <form action="/admin/addColour" method="POST">
-                        <input class="form-control" type="text" name="new_colour" placeholder="Nazwa nowej kategorii"
-                            aria-label="default input example">
-                        <button type="submit" class="btn btn-secondary" style="margin-top: 5%;">Dodaj</button>
-                    </form>
+                    <div class="row" style="margin-top: 5%;">
+                        <p class="lead">
+                            Dodaj nową kategorię:
+                        </p>
+                        <form action="/admin/addCategory" method="POST">
+                            <input class="form-control" type="text" name="new_category"
+                                placeholder="Nazwa nowej kategorii" aria-label="default input example">
+                            <button type="submit" class="btn btn-secondary" style="margin-top: 5%;">Dodaj</button>
+                        </form>
+                    </div>
+                    <div class="row" style="margin-top: 5%;">
+                        <p class="lead">
+                            Dodaj nowy rozmiar:
+                        </p>
+                        <form action="/admin/addSize" method="POST">
+                            <input class="form-control" type="text" name="new_size" placeholder="Nazwa nowej kategorii"
+                                aria-label="default input example">
+                            <button type="submit" class="btn btn-secondary" style="margin-top: 5%;">Dodaj</button>
+                        </form>
+                    </div>
+                    <div class="row" style="margin-top: 5%;">
+                        <p class="lead">
+                            Dodaj nowy kolor:
+                        </p>
+                        <form action="/admin/addColour" method="POST">
+                            <input class="form-control" type="text" name="new_colour"
+                                placeholder="Nazwa nowej kategorii" aria-label="default input example">
+                            <button type="submit" class="btn btn-secondary" style="margin-top: 5%;">Dodaj</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
