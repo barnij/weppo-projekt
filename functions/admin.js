@@ -131,12 +131,13 @@ async function edit_product(req, res) {
     let colour = req.body.new_colour;
     let status = req.body.new_status;
     let desc = req.body.new_description;
-    let pic = req.file.filename;
 
     const success = await db.edit_product(price, name, size, colour, status, desc, category, prodid);
     if(success){
         try {
-            await fs.rename(`./public/uploads/${pic}`, `./public/uploads/${prodid}.jpg`);
+            if(req.file){
+                await fs.rename(`./public/uploads/${req.file.filename}`, `./public/uploads/${prodid}.jpg`);
+            }
             req.session.customAlert = { type: 'success', message: 'Pomyślnie edytowano produkt' };
         } catch (err){
             req.session.customAlert = { type: 'warning', message: 'Edytowano, ale nastąpił błąd w dodaniu zdjęcia' };
