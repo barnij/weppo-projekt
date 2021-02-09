@@ -45,29 +45,40 @@ function clear(req, res) {
 }
 
 async function checkout_get(req, res) {
-    let sum = 0;
-    let bi = req.session.basketinfo;
-    let b = req.session.basket;
-    Object.keys(bi).map((key) => {
+    if(req.session.basketlength == 0) {
+      res.redirect('/');
+    } else {
+      let sum = 0;
+      let bi = req.session.basketinfo;
+      let b = req.session.basket;
+      Object.keys(bi).map((key) => {
         sum += bi[key].price * b[key].amount; 
-    })
-    sum = Math.round(sum*100) / 100;
-    res.render('checkout', {sum: sum});
+      })
+      sum = Math.round(sum*100) / 100;
+      res.render('checkout', {sum: sum});
+    }
 }
 
 async function checkout_post(req, res) {
-    if(req.session.logged) {
-      var userid = req.session.userid;
+    console.log(req.body);
+    if(req.body.payment_method == 0) {
+      req.session.customAlert = { type: 'danger', message: 'Wybierz formę płatności' };
+      res.redirect('/checkout');
     } else {
-      userid = 1;
+      if(req.session.logged) {
+        var userid = req.session.userid;
+      } else {
+        userid = 1;
+      }
+      let id = await db.add_purchase(userid, 1);
+      let bi = req.session.basketinfo;
+      let b = req.session.basket;
+      Object.keys(bi).map(async (key) => {
+          await db.add_sold_product(id, bi[key].id,  b[key].amount);
+      })
+      // Do something with shipping information
+      clear(req, res);
     }
-    let id = await db.add_purchase(userid, 1);
-    let bi = req.session.basketinfo;
-    let b = req.session.basket;
-    Object.keys(bi).map(async (key) => {
-        await db.add_sold_product(id, bi[key].id,  b[key].amount);
-    })
-    clear(req, res);
 }
 
 module.exports = {
@@ -75,6 +86,6 @@ module.exports = {
     add,
     remove,
     clear,
-    checkout_get,
-    checkout_post
+    checkout_post,
+    checkout_get
 }

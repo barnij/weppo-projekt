@@ -54,9 +54,9 @@ app.get('/api/remove/:id(\\d+)', basket.remove);
 
 app.get('/clearbasket', basket.clear);
 
-app.post('/checkout', ash(basket.checkout_get));
+app.get('/checkout', ash(basket.checkout_get));
 
-app.post('/checkout/finalize', ash(basket.checkout_post))
+app.post('/checkout/finalize', ash(basket.checkout_post));
 
 //products
 app.get('/product/:id(\\d+)', ash(product.get));
