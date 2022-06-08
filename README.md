@@ -1,10 +1,7 @@
 # weppo-projekt
-Dokumentacja: https://www.overleaf.com/3193321624xgccbxpyfdjk
 
-Figma link: https://www.figma.com/file/Wyxr5W7aeNAg5QqsZozymk/Weppo?node-id=0%3A1
+[EN]
+Project for the course Selected elements of software design practice.
 
-Hack.md link: https://hackmd.io/xznrybVrTDKy1P2xleKVyQ
-
-Umawiamy się na LF jako znak końca linii.
-
-
+[PL]
+Projekt na przedmiot Wybrane elementy praktyki projektowania oprogramowania.
